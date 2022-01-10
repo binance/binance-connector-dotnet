@@ -21,5 +21,7 @@ namespace Binance.Spot.Models
         public string Value { get; private set; }
 
         public static implicit operator string(WithdrawStatus enm) => enm.Value;
+
+        public override string ToString() => this.Value.ToString();
     }
 }

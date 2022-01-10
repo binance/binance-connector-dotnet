@@ -1,6 +1,10 @@
 # Changelog
 
-## 1.0.0 - 2021-12-02
+## 1.0.1 - 2022-01-10
 
 ### Added
-- First release, please find details from `README.md`
+- Github CI format & unit tests actions
+- Unit tests for enum models
+
+### Fixed
+- Enum query string serialisation
