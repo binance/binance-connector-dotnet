@@ -15,5 +15,7 @@ namespace Binance.Spot.Models
         public short Value { get; private set; }
 
         public static implicit operator short(FuturesTransferType enm) => enm.Value;
+
+        public override string ToString() => this.Value.ToString();
     }
 }

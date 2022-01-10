@@ -14,5 +14,7 @@ namespace Binance.Spot.Models
         public string Value { get; private set; }
 
         public static implicit operator string(TimeInForce enm) => enm.Value;
+
+        public override string ToString() => this.Value.ToString();
     }
 }

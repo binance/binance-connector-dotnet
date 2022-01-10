@@ -1,4 +1,4 @@
-﻿namespace Binance.Common
+namespace Binance.Common
 {
     using System;
     using System.Collections.Generic;
