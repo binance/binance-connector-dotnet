@@ -8,7 +8,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public void ToString_Matches_Value()
         {
-            var model = UniversalTransferType.MAIN_C2C;
+            var model = UniversalTransferType.MAIN_UMFUTURE;
 
             Assert.Equal(model.Value.ToString(), model.ToString());
         }

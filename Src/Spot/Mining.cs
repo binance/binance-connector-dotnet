@@ -209,5 +209,36 @@ namespace Binance.Spot
 
             return result;
         }
+
+        private const string MINING_ACCOUNT_EARNING = "/sapi/v1/mining/payment/uid";
+
+        /// <summary>
+        /// Weight(IP): 5.
+        /// </summary>
+        /// <param name="algo">Algorithm(sha256).</param>
+        /// <param name="startDate">Search date, millisecond timestamp, while empty query all.</param>
+        /// <param name="endDate">Search date, millisecond timestamp, while empty query all.</param>
+        /// <param name="pageIndex">Page number, default is first page, start form 1.</param>
+        /// <param name="pageSize">Number of pages, minimum 10, maximum 200.</param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Mining account earnings.</returns>
+        public async Task<string> MiningAccountEarning(string algo, string startDate = null, string endDate = null, int? pageIndex = null, string pageSize = null, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                MINING_ACCOUNT_EARNING,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "algo", algo },
+                    { "startDate", startDate },
+                    { "endDate", endDate },
+                    { "pageIndex", pageIndex },
+                    { "pageSize", pageSize },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
     }
 }

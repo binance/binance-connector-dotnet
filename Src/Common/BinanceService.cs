@@ -2,6 +2,7 @@ namespace Binance.Common
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net.Http;
     using System.Security.Cryptography;
     using System.Text;
@@ -57,6 +58,7 @@ namespace Binance.Common
             {
                 queryStringBuilder.Append("&");
             }
+
             queryStringBuilder.Append("signature=").Append(signature);
 
             requestUri += "?" + queryStringBuilder.ToString();
@@ -134,7 +136,12 @@ namespace Binance.Common
                             }
                             catch (JsonReaderException ex)
                             {
-                                throw new BinanceClientException($"Failed to map server response from '${requestUri}' to given type", -1, ex);
+                                var clientException = new BinanceClientException($"Failed to map server response from '${requestUri}' to given type", -1, ex);
+
+                                clientException.StatusCode = (int)response.StatusCode;
+                                clientException.Headers = response.Headers.ToDictionary(a => a.Key, a => a.Value);
+
+                                throw clientException;
                             }
                         }
                     }
@@ -143,23 +150,36 @@ namespace Binance.Common
                 {
                     using (HttpContent responseContent = response.Content)
                     {
+                        BinanceHttpException httpException = null;
                         string contentString = await responseContent.ReadAsStringAsync();
-                        if (400 <= ((int)response.StatusCode) && ((int)response.StatusCode) < 500)
+                        int statusCode = (int)response.StatusCode;
+                        if (400 <= statusCode && statusCode < 500)
                         {
-                            try
+                            if (string.IsNullOrWhiteSpace(contentString))
                             {
-                                throw JsonConvert.DeserializeObject<BinanceClientException>(contentString);
-
+                                httpException = new BinanceClientException("Unsuccessful response with no content", -1);
                             }
-                            catch (JsonReaderException ex)
+                            else
                             {
-                                throw new BinanceClientException(contentString, -1, ex);
+                                try
+                                {
+                                    httpException = JsonConvert.DeserializeObject<BinanceClientException>(contentString);
+                                }
+                                catch (JsonReaderException ex)
+                                {
+                                    httpException = new BinanceClientException(contentString, -1, ex);
+                                }
                             }
                         }
                         else
                         {
-                            throw new BinanceServerException(contentString);
+                            httpException = new BinanceServerException(contentString);
                         }
+
+                        httpException.StatusCode = statusCode;
+                        httpException.Headers = response.Headers.ToDictionary(a => a.Key, a => a.Value);
+
+                        throw httpException;
                     }
                 }
             }

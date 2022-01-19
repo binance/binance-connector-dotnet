@@ -10,8 +10,8 @@ namespace Binance.Spot.Tests
 
     public class MarginAccountTrade_Tests
     {
-        private string apiKey = "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A";
-        private string apiSecret = "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j";
+        private string apiKey = "api-key";
+        private string apiSecret = "api-secret";
 
         #region CrossMarginAccountTransfer
         [Fact]
@@ -944,6 +944,78 @@ namespace Binance.Spot.Tests
                 apiSecret: this.apiSecret);
 
             var result = await marginAccountTrade.QueryMarginInterestRateHistory("BTC");
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
+        #region QueryCrossMarginFeeData
+        [Fact]
+        public async void QueryCrossMarginFeeData_Response()
+        {
+            var responseContent = "[{\"vipLevel\":0,\"coin\":\"BTC\",\"transferIn\":true,\"borrowable\":true,\"dailyInterest\":\"0.00026125\",\"yearlyInterest\":\"0.0953\",\"borrowLimit\":\"180\",\"marginablePairs\":[\"\"]}]";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/margin/crossMarginData", HttpMethod.Get)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            MarginAccountTrade margin = new MarginAccountTrade(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await margin.QueryCrossMarginFeeData();
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
+        #region QueryIsolatedMarginFeeData
+        [Fact]
+        public async void QueryIsolatedMarginFeeData_Response()
+        {
+            var responseContent = "[{\"vipLevel\":0,\"symbol\":\"BTCUSDT\",\"leverage\":\"10\",\"data\":[{\"coin\":\"\",\"dailyInterest\":\"\",\"borrowLimit\":\"\"}]}]";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/margin/isolatedMarginData", HttpMethod.Get)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            MarginAccountTrade margin = new MarginAccountTrade(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await margin.QueryIsolatedMarginFeeData();
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
+        #region QueryIsolatedMarginTierData
+        [Fact]
+        public async void QueryIsolatedMarginTierData_Response()
+        {
+            var responseContent = "[{\"symbol\":\"BTCUSDT\",\"tier\":1,\"effectiveMultiple\":\"10\",\"initialRiskRatio\":\"1.111\",\"liquidationRiskRatio\":\"1.05\",\"baseAssetMaxBorrowable\":\"9\",\"quoteAssetMaxBorrowable\":\"70000\"}]";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/margin/isolatedMarginTier", HttpMethod.Get)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            MarginAccountTrade margin = new MarginAccountTrade(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await margin.QueryIsolatedMarginTierData("BNBUSDT");
 
             Assert.Equal(responseContent, result);
         }

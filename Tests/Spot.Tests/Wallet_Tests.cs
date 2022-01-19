@@ -10,8 +10,8 @@ namespace Binance.Spot.Tests
 
     public class Wallet_Tests
     {
-        private string apiKey = "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A";
-        private string apiSecret = "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j";
+        private string apiKey = "api-key";
+        private string apiSecret = "api-secret";
 
         #region SystemStatus
         [Fact]
@@ -415,7 +415,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await wallet.UserUniversalTransfer(UniversalTransferType.MAIN_C2C, "BNB", 2.1m);
+            var result = await wallet.UserUniversalTransfer(UniversalTransferType.MAIN_UMFUTURE, "BNB", 2.1m);
 
             Assert.Equal(responseContent, result);
         }
@@ -439,7 +439,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await wallet.QueryUserUniversalTransferHistory(UniversalTransferType.MAIN_C2C);
+            var result = await wallet.QueryUserUniversalTransferHistory(UniversalTransferType.MAIN_UMFUTURE);
 
             Assert.Equal(responseContent, result);
         }

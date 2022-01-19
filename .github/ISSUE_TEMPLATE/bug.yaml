@@ -1,0 +1,74 @@
+name: "Bug Report"
+description: "Submit a bug report to help us improve the library"
+title: "Bug Report: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out our bug report form 🙏
+  - type: textarea
+    id: reproduction
+    validations:
+      required: true
+    attributes:
+      label: "Reproduction steps"
+      description: "Please provide a step by step walkthrough on how to reproduce the bug."
+      placeholder: >
+        1) First step...
+        2) Second step....
+  - type: textarea
+    id: expected-behavior
+    validations:
+      required: true
+    attributes:
+      label: "Expected behavior"
+      description: "What did you expect to happen?"
+      placeholder: "Expected Result..."
+  - type: textarea
+    id: actual-behavior
+    validations:
+      required: true
+    attributes:
+      label: "Actual Behavior"
+      description: "What did actually happen? (Add any useful information if available ex. screenshots or logs)"
+      placeholder: "Actual Result... "
+  - type: dropdown
+    id: appwrite-version
+    attributes:
+      label: ".NET version"
+      description: "What version of .NET are you running?"
+      options:
+        - .NET Core 3.1.x
+        - .NET Framework 5.0.x
+        - .NET Framework 6.0.x
+        - Other (specify in environment)
+    validations:
+      required: true
+  - type: dropdown
+    id: operating-system
+    attributes:
+      label: "Operating system"
+      description: "What OS are you using to reproduce the bug?"
+      options:
+        - Linux
+        - MacOS
+        - Windows
+        - Other (specify in environment)
+    validations:
+      required: true
+  - type: textarea
+    id: enviromnemt
+    validations:
+      required: false
+    attributes:
+      label: "Environment"
+      description: "Any additional differences in your environment which may relate to the issue"
+      placeholder: ""
+  - type: textarea
+    id: dotnet-info
+    attributes:
+      label: dotnet --info
+      description: Run the dotnet --info command and copy and paste the results
+    validations:
+      required: false

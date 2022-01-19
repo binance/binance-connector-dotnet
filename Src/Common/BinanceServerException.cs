@@ -5,7 +5,7 @@ namespace Binance.Common
     /// <summary>
     /// Binance exception class for any errors throw as a result internal server issues.
     /// </summary>
-    public class BinanceServerException : Exception
+    public class BinanceServerException : BinanceHttpException
     {
         public BinanceServerException()
         : base()

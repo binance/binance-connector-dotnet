@@ -48,7 +48,10 @@ namespace Binance.Spot
         private const string GET_FUTURE_ACCOUNT_TRANSACTION_HISTORY_LIST = "/sapi/v1/futures/transfer";
 
         /// <summary>
-        /// Get Future Account Transaction History.
+        /// Get Future Account Transaction History.<para />
+        /// - Support query within the last 6 months only.<para />
+        /// - If `startTime` and `endTime` not sent, return records of the last 7 days by default.<para />
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="startTime"></param>

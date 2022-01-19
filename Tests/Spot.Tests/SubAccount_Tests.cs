@@ -10,8 +10,8 @@ namespace Binance.Spot.Tests
 
     public class SubAccount_Tests
     {
-        private string apiKey = "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A";
-        private string apiSecret = "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j";
+        private string apiKey = "api-key";
+        private string apiSecret = "api-secret";
 
         #region CreateAVirtualSubaccount
         [Fact]
@@ -752,6 +752,102 @@ namespace Binance.Spot.Tests
                 apiSecret: this.apiSecret);
 
             var result = await subAccount.WithdrawlAssetsFromTheManagedSubaccount("aaa@test.com", "USDT", 522.23m);
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
+        #region EnableOrDisableIpRestrictionForASubaccountApiKey
+        [Fact]
+        public async void EnableOrDisableIpRestrictionForASubaccountApiKey_Response()
+        {
+            var responseContent = "{\"ipRestrict\":\"true\",\"ipList\":[\"0.0.0.0\"],\"updateTime\":1636369557189,\"apiKey\":\"apikey\"}";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/sub-account/subAccountApi/ipRestriction", HttpMethod.Post)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            SubAccount subAccount = new SubAccount(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await subAccount.EnableOrDisableIpRestrictionForASubaccountApiKey("test@email", "api-key", false);
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
+        #region GetIpRestrictionForASubaccountApiKey
+        [Fact]
+        public async void GetIpRestrictionForASubaccountApiKey_Response()
+        {
+            var responseContent = "{\"ipRestrict\":\"true\",\"ipList\":[\"\"],\"updateTime\":1636369557189,\"apiKey\":\"api-key\"}";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/sub-account/subAccountApi/ipRestriction", HttpMethod.Get)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            SubAccount subAccount = new SubAccount(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await subAccount.GetIpRestrictionForASubaccountApiKey("test@email", "api-key");
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
+        #region AddIpListForASubaccountApiKey
+        [Fact]
+        public async void AddIpListForASubaccountApiKey_Response()
+        {
+            var responseContent = "{\"ip\":\"192.168.1.20\",\"updateTime\":1636369557189,\"apiKey\":\"api-key\"}";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/sub-account/subAccountApi/ipRestriction/ipList", HttpMethod.Post)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            SubAccount subAccount = new SubAccount(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await subAccount.AddIpListForASubaccountApiKey("test@email", "api-key", "1.1.1.1");
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
+        #region DeleteIpListForASubaccountApiKey
+        [Fact]
+        public async void DeleteIpListForASubaccountApiKey_Response()
+        {
+            var responseContent = "{\"ipRestrict\":\"true\",\"ipList\":[\"\"],\"updateTime\":1636369557189,\"apiKey\":\"api-key\"}";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/sub-account/subAccountApi/ipRestriction/ipList", HttpMethod.Delete)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            SubAccount subAccount = new SubAccount(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await subAccount.DeleteIpListForASubaccountApiKey("test@email", "api-key", "1.1.1.1");
 
             Assert.Equal(responseContent, result);
         }

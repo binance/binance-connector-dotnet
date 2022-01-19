@@ -24,7 +24,7 @@ namespace Binance.Spot.WalletExamples
 
             var wallet = new Wallet(httpClient);
 
-            var result = await wallet.QueryUserUniversalTransferHistory(UniversalTransferType.MAIN_C2C);
+            var result = await wallet.QueryUserUniversalTransferHistory(UniversalTransferType.MAIN_UMFUTURE);
         }
     }
 }

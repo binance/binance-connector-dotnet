@@ -458,5 +458,27 @@ namespace Binance.Spot
 
             return result;
         }
+
+        private const string QUERY_CURRENT_ORDER_COUNT_USAGE = "/api/v3/rateLimit/order";
+
+        /// <summary>
+        /// Displays the user's current order count usage for all intervals.<para />
+        /// Weight(IP): 20.
+        /// </summary>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Order rate limits.</returns>
+        public async Task<string> QueryCurrentOrderCountUsage(long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                QUERY_CURRENT_ORDER_COUNT_USAGE,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
     }
 }

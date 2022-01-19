@@ -10,8 +10,8 @@ namespace Binance.Spot.Tests
 
     public class SpotAccountTrade_Tests
     {
-        private string apiKey = "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A";
-        private string apiSecret = "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j";
+        private string apiKey = "api-key";
+        private string apiSecret = "api-secret";
 
         #region TestNewOrder
         [Fact]
@@ -344,6 +344,30 @@ namespace Binance.Spot.Tests
                 apiSecret: this.apiSecret);
 
             var result = await spotAccountTrade.AccountTradeList("BNBBTC");
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
+        #region QueryCurrentOrderCountUsage
+        [Fact]
+        public async void QueryCurrentOrderCountUsage_Response()
+        {
+            var responseContent = "[{\"rateLimitType\":\"\",\"interval\":\"\",\"intervalNum\":0,\"limit\":0,\"count\":0}]";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/api/v3/rateLimit/order", HttpMethod.Get)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            SpotAccountTrade trade = new SpotAccountTrade(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await trade.QueryCurrentOrderCountUsage();
 
             Assert.Equal(responseContent, result);
         }

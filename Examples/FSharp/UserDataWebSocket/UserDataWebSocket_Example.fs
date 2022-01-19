@@ -19,8 +19,8 @@ let main argv =
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
 
-    let apiKey = "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A";
-    let apiSecret = "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j";
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
     let userDataStreams = new UserDataStreams(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     let response = userDataStreams.CreateSpotListenKey() |> Async.AwaitTask |> Async.RunSynchronously
