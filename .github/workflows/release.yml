@@ -1,0 +1,32 @@
+name: Release Distributables
+
+on:
+  release:
+    types:
+      - published
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET on 6.0.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version:  6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release
+    - name: Pack
+      run: dotnet pack Src/Spot -p:NuspecFile=.nuspec -p:RepositoryBranch=${{ github.event.release.tag_name }} -o Release
+    - name: Upload
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./Release/Binance.Spot.${{ github.event.release.tag_name }}.nupkg
+        asset_name: Binance.Spot.${{ github.event.release.tag_name }}.nupkg
+        asset_content_type: binary/octet-stream
+

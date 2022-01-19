@@ -1,0 +1,17 @@
+name: "Documentation"
+description: "Documentation report"
+title: "Documentation: "
+labels: [documentation]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to help us improve our documentation 
+  - type: textarea
+    id: issue-description
+    validations:
+      required: true
+    attributes:
+      label: "Description"
+      description: "A clear and concise description of what the issue is."
+      placeholder: "Suggestion to change the documentation for..."

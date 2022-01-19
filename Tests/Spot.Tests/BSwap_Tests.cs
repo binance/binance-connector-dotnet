@@ -10,8 +10,8 @@ namespace Binance.Spot.Tests
 
     public class BSwap_Tests
     {
-        private string apiKey = "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A";
-        private string apiSecret = "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j";
+        private string apiKey = "api-key";
+        private string apiSecret = "api-secret";
 
         #region ListAllSwapPools
         [Fact]
@@ -200,6 +200,126 @@ namespace Binance.Spot.Tests
                 apiSecret: this.apiSecret);
 
             var result = await bSwap.GetSwapHistory();
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
+        #region PoolConfigure
+        [Fact]
+        public async void PoolConfigure_Response()
+        {
+            var responseContent = "[{\"poolId\":2,\"poolNmae\":\"BUSD/USDT\",\"updateTime\":1565769342148,\"liquidity\":{\"constantA\":2000,\"minRedeemShare\":0.1,\"slippageTolerance\":0.2},\"assetConfigure\":{\"BUSD\":{\"minAdd\":10,\"maxAdd\":20,\"minSwap\":10,\"maxSwap\":30},\"USDT\":{\"minAdd\":10,\"maxAdd\":20,\"minSwap\":10,\"maxSwap\":30}}}]";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/bswap/poolConfigure", HttpMethod.Get)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            BSwap bSwap = new BSwap(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await bSwap.PoolConfigure();
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
+        #region AddLiquidityPreview
+        [Fact]
+        public async void AddLiquidityPreview_Response()
+        {
+            var responseContent = "{\"quoteAsset\":\"USDT\",\"baseAsset\":\"BUSD\",\"quoteAmt\":300000,\"baseAmt\":299975,\"price\":1.00008334,\"share\":1.23}";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/bswap/addLiquidityPreview", HttpMethod.Get)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            BSwap bSwap = new BSwap(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await bSwap.AddLiquidityPreview(2, "SINGLE", "USDT", 1.1m);
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
+        #region GetUnclaimedRewardsRecord
+        [Fact]
+        public async void GetUnclaimedRewardsRecord_Response()
+        {
+            var responseContent = "{\"totalUnclaimedRewards\":{\"BUSD\":100000315.79,\"BNB\":1e-8,\"USDT\":2e-8},\"details\":{\"BNB/USDT\":{\"BUSD\":100000315.79,\"USDT\":2e-8},\"BNB/BTC\":{\"BNB\":1e-8}}}";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/bswap/unclaimedRewards", HttpMethod.Get)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            BSwap bSwap = new BSwap(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await bSwap.GetUnclaimedRewardsRecord();
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
+        #region ClaimRewards
+        [Fact]
+        public async void ClaimRewards_Response()
+        {
+            var responseContent = "{\"success\":true}";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/bswap/claimRewards", HttpMethod.Post)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            BSwap bSwap = new BSwap(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await bSwap.ClaimRewards();
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
+        #region GetClaimedHistory
+        [Fact]
+        public async void GetClaimedHistory_Response()
+        {
+            var responseContent = "[{\"poolId\":52,\"poolName\":\"BNB/USDT\",\"assetRewards\":\"BNB\",\"claimTime\":1565769342148,\"claimAmount\":2.3e-7,\"status\":1}]";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/bswap/claimedHistory", HttpMethod.Get)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            BSwap bSwap = new BSwap(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await bSwap.GetClaimedHistory();
 
             Assert.Equal(responseContent, result);
         }

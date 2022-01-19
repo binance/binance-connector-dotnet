@@ -1148,16 +1148,16 @@ namespace Binance.Spot
         private const string QUERY_MARGIN_INTEREST_RATE_HISTORY = "/sapi/v1/margin/interestRateHistory";
 
         /// <summary>
-        /// Weight: 1.
+        /// The max interval between startTime and endTime is 30 days.<para />
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="vipLevel">Defaults to user's vip level.</param>
         /// <param name="startTime">UTC timestamp in ms.</param>
         /// <param name="endTime">UTC timestamp in ms.</param>
-        /// <param name="limit">Default 500; max 1000.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Margin Interest Rate History.</returns>
-        public async Task<string> QueryMarginInterestRateHistory(string asset, int? vipLevel = null, long? startTime = null, long? endTime = null, int? limit = null, long? recvWindow = null)
+        public async Task<string> QueryMarginInterestRateHistory(string asset, int? vipLevel = null, long? startTime = null, long? endTime = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 QUERY_MARGIN_INTEREST_RATE_HISTORY,
@@ -1168,7 +1168,84 @@ namespace Binance.Spot
                     { "vipLevel", vipLevel },
                     { "startTime", startTime },
                     { "endTime", endTime },
-                    { "limit", limit },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
+        private const string QUERY_CROSS_MARGIN_FEE_DATA = "/sapi/v1/margin/crossMarginData";
+
+        /// <summary>
+        /// Get cross margin fee data collection with any vip level or user's current specific data as https://www.binance.com/en/margin-fee.<para />
+        /// Weight(IP): 1 when coin is specified; 5 when the coin parameter is omitted.
+        /// </summary>
+        /// <param name="vipLevel">Defaults to user's vip level.</param>
+        /// <param name="coin">Coin name.</param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Cross Margin Fee Data.</returns>
+        public async Task<string> QueryCrossMarginFeeData(int? vipLevel = null, string coin = null, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                QUERY_CROSS_MARGIN_FEE_DATA,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "vipLevel", vipLevel },
+                    { "coin", coin },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
+        private const string QUERY_ISOLATED_MARGIN_FEE_DATA = "/sapi/v1/margin/isolatedMarginData";
+
+        /// <summary>
+        /// Get isolated margin fee data collection with any vip level or user's current specific data as https://www.binance.com/en/margin-fee.<para />
+        /// Weight(IP): 1 when a single is specified; 10 when the symbol parameter is omitted.
+        /// </summary>
+        /// <param name="vipLevel">Defaults to user's vip level.</param>
+        /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Isolated Margin Fee Data.</returns>
+        public async Task<string> QueryIsolatedMarginFeeData(int? vipLevel = null, string symbol = null, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                QUERY_ISOLATED_MARGIN_FEE_DATA,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "vipLevel", vipLevel },
+                    { "symbol", symbol },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
+        private const string QUERY_ISOLATED_MARGIN_TIER_DATA = "/sapi/v1/margin/isolatedMarginTier";
+
+        /// <summary>
+        /// Get isolated margin tier data collection with any tier as https://www.binance.com/en/margin-data.<para />
+        /// Weight(IP): 1.
+        /// </summary>
+        /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
+        /// <param name="tier">All margin tier data will be returned if tier is omitted.</param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Isolated Margin Tier Data.</returns>
+        public async Task<string> QueryIsolatedMarginTierData(string symbol, string tier = null, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                QUERY_ISOLATED_MARGIN_TIER_DATA,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "symbol", symbol },
+                    { "tier", tier },
                     { "recvWindow", recvWindow },
                     { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
                 });

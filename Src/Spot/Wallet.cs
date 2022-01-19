@@ -59,7 +59,10 @@ namespace Binance.Spot
         private const string DAILY_ACCOUNT_SNAPSHOT = "/sapi/v1/accountSnapshot";
 
         /// <summary>
-        /// Weight: 1.
+        /// - The query time period must be less than 30 days.<para />
+        /// - Support query within the last 6 months only.<para />
+        /// - If startTimeand endTime not sent, return records of the last 7 days by default.<para />
+        /// Weight(IP): 2400.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="startTime">UTC timestamp in ms.</param>
@@ -147,9 +150,10 @@ namespace Binance.Spot
         /// - `true` ->  returning the fee to the destination account;.<para />
         /// - `false` -> returning the fee back to the departure account.</param>
         /// <param name="name"></param>
+        /// <param name="walletType">The wallet type for withdraw，0-Spot wallet, 1- Funding wallet. Default is Spot wallet.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Transafer Id.</returns>
-        public async Task<string> Withdraw(string coin, string address, decimal amount, string withdrawOrderId = null, string network = null, string addressTag = null, bool? transactionFeeFlag = null, string name = null, long? recvWindow = null)
+        public async Task<string> Withdraw(string coin, string address, decimal amount, string withdrawOrderId = null, string network = null, string addressTag = null, bool? transactionFeeFlag = null, string name = null, int? walletType = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 WITHDRAW,
@@ -164,6 +168,7 @@ namespace Binance.Spot
                     { "amount", amount },
                     { "transactionFeeFlag", transactionFeeFlag },
                     { "name", name },
+                    { "walletType", walletType },
                     { "recvWindow", recvWindow },
                     { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
                 });
@@ -461,35 +466,28 @@ namespace Binance.Spot
         /// - `fromSymbol` must be sent when type are ISOLATEDMARGIN_MARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN.<para />
         /// - `toSymbol` must be sent when type are MARGIN_ISOLATEDMARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN.<para />
         /// ENUM of transfer types:.<para />
-        /// - MAIN_C2C Spot account transfer to C2C account.<para />
         /// - MAIN_UMFUTURE Spot account transfer to USDⓈ-M Futures account.<para />
         /// - MAIN_CMFUTURE Spot account transfer to COIN-M Futures account.<para />
         /// - MAIN_MARGIN Spot account transfer to Margin（cross）account.<para />
-        /// - MAIN_MINING Spot account transfer to Mining account.<para />
-        /// - C2C_MAIN C2C account transfer to Spot account.<para />
-        /// - C2C_UMFUTURE C2C account transfer to USDⓈ-M Futures account.<para />
-        /// - C2C_MINING C2C account transfer to Mining account.<para />
-        /// - C2C_MARGIN C2C account transfer to Margin(cross) account.<para />
         /// - UMFUTURE_MAIN USDⓈ-M Futures account transfer to Spot account.<para />
-        /// - UMFUTURE_C2C USDⓈ-M Futures account transfer to C2C account.<para />
         /// - UMFUTURE_MARGIN USDⓈ-M Futures account transfer to Margin（cross）account.<para />
         /// - CMFUTURE_MAIN COIN-M Futures account transfer to Spot account.<para />
         /// - CMFUTURE_MARGIN COIN-M Futures account transfer to Margin(cross) account.<para />
         /// - MARGIN_MAIN Margin（cross）account transfer to Spot account.<para />
         /// - MARGIN_UMFUTURE Margin（cross）account transfer to USDⓈ-M Futures.<para />
         /// - MARGIN_CMFUTURE Margin（cross）account transfer to COIN-M Futures.<para />
-        /// - MARGIN_MINING Margin（cross）account transfer to Mining account.<para />
-        /// - MARGIN_C2C Margin（cross）account transfer to C2C account.<para />
-        /// - MINING_MAIN Mining account transfer to Spot account.<para />
-        /// - MINING_UMFUTURE Mining account transfer to USDⓈ-M Futures account.<para />
-        /// - MINING_C2C Mining account transfer to C2C account.<para />
-        /// - MINING_MARGIN Mining account transfer to Margin(cross) account.<para />
-        /// - MAIN_PAY Spot account transfer to Pay account.<para />
-        /// - PAY_MAIN Pay account transfer to Spot account.<para />
         /// - ISOLATEDMARGIN_MARGIN Isolated margin account transfer to Margin(cross) account.<para />
         /// - MARGIN_ISOLATEDMARGIN Margin(cross) account transfer to Isolated margin account.<para />
         /// - ISOLATEDMARGIN_ISOLATEDMARGIN Isolated margin account transfer to Isolated margin account.<para />
-        /// Weight: 1.
+        /// - MAIN_FUNDING Spot account transfer to Funding account.<para />
+        /// - FUNDING_MAIN Funding account transfer to Spot account.<para />
+        /// - FUNDING_UMFUTURE Funding account transfer to UMFUTURE account.<para />
+        /// - UMFUTURE_FUNDING UMFUTURE account transfer to Funding account.<para />
+        /// - MARGIN_FUNDING MARGIN account transfer to Funding account.<para />
+        /// - FUNDING_MARGIN Funding account transfer to Margin account.<para />
+        /// - FUNDING_CMFUTURE Funding account transfer to CMFUTURE account.<para />
+        /// - CMFUTURE_FUNDING CMFUTURE account transfer to Funding account.<para />
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="type">Universal transfer type.</param>
         /// <param name="asset"></param>
@@ -522,7 +520,9 @@ namespace Binance.Spot
         /// <summary>
         /// - `fromSymbol` must be sent when type are ISOLATEDMARGIN_MARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN.<para />
         /// - `toSymbol` must be sent when type are MARGIN_ISOLATEDMARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN.<para />
-        /// Weight: 1.
+        /// - Support query within the last 6 months only.<para />
+        /// - If `startTime` and `endTime` not sent, return records of the last 7 days by default.<para />
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="type">Universal transfer type.</param>
         /// <param name="startTime">UTC timestamp in ms.</param>

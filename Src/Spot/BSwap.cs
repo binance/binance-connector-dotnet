@@ -245,5 +245,143 @@ namespace Binance.Spot
 
             return result;
         }
+
+        private const string POOL_CONFIGURE = "/sapi/v1/bswap/poolConfigure";
+
+        /// <summary>
+        /// Weight(IP): 150.
+        /// </summary>
+        /// <param name="poolId"></param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Pool Information.</returns>
+        public async Task<string> PoolConfigure(long? poolId = null, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                POOL_CONFIGURE,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "poolId", poolId },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
+        private const string ADD_LIQUIDITY_PREVIEW = "/sapi/v1/bswap/addLiquidityPreview";
+
+        /// <summary>
+        /// Calculate expected share amount for adding liquidity in single or dual token.<para />
+        /// Weight(IP): 150.
+        /// </summary>
+        /// <param name="poolId"></param>
+        /// <param name="type">"SINGLE" for adding a single token;"COMBINATION" for adding dual tokens.</param>
+        /// <param name="quoteAsset"></param>
+        /// <param name="quoteQty"></param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Add Liquidity Preview.</returns>
+        public async Task<string> AddLiquidityPreview(long poolId, string type, string quoteAsset, decimal quoteQty, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                ADD_LIQUIDITY_PREVIEW,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "poolId", poolId },
+                    { "type", type },
+                    { "quoteAsset", quoteAsset },
+                    { "quoteQty", quoteQty },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
+        private const string GET_UNCLAIMED_REWARDS_RECORD = "/sapi/v1/bswap/unclaimedRewards";
+
+        /// <summary>
+        /// Get unclaimed rewards record.<para />
+        ///  .<para />
+        /// Weight(UID): 1000.
+        /// </summary>
+        /// <param name="type">0: Swap rewards, 1: Liquidity rewards, default to 0.</param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Unclaimed rewards record.</returns>
+        public async Task<string> GetUnclaimedRewardsRecord(int? type = null, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                GET_UNCLAIMED_REWARDS_RECORD,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "type", type },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
+        private const string CLAIM_REWARDS = "/sapi/v1/bswap/claimRewards";
+
+        /// <summary>
+        /// Claim swap rewards or liquidity rewards.<para />
+        ///  .<para />
+        /// Weight(UID): 1000.
+        /// </summary>
+        /// <param name="type">0: Swap rewards, 1: Liquidity rewards, default to 0.</param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Result of claim.</returns>
+        public async Task<string> ClaimRewards(int? type = null, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                CLAIM_REWARDS,
+                HttpMethod.Post,
+                query: new Dictionary<string, object>
+                {
+                    { "type", type },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
+        private const string GET_CLAIMED_HISTORY = "/sapi/v1/bswap/claimedHistory";
+
+        /// <summary>
+        /// Get history of claimed rewards.<para />
+        ///  .<para />
+        /// Weight(UID): 1000.
+        /// </summary>
+        /// <param name="poolId"></param>
+        /// <param name="assetRewards"></param>
+        /// <param name="type">0: Swap rewards, 1: Liquidity rewards, default to 0.</param>
+        /// <param name="startTime">UTC timestamp in ms.</param>
+        /// <param name="endTime">UTC timestamp in ms.</param>
+        /// <param name="limit">Default 3, max 100.</param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Claimed History.</returns>
+        public async Task<string> GetClaimedHistory(long? poolId = null, string assetRewards = null, int? type = null, long? startTime = null, long? endTime = null, int? limit = null, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                GET_CLAIMED_HISTORY,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "poolId", poolId },
+                    { "assetRewards", assetRewards },
+                    { "type", type },
+                    { "startTime", startTime },
+                    { "endTime", endTime },
+                    { "limit", limit },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
     }
 }

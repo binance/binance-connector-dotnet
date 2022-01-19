@@ -19,6 +19,6 @@ let main argv =
     
     let wallet = new Wallet(httpClient)
     
-    let result = wallet.UserUniversalTransfer(UniversalTransferType.MAIN_C2C, "BNB", 2.1m) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = wallet.UserUniversalTransfer(UniversalTransferType.MAIN_UMFUTURE, "BNB", 2.1m) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

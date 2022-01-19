@@ -23,8 +23,8 @@ namespace Binance.Spot.UserDataWebSocketExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var apiKey = "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A";
-            var apiSecret = "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j";
+            var apiKey = "api-key";
+            var apiSecret = "api-secret";
 
             var userDataStreams = new UserDataStreams(httpClient, apiKey: apiKey, apiSecret: apiSecret);
             var response = await userDataStreams.CreateSpotListenKey();

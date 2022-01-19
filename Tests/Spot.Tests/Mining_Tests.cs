@@ -10,8 +10,8 @@ namespace Binance.Spot.Tests
 
     public class Mining_Tests
     {
-        private string apiKey = "vmPUZE6mv9SD5VNHk4HlWFsOr6aKE2zvsw0MuIgwCIPy6utIco14y7Ju91duEh8A";
-        private string apiSecret = "NhqPtmdSJYdKjVHjA7PZj4Mge3R5YNiP1e3UZjInClVN65XAbvqqM6A7H5fATj0j";
+        private string apiKey = "api-key";
+        private string apiSecret = "api-secret";
 
         #region AcquiringAlgorithm
         [Fact]
@@ -296,6 +296,30 @@ namespace Binance.Spot.Tests
                 apiSecret: this.apiSecret);
 
             var result = await mining.AccountList();
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
+        #region MiningAccountEarning
+        [Fact]
+        public async void MiningAccountEarning_Response()
+        {
+            var responseContent = "{\"code\":0,\"msg\":\"\",\"data\":{\"accountProfits\":[{\"time\":1607443200000,\"coinName\":\"BTC\",\"type\":2,\"puid\":59985472,\"subName\":\"vdvaghani\",\"amount\":0.09186957}],\"totalNum\":3,\"pageSize\":20}}";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/mining/payment/uid", HttpMethod.Get)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            Mining mining = new Mining(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await mining.MiningAccountEarning("sha256");
 
             Assert.Equal(responseContent, result);
         }

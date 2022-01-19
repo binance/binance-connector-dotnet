@@ -1,0 +1,28 @@
+name: .NET Distributable 
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master, rc-** ]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest, windows-latest, macOS-latest]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET on 3.1.x, 5.0.x, 6.0.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          3.1.x
+          5.0.x
+          6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build Src/Spot --no-restore

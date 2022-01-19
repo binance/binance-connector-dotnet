@@ -35,7 +35,7 @@ namespace Binance.Common
             {
                 this.loopCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
                 await this.handler.ConnectAsync(this.url, cancellationToken);
-                await Task.Factory.StartNew(() => this.ReceiveLoop(loopCancellationTokenSource.Token, this.receiveBufferSize), loopCancellationTokenSource.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+                await Task.Factory.StartNew(() => this.ReceiveLoop(this.loopCancellationTokenSource.Token, this.receiveBufferSize), this.loopCancellationTokenSource.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
             }
         }
 
@@ -45,6 +45,7 @@ namespace Binance.Common
             {
                 this.loopCancellationTokenSource.Cancel();
             }
+
             if (this.handler.State == WebSocketState.Open)
             {
                 await this.handler.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, null, cancellationToken);
@@ -97,6 +98,7 @@ namespace Binance.Common
                     {
                         break;
                     }
+
                     string content = Encoding.UTF8.GetString(buffer.ToArray());
                     this.onMessageReceivedFunctions.ForEach(omrf => omrf(content));
                 }

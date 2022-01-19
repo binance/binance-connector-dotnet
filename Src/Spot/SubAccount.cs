@@ -620,7 +620,7 @@ namespace Binance.Spot
         /// - Transfer from master account by default if fromEmail is not sent.<para />
         /// - Transfer to master account by default if toEmail is not sent.<para />
         /// - Transfer between futures accounts is not supported.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="fromAccountType"></param>
         /// <param name="toAccountType"></param>
@@ -628,9 +628,10 @@ namespace Binance.Spot
         /// <param name="amount"></param>
         /// <param name="fromEmail">Sub-account email.</param>
         /// <param name="toEmail">Sub-account email.</param>
+        /// <param name="clientTranId"></param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Transfer id.</returns>
-        public async Task<string> UniversalTransfer(UniversalTransferAccountType fromAccountType, UniversalTransferAccountType toAccountType, string asset, decimal amount, string fromEmail = null, string toEmail = null, long? recvWindow = null)
+        public async Task<string> UniversalTransfer(UniversalTransferAccountType fromAccountType, UniversalTransferAccountType toAccountType, string asset, decimal amount, string fromEmail = null, string toEmail = null, string clientTranId = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 UNIVERSAL_TRANSFER,
@@ -641,6 +642,7 @@ namespace Binance.Spot
                     { "toEmail", toEmail },
                     { "fromAccountType", fromAccountType },
                     { "toAccountType", toAccountType },
+                    { "clientTranId", clientTranId },
                     { "asset", asset },
                     { "amount", amount },
                     { "recvWindow", recvWindow },
@@ -656,7 +658,7 @@ namespace Binance.Spot
         /// - fromEmail and toEmail cannot be sent at the same time.<para />
         /// - Return fromEmail equal master account email by default.<para />
         /// - Only get the latest history of past 30 days.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="fromEmail">Sub-account email.</param>
         /// <param name="toEmail">Sub-account email.</param>
@@ -665,8 +667,9 @@ namespace Binance.Spot
         /// <param name="page">Default 1.</param>
         /// <param name="limit">Default 500, Max 500.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <param name="clientTranId"></param>
         /// <returns>Transfer History.</returns>
-        public async Task<string> QueryUniversalTransferHistory(string fromEmail = null, string toEmail = null, long? startTime = null, long? endTime = null, int? page = null, int? limit = null, long? recvWindow = null)
+        public async Task<string> QueryUniversalTransferHistory(string fromEmail = null, string toEmail = null, long? startTime = null, long? endTime = null, int? page = null, int? limit = null, long? recvWindow = null, string clientTranId = null)
         {
             var result = await this.SendSignedAsync<string>(
                 QUERY_UNIVERSAL_TRANSFER_HISTORY,
@@ -675,6 +678,7 @@ namespace Binance.Spot
                 {
                     { "fromEmail", fromEmail },
                     { "toEmail", toEmail },
+                    { "clientTranId", clientTranId },
                     { "startTime", startTime },
                     { "endTime", endTime },
                     { "page", page },
@@ -863,6 +867,113 @@ namespace Binance.Spot
                     { "asset", asset },
                     { "amount", amount },
                     { "transferDate", transferDate },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
+        private const string ENABLE_OR_DISABLE_IP_RESTRICTION_FOR_A_SUBACCOUNT_API_KEY = "/sapi/v1/sub-account/subAccountApi/ipRestriction";
+
+        /// <summary>
+        /// Weight(UID): 3000.
+        /// </summary>
+        /// <param name="email">Sub-account email.</param>
+        /// <param name="subAccountApiKey"></param>
+        /// <param name="ipRestrict">true or false.</param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>IP Restriction information.</returns>
+        public async Task<string> EnableOrDisableIpRestrictionForASubaccountApiKey(string email, string subAccountApiKey, bool ipRestrict, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                ENABLE_OR_DISABLE_IP_RESTRICTION_FOR_A_SUBACCOUNT_API_KEY,
+                HttpMethod.Post,
+                query: new Dictionary<string, object>
+                {
+                    { "email", email },
+                    { "subAccountApiKey", subAccountApiKey },
+                    { "ipRestrict", ipRestrict },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
+        private const string GET_IP_RESTRICTION_FOR_A_SUBACCOUNT_API_KEY = "/sapi/v1/sub-account/subAccountApi/ipRestriction";
+
+        /// <summary>
+        /// Weight(UID): 3000.
+        /// </summary>
+        /// <param name="email">Sub-account email.</param>
+        /// <param name="subAccountApiKey"></param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>IP Restriction information.</returns>
+        public async Task<string> GetIpRestrictionForASubaccountApiKey(string email, string subAccountApiKey, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                GET_IP_RESTRICTION_FOR_A_SUBACCOUNT_API_KEY,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "email", email },
+                    { "subAccountApiKey", subAccountApiKey },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
+        private const string ADD_IP_LIST_FOR_A_SUBACCOUNT_API_KEY = "/sapi/v1/sub-account/subAccountApi/ipRestriction/ipList";
+
+        /// <summary>
+        /// Before the usage of this endpoint, please ensure `POST /sapi/v1/sub-account/subAccountApi/ipRestriction` was used to enable the IP restriction.<para />
+        /// Weight(UID): 3000.
+        /// </summary>
+        /// <param name="email">Sub-account email.</param>
+        /// <param name="subAccountApiKey"></param>
+        /// <param name="ipAddress">Can be added in batches, separated by commas.</param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Add IP information.</returns>
+        public async Task<string> AddIpListForASubaccountApiKey(string email, string subAccountApiKey, string ipAddress, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                ADD_IP_LIST_FOR_A_SUBACCOUNT_API_KEY,
+                HttpMethod.Post,
+                query: new Dictionary<string, object>
+                {
+                    { "email", email },
+                    { "subAccountApiKey", subAccountApiKey },
+                    { "ipAddress", ipAddress },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
+        private const string DELETE_IP_LIST_FOR_A_SUBACCOUNT_API_KEY = "/sapi/v1/sub-account/subAccountApi/ipRestriction/ipList";
+
+        /// <summary>
+        /// Weight(UID): 3000.
+        /// </summary>
+        /// <param name="email">Sub-account email.</param>
+        /// <param name="subAccountApiKey"></param>
+        /// <param name="ipAddress">Can be added in batches, separated by commas.</param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Delete IP information.</returns>
+        public async Task<string> DeleteIpListForASubaccountApiKey(string email, string subAccountApiKey, string ipAddress, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                DELETE_IP_LIST_FOR_A_SUBACCOUNT_API_KEY,
+                HttpMethod.Delete,
+                query: new Dictionary<string, object>
+                {
+                    { "email", email },
+                    { "subAccountApiKey", subAccountApiKey },
+                    { "ipAddress", ipAddress },
                     { "recvWindow", recvWindow },
                     { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
                 });
