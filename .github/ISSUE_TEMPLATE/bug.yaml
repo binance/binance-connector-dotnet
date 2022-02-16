@@ -64,7 +64,7 @@ body:
     attributes:
       label: "Environment"
       description: "Any additional differences in your environment which may relate to the issue"
-      placeholder: ""
+      placeholder: "Differences..."
   - type: textarea
     id: dotnet-info
     attributes:

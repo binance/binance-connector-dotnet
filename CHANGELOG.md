@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0 - 2022-02-16
+### Added
+- New endpoints for Binance Code, named as Gift Card to avoid technical confusion.
+  - `POST /sapi/v1/giftcard/createCode` to create a Binance Code.
+  - `POST /sapi/v1/giftcard/redeemCode` to redeem a Binance Code.
+  - `GET /sapi/v1/giftcard/verify` to verify a Binance Code.
+
 ## 1.1.0 - 2022-01-19
 ### Added
 - New endpoints for BSwap
