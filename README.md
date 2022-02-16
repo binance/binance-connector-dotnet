@@ -1,5 +1,6 @@
 # Binance Public API Connector DotNET
 
+[![[Nuget]](https://img.shields.io/nuget/v/Binance.Spot)](https://www.nuget.org/packages/Binance.Spot)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 This is a lightweight library that works as a connector to [Binance public API](https://github.com/binance/binance-spot-api-docs)
