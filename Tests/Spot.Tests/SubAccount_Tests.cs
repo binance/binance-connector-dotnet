@@ -41,7 +41,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void QuerySubaccountList_Response()
         {
-            var responseContent = "{\"subAccounts\":[{\"email\":\"testsub@gmail.com\",\"isFreeze\":false,\"createTime\":1544433328000},{\"email\":\"virtual@oxebmvfonoemail.com\",\"isFreeze\":false,\"createTime\":1544433328000}]}";
+            var responseContent = "{\"subAccounts\":[{\"email\":\"testsub@gmail.com\",\"isFreeze\":false,\"createTime\":1544433328000,\"isManagedSubAccount\":false,\"isAssetManagementSubAccount\":false},{\"email\":\"virtual@oxebmvfonoemail.com\",\"isFreeze\":false,\"createTime\":1544433328000,\"isManagedSubAccount\":false,\"isAssetManagementSubAccount\":false}]}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/sub-account/list", HttpMethod.Get)

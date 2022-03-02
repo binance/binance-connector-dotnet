@@ -301,6 +301,30 @@ namespace Binance.Spot.Tests
         }
         #endregion
 
+        #region BnbConvertableAssets
+        [Fact]
+        public async void BnbConvertableAssets_Response()
+        {
+            var responseContent = "{\"details\":[{\"asset\":\"ADA\",\"assetFullName\":\"ADA\",\"amountFree\":\"6.21\",\"toBTC\":\"0.00016848\",\"toBNB\":\"0.01777302\",\"toBNBOffExchange\":\"0.01741756\",\"exchange\":\"0.00035546\"}],\"totalTransferBtc\":\"0.00016848\",\"totalTransferBNB\":\"0.01777302\",\"dribbletPercentage\":\"0.02\"}";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/asset/dust-btc", HttpMethod.Post)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            Wallet wallet = new Wallet(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await wallet.BnbConvertableAssets();
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
         #region DustTransfer
         [Fact]
         public async void DustTransfer_Response()

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.0 - 2022-03-02
+### Added
+- New endpoints for Wallet
+  - `POST /sapi/v1/asset/dust-btc` to get assets that can be converted into BNB.
+
 ## 1.2.0 - 2022-02-16
 ### Added
 - New endpoints for Binance Code, named as Gift Card to avoid technical confusion.
