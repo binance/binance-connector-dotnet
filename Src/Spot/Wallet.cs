@@ -60,8 +60,8 @@ namespace Binance.Spot
 
         /// <summary>
         /// - The query time period must be less than 30 days.<para />
-        /// - Support query within the last 6 months only.<para />
-        /// - If startTimeand endTime not sent, return records of the last 7 days by default.<para />
+        /// - Support query within the last one month only.<para />
+        /// - If startTime and endTime not sent, return records of the last 7 days by default.<para />
         /// Weight(IP): 2400.
         /// </summary>
         /// <param name="type"></param>
@@ -349,6 +349,27 @@ namespace Binance.Spot
                 {
                     { "startTime", startTime },
                     { "endTime", endTime },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
+        private const string GET_ASSETS_THAT_CAN_BE_CONVERTED_INTO_BNB = "/sapi/v1/asset/dust-btc";
+
+        /// <summary>
+        /// Weight(IP): 1.
+        /// </summary>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Account assets available to be converted to BNB.</returns>
+        public async Task<string> BnbConvertableAssets(long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                GET_ASSETS_THAT_CAN_BE_CONVERTED_INTO_BNB,
+                HttpMethod.Post,
+                query: new Dictionary<string, object>
+                {
                     { "recvWindow", recvWindow },
                     { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
                 });
