@@ -19,6 +19,6 @@ let main argv =
     
     let spotAccountTrade = new SpotAccountTrade(httpClient)
     
-    let result = spotAccountTrade.NewOrder("BTCUSDT", Side.BUY, OrderType.LIMIT) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = spotAccountTrade.NewOrder("BTCUSDT", Side.BUY, OrderType.MARKET, quantity = 0.45m) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

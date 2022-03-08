@@ -2,6 +2,7 @@ namespace Binance.Common
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Net.Http;
     using System.Security.Cryptography;
@@ -83,7 +84,8 @@ namespace Binance.Common
         {
             foreach (KeyValuePair<string, object> queryParameter in queryParameters)
             {
-                if (!string.IsNullOrWhiteSpace(queryParameter.Value?.ToString()))
+                string queryParameterValue = Convert.ToString(queryParameter.Value, CultureInfo.InvariantCulture);
+                if (!string.IsNullOrWhiteSpace(queryParameterValue))
                 {
                     if (builder.Length > 0)
                     {
@@ -93,7 +95,7 @@ namespace Binance.Common
                     builder
                         .Append(queryParameter.Key)
                         .Append("=")
-                        .Append(HttpUtility.UrlEncode(queryParameter.Value.ToString()));
+                        .Append(HttpUtility.UrlEncode(queryParameterValue));
                 }
             }
 

@@ -55,7 +55,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await spotAccountTrade.NewOrder("BTCUSDT", Side.BUY, OrderType.LIMIT);
+            var result = await spotAccountTrade.NewOrder("BTCUSDT", Side.BUY, OrderType.MARKET, quantity: 0.12M);
 
             Assert.Equal(responseContent, result);
         }
@@ -79,7 +79,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await spotAccountTrade.CancelOrder("LTCBTC");
+            var result = await spotAccountTrade.CancelOrder("LTCBTC", orderId: 123);
 
             Assert.Equal(responseContent, result);
         }
@@ -127,7 +127,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await spotAccountTrade.QueryOrder("LTCBTC");
+            var result = await spotAccountTrade.QueryOrder("LTCBTC", orderId: 123);
 
             Assert.Equal(responseContent, result);
         }
@@ -247,7 +247,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await spotAccountTrade.QueryOco();
+            var result = await spotAccountTrade.QueryOco(orderListId: 123);
 
             Assert.Equal(responseContent, result);
         }

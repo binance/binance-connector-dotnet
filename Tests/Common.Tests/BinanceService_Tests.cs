@@ -2,6 +2,7 @@ namespace Binance.Common.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -175,6 +176,31 @@ namespace Binance.Common.Tests
                     It.IsAny<Exception>(),
                     (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
                 Times.AtLeast(2));
+        }
+
+        [Fact]
+        public async void SendPublicAsync_Culture_Invariant()
+        {
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            var mockLogger = new Mock<ILogger>();
+
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("de-DE");
+
+            mockMessageHandler.Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.Is<HttpRequestMessage>(rm => rm.RequestUri.Query.Contains("decimal=0.45")), ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                });
+            var binanceService = new MockBinanceService(new HttpClient(mockMessageHandler.Object), baseUrl: "https://www.binance.com");
+
+            await binanceService.SendPublicAsync<string>(
+                string.Empty,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "decimal", 0.45M },
+                });
         }
         #endregion
 
@@ -518,6 +544,31 @@ namespace Binance.Common.Tests
                     It.IsAny<Exception>(),
                     (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
                 Times.AtLeast(2));
+        }
+
+        [Fact]
+        public async void SendSignedAsync_Culture_Invariant()
+        {
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            var mockLogger = new Mock<ILogger>();
+
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("de-DE");
+
+            mockMessageHandler.Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.Is<HttpRequestMessage>(rm => rm.RequestUri.Query.Contains("decimal=0.45")), ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                });
+            var binanceService = new MockBinanceService(new HttpClient(mockMessageHandler.Object), baseUrl: "https://www.binance.com", apiKey: null, apiSecret: "apiSecret");
+
+            await binanceService.SendSignedAsync<string>(
+                string.Empty,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "decimal", 0.45M },
+                });
         }
         #endregion
     }

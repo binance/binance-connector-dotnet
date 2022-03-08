@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.1 - 2022-03-08
+### Fixed
+- Query parameter is no longer subject to culture.
+- Trade examples have more appropriate arguments
+
 ## 1.3.0 - 2022-03-02
 ### Added
 - New endpoints for Wallet
