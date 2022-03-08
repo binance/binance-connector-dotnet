@@ -24,7 +24,7 @@ namespace Binance.Spot.SpotAccountTradeExamples
 
             var spotAccountTrade = new SpotAccountTrade(httpClient);
 
-            var result = await spotAccountTrade.QueryOco();
+            var result = await spotAccountTrade.QueryOco(orderListId: 123);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Binance.Spot.SpotAccountTradeExamples
 
             var spotAccountTrade = new SpotAccountTrade(httpClient);
 
-            var result = await spotAccountTrade.QueryOrder("LTCBTC");
+            var result = await spotAccountTrade.QueryOrder("LTCBTC", orderId: 123);
         }
     }
 }

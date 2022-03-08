@@ -24,7 +24,7 @@ namespace Binance.Spot.SpotAccountTradeExamples
 
             var spotAccountTrade = new SpotAccountTrade(httpClient);
 
-            var result = await spotAccountTrade.NewOrder("BTCUSDT", Side.BUY, OrderType.LIMIT);
+            var result = await spotAccountTrade.NewOrder("BTCUSDT", Side.BUY, OrderType.MARKET, quantity: 0.12M);
         }
     }
 }

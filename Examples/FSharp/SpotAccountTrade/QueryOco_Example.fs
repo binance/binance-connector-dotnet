@@ -19,6 +19,6 @@ let main argv =
     
     let spotAccountTrade = new SpotAccountTrade(httpClient)
     
-    let result = spotAccountTrade.QueryOco() |> Async.AwaitTask |> Async.RunSynchronously
+    let result = spotAccountTrade.QueryOco(orderId = 123) |> Async.AwaitTask |> Async.RunSynchronously
     
     0
