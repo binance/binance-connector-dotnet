@@ -1,4 +1,4 @@
-namespace Binance.Spot.SpotAccountTradeExamples
+namespace Binance.Spot.SubAccountExamples
 {
     using System;
     using System.Net;
@@ -9,7 +9,7 @@ namespace Binance.Spot.SpotAccountTradeExamples
     using Binance.Spot.Models;
     using Microsoft.Extensions.Logging;
 
-    public class TestNewOrder_Example
+    public class QueryManagedSubaccountSnapshot_Example
     {
         public static async Task Main(string[] args)
         {
@@ -17,14 +17,14 @@ namespace Binance.Spot.SpotAccountTradeExamples
             {
                 builder.AddConsole();
             });
-            ILogger logger = loggerFactory.CreateLogger<TestNewOrder_Example>();
+            ILogger logger = loggerFactory.CreateLogger<QueryManagedSubaccountSnapshot_Example>();
 
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var spotAccountTrade = new SpotAccountTrade(httpClient);
+            var subAccount = new SubAccount(httpClient);
 
-            var result = await spotAccountTrade.TestNewOrder("BTCUSDT", Side.BUY, OrderType.MARKET, quantity: 0.12m);
+            var result = await subAccount.QueryManagedSubaccountSnapshot("testaccount@email.com", "SPOT");
         }
     }
 }
