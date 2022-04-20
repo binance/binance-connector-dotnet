@@ -757,6 +757,30 @@ namespace Binance.Spot.Tests
         }
         #endregion
 
+        #region QueryManagedSubaccountSnapshot
+        [Fact]
+        public async void QueryManagedSubaccountSnapshot_Response()
+        {
+            var responseContent = "{\"code\":200,\"msg\":\"\",\"snapshotVos\":[{\"data\":{\"balances\":[{\"asset\":\"BTC\",\"free\":\"0.09905021\",\"locked\":\"0.00000000\"},{\"asset\":\"USDT\",\"free\":\"1.89109409\",\"locked\":\"0.00000000\"}],\"totalAssetOfBtc\":\"0.09942700\"},\"type\":\"spot\",\"updateTime\":1576281599000}]}";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/managed-subaccount/accountSnapshot", HttpMethod.Get)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            SubAccount subAccount = new SubAccount(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await subAccount.QueryManagedSubaccountSnapshot("testaccount@email.com", "SPOT");
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
         #region EnableOrDisableIpRestrictionForASubaccountApiKey
         [Fact]
         public async void EnableOrDisableIpRestrictionForASubaccountApiKey_Response()

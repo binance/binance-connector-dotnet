@@ -31,7 +31,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await spotAccountTrade.TestNewOrder();
+            var result = await spotAccountTrade.TestNewOrder("BTCUSDT", Side.BUY, OrderType.LIMIT);
 
             Assert.Equal(responseContent, result);
         }

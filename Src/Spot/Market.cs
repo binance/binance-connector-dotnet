@@ -79,13 +79,13 @@ namespace Binance.Spot
         /// <summary>
         /// | Limit               | Weight  |.<para />
         /// | -------------       |---------|.<para />
-        /// | 5, 10, 20, 50, 100  | 1       |.<para />
-        /// | 500                 | 5       |.<para />
-        /// | 1000                | 10      |.<para />
-        /// | 5000                | 50      |.
+        /// | 1-100               | 1       |.<para />
+        /// | 101-500             | 5       |.<para />
+        /// | 501-1000            | 10      |.<para />
+        /// | 1001-5000           | 50      |.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
-        /// <param name="limit"></param>
+        /// <param name="limit">Default 100; max 5000. If limit > 5000, then the response will truncate to 5000.</param>
         /// <returns>Order book.</returns>
         public async Task<string> OrderBook(string symbol, int? limit = null)
         {

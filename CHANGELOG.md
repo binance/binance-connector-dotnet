@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.4.0 - 2022-04-20
+### Added
+- New endpoint for Sub-Account
+  - `GET /sapi/v1/managed-subaccount/accountSnapshot` to support investor master account query asset snapshot of managed sub-account.
+- New transfer types `MARGIN`, `ISOLATED_MARGIN` and parameter `symbol` for `POST /sapi/v1/sub-account/universalTransfer` to support transfer to sub-account cross margin account and isolated margin account.
+
+### Changed
+- Changed endpoints for Spot Trading
+  - `POST /api/v3/order` - New optional field trailingDelta.
+  - `POST /api/v3/order/test` - New optional field trailingDelta.
+  - `POST /api/v3/order/oco` - New optional field trailingDelta.
+- Changed endpoints for Sub-Account
+- `GET /sapi/v1/sub-account/universalTransfer`
+  - The query time period must be less then 30 days; If startTime and endTime not sent, return records of the last 30 days by default.
+- `GET api/v3/depth`
+  - The limit value can be outside of the previous values (i.e. 5, 10, 20, 50, 100, 500, 1000,5000) and will return the correct limit. (i.e. if limit=3 then the response will be the top 3 bids and asks)
+  - The limit still cannot exceed 5000. If the limit provided is greater than 5000, then the response will be truncated to 5000.
+
+### Fixed
+- Fixed query parameters for `POST /api/v3/order/test`.
+
 ## 1.3.1 - 2022-03-08
 ### Fixed
 - Query parameter is no longer subject to culture.

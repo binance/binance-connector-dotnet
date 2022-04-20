@@ -17,8 +17,8 @@ let main argv =
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
     
-    let spotAccountTrade = new SpotAccountTrade(httpClient)
+    let subAccount = new SubAccount(httpClient)
     
-    let result = spotAccountTrade.TestNewOrder("BTCUSDT", Side.BUY, OrderType.MARKET, quantity: 0.12m) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = subAccount.QueryManagedSubaccountSnapshot("testaccount@email.com", "SPOT") |> Async.AwaitTask |> Async.RunSynchronously
     
     0

@@ -655,9 +655,10 @@ namespace Binance.Spot
         private const string QUERY_UNIVERSAL_TRANSFER_HISTORY = "/sapi/v1/sub-account/universalTransfer";
 
         /// <summary>
-        /// - fromEmail and toEmail cannot be sent at the same time.<para />
-        /// - Return fromEmail equal master account email by default.<para />
-        /// - Only get the latest history of past 30 days.<para />
+        /// - `fromEmail` and `toEmail` cannot be sent at the same time.<para />
+        /// - Return `fromEmail` equal master account email by default.<para />
+        /// - The query time period must be less then 30 days.<para />
+        /// - If startTime and endTime not sent, return records of the last 30 days by default.<para />
         /// Weight(IP): 1.
         /// </summary>
         /// <param name="fromEmail">Sub-account email.</param>
@@ -867,6 +868,40 @@ namespace Binance.Spot
                     { "asset", asset },
                     { "amount", amount },
                     { "transferDate", transferDate },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
+        private const string QUERY_MANAGED_SUBACCOUNT_SNAPSHOT = "/sapi/v1/managed-subaccount/accountSnapshot";
+
+        /// <summary>
+        /// - The query time period must be less then 30 days.<para />
+        /// - Support query within the last one month only.<para />
+        /// - If `startTime` and `endTime` not sent, return records of the last 7 days by default.<para />
+        /// Weight(IP): 2400.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="type">"SPOT", "MARGIN"（cross）, "FUTURES"（UM）.</param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="limit">min 7, max 30, default 7.</param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Sub-account spot snapshot.</returns>
+        public async Task<string> QueryManagedSubaccountSnapshot(string email, string type, long? startTime = null, long? endTime = null, int? limit = null, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                QUERY_MANAGED_SUBACCOUNT_SNAPSHOT,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "email", email },
+                    { "type", type },
+                    { "startTime", startTime },
+                    { "endTime", endTime },
+                    { "limit", limit },
                     { "recvWindow", recvWindow },
                     { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
                 });
