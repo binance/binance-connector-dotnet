@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let mining = new Mining(httpClient)
+    let mining = new Mining(httpClient, apiKey, apiSecret)
     
-    let result = mining.HashrateResaleRequest() |> Async.AwaitTask |> Async.RunSynchronously
+    let result = mining.HashrateResaleRequest("username", "sha256", "username", 100000000) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

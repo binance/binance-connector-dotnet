@@ -19,6 +19,6 @@ let main argv =
     
     let market = new Market(httpClient)
     
-    let result = market.CompressedAggregateTradesList("BTCUSDT") |> Async.AwaitTask |> Async.RunSynchronously
+    let result = market.CompressedAggregateTradesList("BNBUSDT") |> Async.AwaitTask |> Async.RunSynchronously
     
     0

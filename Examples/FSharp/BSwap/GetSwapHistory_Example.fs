@@ -16,8 +16,11 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let bSwap = new BSwap(httpClient)
+    let bSwap = new BSwap(httpClient, apiKey, apiSecret)
     
     let result = bSwap.GetSwapHistory() |> Async.AwaitTask |> Async.RunSynchronously
     

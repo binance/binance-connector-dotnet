@@ -22,9 +22,12 @@ namespace Binance.Spot.GiftCardExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var giftCard = new GiftCard(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
 
-            var result = await giftCard.RedeemBinanceCode("X1X1X1X1X1X11XX1X11X1");
+            var giftCard = new GiftCard(httpClient, apiKey, apiSecret);
+
+            var result = await giftCard.RedeemBinanceCode("000000");
         }
     }
 }

@@ -16,8 +16,11 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let cryptoLoans = new CryptoLoans(httpClient)
+    let cryptoLoans = new CryptoLoans(httpClient, apiKey, apiSecret)
     
     let result = cryptoLoans.GetCryptoLoansIncomeHistory("BTC") |> Async.AwaitTask |> Async.RunSynchronously
     

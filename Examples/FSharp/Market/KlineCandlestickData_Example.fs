@@ -19,6 +19,6 @@ let main argv =
     
     let market = new Market(httpClient)
     
-    let result = market.KlineCandlestickData("BTCUSDT", Interval.FIFTEEN_MINUTE) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = market.KlineCandlestickData("BNBUSDT", Interval.ONE_MINUTE) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

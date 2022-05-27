@@ -22,9 +22,12 @@ namespace Binance.Spot.SubAccountExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var subAccount = new SubAccount(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
 
-            var result = await subAccount.GetIpRestrictionForASubaccountApiKey("test@email", "api-key");
+            var subAccount = new SubAccount(httpClient, apiKey, apiSecret);
+
+            var result = await subAccount.GetIpRestrictionForASubaccountApiKey("testaccount@email.com", "subAccountApiKey");
         }
     }
 }

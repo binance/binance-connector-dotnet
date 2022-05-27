@@ -1,6 +1,5 @@
 namespace Binance.Spot.Tests
 {
-    using System;
     using System.Net;
     using System.Net.Http;
     using Binance.Spot.Models;
@@ -41,7 +40,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void GetFiatPaymentsHistory_Response()
         {
-            var responseContent = "{\"code\":\"000000\",\"message\":\"success\",\"data\":[{\"orderNo\":\"353fca443f06466db0c4dc89f94f027a\",\"sourceAmount\":\"20.0\",\"fiatCurrency\":\"EUR\",\"obtainAmount\":\"4.462\",\"cryptoCurrency\":\"LUNA\",\"totalFee\":\"0.2\",\"price\":\"4.437472\",\"status\":\"Failed\",\"createTime\":1624529919000,\"updateTime\":1624529919000}],\"total\":1,\"success\":true}";
+            var responseContent = "{\"code\":\"000000\",\"message\":\"success\",\"data\":[{\"orderNo\":\"353fca443f06466db0c4dc89f94f027a\",\"sourceAmount\":\"20.00\",\"fiatCurrency\":\"EUR\",\"obtainAmount\":\"4.462\",\"cryptoCurrency\":\"LUNA\",\"totalFee\":\"0.2\",\"price\":\"4.437472\",\"status\":\"Failed\",\"createTime\":1624529919000,\"updateTime\":1624529919000}],\"total\":1,\"success\":true}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/fiat/payments", HttpMethod.Get)

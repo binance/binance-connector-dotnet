@@ -1,6 +1,5 @@
 namespace Binance.Spot.Tests
 {
-    using System;
     using System.Net;
     using System.Net.Http;
     using Binance.Spot.Models;
@@ -26,12 +25,12 @@ namespace Binance.Spot.Tests
                     StatusCode = HttpStatusCode.OK,
                     Content = new StringContent(responseContent),
                 });
-            C2C c2C = new C2C(
+            C2C c2c = new C2C(
                 new HttpClient(mockMessageHandler.Object),
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await c2C.GetC2cTradeHistory(Side.BUY);
+            var result = await c2c.GetC2cTradeHistory(Side.BUY);
 
             Assert.Equal(responseContent, result);
         }

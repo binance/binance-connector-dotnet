@@ -22,9 +22,12 @@ namespace Binance.Spot.BSwapExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var bSwap = new BSwap(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
 
-            var result = await bSwap.RequestQuote("USDT", "BUSD", 300000m);
+            var bSwap = new BSwap(httpClient, apiKey, apiSecret);
+
+            var result = await bSwap.RequestQuote("USDT", "BUSD", 12415.2m);
         }
     }
 }

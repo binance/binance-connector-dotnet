@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let blvt = new BLVT(httpClient)
+    let bLVT = new BLVT(httpClient, apiKey, apiSecret)
     
-    let result = BLVT.SubscribeBlvt("BTCDOWN", 9.99999995m) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = bLVT.SubscribeBlvt("BTCDOWN", 1.01m) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

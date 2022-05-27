@@ -1,3 +1,4 @@
+open System
 open System.Net
 open System.Net.Http
 open System.Threading.Tasks
@@ -15,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let convert = new Convert(httpClient)
+    let convert = new Convert(httpClient, apiKey, apiSecret)
     
-    let result = convert.GetConvertTradeHistory(1639646747000, 1642325147000) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = convert.GetConvertTradeHistory(1563189166000, 1563282766000) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

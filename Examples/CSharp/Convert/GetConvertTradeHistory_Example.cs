@@ -1,5 +1,6 @@
 namespace Binance.Spot.ConvertExamples
 {
+    using System;
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
@@ -21,9 +22,12 @@ namespace Binance.Spot.ConvertExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var convert = new Convert(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
 
-            var result = await convert.GetConvertTradeHistory(1639646747000, 1642325147000);
+            var convert = new Convert(httpClient, apiKey, apiSecret);
+
+            var result = await convert.GetConvertTradeHistory(1563189166000, 1563282766000);
         }
     }
 }

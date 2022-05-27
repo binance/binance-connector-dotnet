@@ -26,7 +26,14 @@ namespace Binance.Spot
         /// Weight(UID): 6000.
         /// </summary>
         /// <param name="asset"></param>
-        /// <param name="type">All types will be returned by default. Enum: borrowIn, collateralSpent, repayAmount, collateralReturn (Collateral return after repayment), addCollateral, removeCollateral, collateralReturnAfterLiquidation.</param>
+        /// <param name="type">All types will be returned by default.<para />
+        /// * `borrowIn`.<para />
+        /// * `collateralSpent`.<para />
+        /// * `repayAmount`.<para />
+        /// * `collateralReturn` - Collateral return after repayment.<para />
+        /// * `addCollateral`.<para />
+        /// * `removeCollateral`.<para />
+        /// * `collateralReturnAfterLiquidation`.</param>
         /// <param name="startTime">UTC timestamp in ms.</param>
         /// <param name="endTime">UTC timestamp in ms.</param>
         /// <param name="limit">default 20, max 100.</param>

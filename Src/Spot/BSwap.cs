@@ -22,7 +22,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Get metadata about all swap pools.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <returns>List of Swap Pools.</returns>
         public async Task<string> ListAllSwapPools()
@@ -38,9 +38,9 @@ namespace Binance.Spot
 
         /// <summary>
         /// Get liquidity information and user share of a pool.<para />
-        /// Weight:.<para />
-        /// `1`  for one pool.<para />
-        /// `10` when the poolId parameter is omitted.
+        /// Weight(IP):.<para />
+        /// - `1` for one pool;.<para />
+        /// - `10` when the poolId parameter is omitted;.
         /// </summary>
         /// <param name="poolId"></param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -64,14 +64,16 @@ namespace Binance.Spot
 
         /// <summary>
         /// Add liquidity to a pool.<para />
-        /// Weight: 2.
+        /// Weight(UID): 1000 (Additional: 3 times one second).
         /// </summary>
         /// <param name="poolId"></param>
         /// <param name="asset"></param>
         /// <param name="quantity"></param>
+        /// <param name="type">* `Single` - to add a single token.<para />
+        /// * `Combination` - to add dual tokens.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Operation Id.</returns>
-        public async Task<string> AddLiquidity(long poolId, string asset, decimal quantity, long? recvWindow = null)
+        public async Task<string> AddLiquidity(long poolId, string asset, decimal quantity, string type = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 ADD_LIQUIDITY,
@@ -79,6 +81,7 @@ namespace Binance.Spot
                 query: new Dictionary<string, object>
                 {
                     { "poolId", poolId },
+                    { "type", type },
                     { "asset", asset },
                     { "quantity", quantity },
                     { "recvWindow", recvWindow },
@@ -92,10 +95,11 @@ namespace Binance.Spot
 
         /// <summary>
         /// Remove liquidity from a pool, `type` include `SINGLE` and `COMBINATION`, asset is mandatory for single asset removal.<para />
-        /// Weight: 2.
+        /// Weight(UID): 1000 (Additional: 3 times one second).
         /// </summary>
         /// <param name="poolId"></param>
-        /// <param name="type">Can be `SINGLE` for single asset removal, `COMBINATION` for combination of all coins removal.</param>
+        /// <param name="type">* `SINGLE` - for single asset removal.<para />
+        /// * `COMBINATION` - for combination of all coins removal.</param>
         /// <param name="shareAmount"></param>
         /// <param name="asset">Mandatory for single asset removal.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -122,7 +126,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Get liquidity operation (add/remove) records.<para />
-        /// Weight: 2.
+        /// Weight(UID): 3000.
         /// </summary>
         /// <param name="operationId"></param>
         /// <param name="poolId"></param>
@@ -132,7 +136,7 @@ namespace Binance.Spot
         /// <param name="limit">Default 500; max 1000.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Liquidity Operation Record.</returns>
-        public async Task<string> GetLiquidityOperationRecord(long? operationId = null, long? poolId = null, LiquidityOperation? operation = null, long? startTime = null, long? endTime = null, long? limit = null, long? recvWindow = null)
+        public async Task<string> GetLiquidityOperationRecord(long? operationId = null, long? poolId = null, LiquidityOperation? operation = null, long? startTime = null, long? endTime = null, int? limit = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 GET_LIQUIDITY_OPERATION_RECORD,
@@ -158,7 +162,7 @@ namespace Binance.Spot
         /// Request a quote for swap quote asset (selling asset) for base asset (buying asset), essentially price/exchange rates.<para />
         /// quoteQty is quantity of quote asset (to sell).<para />
         /// Please be noted the quote is for reference only, the actual price will change as the liquidity changes, it's recommended to swap immediate after request a quote for slippage prevention.<para />
-        /// Weight: 2.
+        /// Weight(UID): 150.
         /// </summary>
         /// <param name="quoteAsset"></param>
         /// <param name="baseAsset"></param>
@@ -186,7 +190,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Swap `quoteAsset` for `baseAsset`.<para />
-        /// Weight: 2.
+        /// Weight(UID): 1000 (Additional: 3 times one second).
         /// </summary>
         /// <param name="quoteAsset"></param>
         /// <param name="baseAsset"></param>
@@ -214,18 +218,20 @@ namespace Binance.Spot
 
         /// <summary>
         /// Get swap history.<para />
-        /// Weight: 2.
+        /// Weight(UID): 3000.
         /// </summary>
         /// <param name="swapId"></param>
         /// <param name="startTime">UTC timestamp in ms.</param>
         /// <param name="endTime">UTC timestamp in ms.</param>
-        /// <param name="status">0: pending for swap, 1: success, 2: failed.</param>
+        /// <param name="status">* `0` - pending for swap.<para />
+        /// * `1` - success.<para />
+        /// * `2` - failed.</param>
         /// <param name="quoteAsset"></param>
         /// <param name="baseAsset"></param>
         /// <param name="limit">default 3, max 100.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Swap History.</returns>
-        public async Task<string> GetSwapHistory(long? swapId = null, long? startTime = null, long? endTime = null, SwapStatus? status = null, string quoteAsset = null, string baseAsset = null, long? limit = null, long? recvWindow = null)
+        public async Task<string> GetSwapHistory(long? swapId = null, long? startTime = null, long? endTime = null, SwapStatus? status = null, string quoteAsset = null, string baseAsset = null, int? limit = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 GET_SWAP_HISTORY,
@@ -276,7 +282,8 @@ namespace Binance.Spot
         /// Weight(IP): 150.
         /// </summary>
         /// <param name="poolId"></param>
-        /// <param name="type">"SINGLE" for adding a single token;"COMBINATION" for adding dual tokens.</param>
+        /// <param name="type">* `SINGLE` - for adding a single token.<para />
+        /// * `COMBINATION` - for adding dual tokens.</param>
         /// <param name="quoteAsset"></param>
         /// <param name="quoteQty"></param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -292,6 +299,37 @@ namespace Binance.Spot
                     { "type", type },
                     { "quoteAsset", quoteAsset },
                     { "quoteQty", quoteQty },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
+        private const string REMOVE_LIQUIDITY_PREVIEW = "/sapi/v1/bswap/removeLiquidityPreview";
+
+        /// <summary>
+        /// Calculate the expected asset amount of single token redemption or dual token redemption.<para />
+        /// Weight(IP): 150.
+        /// </summary>
+        /// <param name="poolId"></param>
+        /// <param name="type">* `SINGLE` - remove and obtain a single token.<para />
+        /// * `COMBINATION` - remove and obtain dual token.</param>
+        /// <param name="quoteAsset"></param>
+        /// <param name="shareAmount"></param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Remove Liquidity Preview.</returns>
+        public async Task<string> RemoveLiquidityPreview(long poolId, string type, string quoteAsset, decimal shareAmount, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                REMOVE_LIQUIDITY_PREVIEW,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "poolId", poolId },
+                    { "type", type },
+                    { "quoteAsset", quoteAsset },
+                    { "shareAmount", shareAmount },
                     { "recvWindow", recvWindow },
                     { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
                 });

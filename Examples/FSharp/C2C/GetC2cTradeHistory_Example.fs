@@ -16,8 +16,11 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let c2C = new C2C(httpClient)
+    let c2C = new C2C(httpClient, apiKey, apiSecret)
     
     let result = c2C.GetC2cTradeHistory(Side.BUY) |> Async.AwaitTask |> Async.RunSynchronously
     

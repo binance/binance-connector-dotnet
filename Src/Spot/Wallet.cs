@@ -22,7 +22,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Fetch system status.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <returns>OK.</returns>
         public async Task<string> SystemStatus()
@@ -38,7 +38,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Get information of coins (available for deposit and withdraw) for user.<para />
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>All coins details information.</returns>
@@ -61,10 +61,10 @@ namespace Binance.Spot
         /// <summary>
         /// - The query time period must be less than 30 days.<para />
         /// - Support query within the last one month only.<para />
-        /// - If startTime and endTime not sent, return records of the last 7 days by default.<para />
+        /// - If startTimeand endTime not sent, return records of the last 7 days by default.<para />
         /// Weight(IP): 2400.
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="type">"SPOT", "MARGIN", "FUTURES".</param>
         /// <param name="startTime">UTC timestamp in ms.</param>
         /// <param name="endTime">UTC timestamp in ms.</param>
         /// <param name="limit"></param>
@@ -92,7 +92,8 @@ namespace Binance.Spot
 
         /// <summary>
         /// - This request will disable fastwithdraw switch under your account.<para />
-        /// - You need to enable "trade" option for the api key which requests this endpoint.
+        /// - You need to enable "trade" option for the api key which requests this endpoint.<para />
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>OK.</returns>
@@ -114,7 +115,8 @@ namespace Binance.Spot
 
         /// <summary>
         /// - This request will enable fastwithdraw switch under your account. You need to enable "trade" option for the api key which requests this endpoint.<para />
-        /// - When Fast Withdraw Switch is on, transferring funds to a Binance account will be done instantly. There is no on-chain transaction, no transaction ID and no withdrawal fee.
+        /// - When Fast Withdraw Switch is on, transferring funds to a Binance account will be done instantly. There is no on-chain transaction, no transaction ID and no withdrawal fee.<para />
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>OK.</returns>
@@ -138,7 +140,7 @@ namespace Binance.Spot
         /// Submit a withdraw request.<para />
         /// - If `network` not send, return with default network of the coin.<para />
         /// - You can get `network` and `isDefault` in `networkList` of a coin in the response of `Get /sapi/v1/capital/config/getall (HMAC SHA256)`.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="coin">Coin name.</param>
         /// <param name="address"></param>
@@ -182,12 +184,12 @@ namespace Binance.Spot
         /// Fetch deposit history.<para />
         /// - Please notice the default `startTime` and `endTime` to make sure that time interval is within 0-90 days.<para />
         /// - If both `startTime` and `endTime` are sent, time between `startTime` and `endTime` must be less than 90 days.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="coin">Coin name.</param>
-        /// <param name="status">0 -> pending.<para />
-        /// 6 -> credited but cannot withdraw.<para />
-        /// 1 -> success.</param>
+        /// <param name="status">* `0` - pending.<para />
+        /// * `6` - credited but cannot withdraw.<para />
+        /// * `1` - success.</param>
         /// <param name="startTime">UTC timestamp in ms.</param>
         /// <param name="endTime">UTC timestamp in ms.</param>
         /// <param name="offset"></param>
@@ -221,17 +223,17 @@ namespace Binance.Spot
         /// - `network` may not be in the response for old withdraw.<para />
         /// - Please notice the default `startTime` and `endTime` to make sure that time interval is within 0-90 days.<para />
         /// - If both `startTime` and `endTime` are sent, time between `startTime` and `endTime` must be less than 90 days.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="coin">Coin name.</param>
         /// <param name="withdrawOrderId"></param>
-        /// <param name="status">0:Email Sent.<para />
-        /// 1:Cancelled.<para />
-        /// 2:Awaiting Approval.<para />
-        /// 3:Rejected.<para />
-        /// 4:Processing.<para />
-        /// 5:Failure.<para />
-        /// 6:Completed.</param>
+        /// <param name="status">* `0` - Email Sent.<para />
+        /// * `1` - Cancelled.<para />
+        /// * `2` - Awaiting Approval.<para />
+        /// * `3` - Rejected.<para />
+        /// * `4` - Processing.<para />
+        /// * `5` - Failure.<para />
+        /// * `6` - Completed.</param>
         /// <param name="offset"></param>
         /// <param name="limit">Default 500; max 1000.</param>
         /// <param name="startTime">UTC timestamp in ms.</param>
@@ -265,7 +267,7 @@ namespace Binance.Spot
         /// Fetch deposit address with network.<para />
         /// - If network is not send, return with default network of the coin.<para />
         /// - You can get network and isDefault in networkList in the response of Get /sapi/v1/capital/config/getall (HMAC SHA256).<para />
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="coin">Coin name.</param>
         /// <param name="network"></param>
@@ -291,7 +293,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Fetch account status detail.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>OK.</returns>
@@ -313,7 +315,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Fetch account API trading status with details.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Account API trading status.</returns>
@@ -334,7 +336,7 @@ namespace Binance.Spot
         private const string DUSTLOG = "/sapi/v1/asset/dribblet";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="startTime">UTC timestamp in ms.</param>
         /// <param name="endTime">UTC timestamp in ms.</param>
@@ -356,7 +358,7 @@ namespace Binance.Spot
             return result;
         }
 
-        private const string GET_ASSETS_THAT_CAN_BE_CONVERTED_INTO_BNB = "/sapi/v1/asset/dust-btc";
+        private const string BNB_CONVERTABLE_ASSETS = "/sapi/v1/asset/dust-btc";
 
         /// <summary>
         /// Weight(IP): 1.
@@ -366,7 +368,7 @@ namespace Binance.Spot
         public async Task<string> BnbConvertableAssets(long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
-                GET_ASSETS_THAT_CAN_BE_CONVERTED_INTO_BNB,
+                BNB_CONVERTABLE_ASSETS,
                 HttpMethod.Post,
                 query: new Dictionary<string, object>
                 {
@@ -381,7 +383,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Convert dust assets to BNB.<para />
-        /// Weight: 1.
+        /// Weight(UID): 10.
         /// </summary>
         /// <param name="asset">The asset being converted. For example, asset=BTC&amp;asset=USDT.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -405,7 +407,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Query asset Dividend Record.<para />
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="startTime">UTC timestamp in ms.</param>
@@ -436,7 +438,7 @@ namespace Binance.Spot
         /// <summary>
         /// Fetch details of assets supported on Binance.<para />
         /// - Please get network and other deposit or withdraw details from `GET /sapi/v1/capital/config/getall`.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -460,7 +462,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Fetch trade fee.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -473,6 +475,45 @@ namespace Binance.Spot
                 query: new Dictionary<string, object>
                 {
                     { "symbol", symbol },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
+        private const string QUERY_USER_UNIVERSAL_TRANSFER_HISTORY = "/sapi/v1/asset/transfer";
+
+        /// <summary>
+        /// - `fromSymbol` must be sent when type are ISOLATEDMARGIN_MARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN.<para />
+        /// - `toSymbol` must be sent when type are MARGIN_ISOLATEDMARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN.<para />
+        /// - Support query within the last 6 months only.<para />
+        /// - If `startTime` and `endTime` not sent, return records of the last 7 days by default.<para />
+        /// Weight(IP): 1.
+        /// </summary>
+        /// <param name="type">Universal transfer type.</param>
+        /// <param name="startTime">UTC timestamp in ms.</param>
+        /// <param name="endTime">UTC timestamp in ms.</param>
+        /// <param name="current">Current querying page. Start from 1. Default:1.</param>
+        /// <param name="size">Default:10 Max:100.</param>
+        /// <param name="fromSymbol">Must be sent when type are ISOLATEDMARGIN_MARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN.</param>
+        /// <param name="toSymbol">Must be sent when type are MARGIN_ISOLATEDMARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN.</param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Universal transfer history.</returns>
+        public async Task<string> QueryUserUniversalTransferHistory(UniversalTransferType type, long? startTime = null, long? endTime = null, int? current = null, int? size = null, string fromSymbol = null, string toSymbol = null, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                QUERY_USER_UNIVERSAL_TRANSFER_HISTORY,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "type", type },
+                    { "startTime", startTime },
+                    { "endTime", endTime },
+                    { "current", current },
+                    { "size", size },
+                    { "fromSymbol", fromSymbol },
+                    { "toSymbol", toSymbol },
                     { "recvWindow", recvWindow },
                     { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
                 });
@@ -536,50 +577,11 @@ namespace Binance.Spot
             return result;
         }
 
-        private const string QUERY_USER_UNIVERSAL_TRANSFER_HISTORY = "/sapi/v1/asset/transfer";
-
-        /// <summary>
-        /// - `fromSymbol` must be sent when type are ISOLATEDMARGIN_MARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN.<para />
-        /// - `toSymbol` must be sent when type are MARGIN_ISOLATEDMARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN.<para />
-        /// - Support query within the last 6 months only.<para />
-        /// - If `startTime` and `endTime` not sent, return records of the last 7 days by default.<para />
-        /// Weight(IP): 1.
-        /// </summary>
-        /// <param name="type">Universal transfer type.</param>
-        /// <param name="startTime">UTC timestamp in ms.</param>
-        /// <param name="endTime">UTC timestamp in ms.</param>
-        /// <param name="current">Current querying page. Start from 1. Default:1.</param>
-        /// <param name="size">Default:10 Max:100.</param>
-        /// <param name="fromSymbol">Must be sent when type are ISOLATEDMARGIN_MARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN.</param>
-        /// <param name="toSymbol">Must be sent when type are MARGIN_ISOLATEDMARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN.</param>
-        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
-        /// <returns>Universal transfer history.</returns>
-        public async Task<string> QueryUserUniversalTransferHistory(UniversalTransferType type, long? startTime = null, long? endTime = null, int? current = null, int? size = null, string fromSymbol = null, string toSymbol = null, long? recvWindow = null)
-        {
-            var result = await this.SendSignedAsync<string>(
-                QUERY_USER_UNIVERSAL_TRANSFER_HISTORY,
-                HttpMethod.Get,
-                query: new Dictionary<string, object>
-                {
-                    { "type", type },
-                    { "startTime", startTime },
-                    { "endTime", endTime },
-                    { "current", current },
-                    { "size", size },
-                    { "fromSymbol", fromSymbol },
-                    { "toSymbol", toSymbol },
-                    { "recvWindow", recvWindow },
-                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
-                });
-
-            return result;
-        }
-
         private const string FUNDING_WALLET = "/sapi/v1/asset/get-funding-asset";
 
         /// <summary>
         /// - Currently supports querying the following business assets：Binance Pay, Binance Card, Binance Gift Card, Stock Token.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="needBtcValuation"></param>
@@ -604,7 +606,7 @@ namespace Binance.Spot
         private const string GET_API_KEY_PERMISSION = "/sapi/v1/account/apiRestrictions";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>API Key permissions.</returns>

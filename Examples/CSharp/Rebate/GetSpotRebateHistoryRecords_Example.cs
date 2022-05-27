@@ -22,7 +22,10 @@ namespace Binance.Spot.RebateExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var rebate = new Rebate(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
+
+            var rebate = new Rebate(httpClient, apiKey, apiSecret);
 
             var result = await rebate.GetSpotRebateHistoryRecords();
         }

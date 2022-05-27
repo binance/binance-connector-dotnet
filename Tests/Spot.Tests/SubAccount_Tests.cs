@@ -1,6 +1,5 @@
 namespace Binance.Spot.Tests
 {
-    using System;
     using System.Net;
     using System.Net.Http;
     using Binance.Spot.Models;
@@ -31,7 +30,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.CreateAVirtualSubaccount();
+            var result = await subAccount.CreateAVirtualSubaccount("testaccount");
 
             Assert.Equal(responseContent, result);
         }
@@ -41,7 +40,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void QuerySubaccountList_Response()
         {
-            var responseContent = "{\"subAccounts\":[{\"email\":\"testsub@gmail.com\",\"isFreeze\":false,\"createTime\":1544433328000,\"isManagedSubAccount\":false,\"isAssetManagementSubAccount\":false},{\"email\":\"virtual@oxebmvfonoemail.com\",\"isFreeze\":false,\"createTime\":1544433328000,\"isManagedSubAccount\":false,\"isAssetManagementSubAccount\":false}]}";
+            var responseContent = "{\"subAccounts\":[{\"email\":\"testsub@gmail.com\",\"isFreeze\":false,\"createTime\":1544433328000,\"isManagedSubAccount\":false,\"isAssetManagementSubAccount\":false}]}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/sub-account/list", HttpMethod.Get)
@@ -65,7 +64,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void QuerySubaccountSpotAssetTransferHistory_Response()
         {
-            var responseContent = "[{\"from\":\"aaa@test.com\",\"to\":\"bbb@test.com\",\"asset\":\"BTC\",\"qty\":\"10\",\"status\":\"SUCCESS\",\"tranId\":6489943656,\"time\":1544433328000},{\"from\":\"bbb@test.com\",\"to\":\"ccc@test.com\",\"asset\":\"ETH\",\"qty\":\"2\",\"status\":\"SUCCESS\",\"tranId\":6489938713,\"time\":1544433328000}]";
+            var responseContent = "[{\"from\":\"aaa@test.com\",\"to\":\"bbb@test.com\",\"asset\":\"BTC\",\"qty\":10,\"status\":\"SUCCESS\",\"tranId\":6489943656,\"time\":1544433328000}]";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/sub-account/sub/transfer/history", HttpMethod.Get)
@@ -89,7 +88,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void QuerySubaccountFuturesAssetTransferHistory_Response()
         {
-            var responseContent = "{\"success\":true,\"futuresType\":2,\"transfers\":[{\"from\":\"aaa@test.com\",\"to\":\"bbb@test.com\",\"asset\":\"BTC\",\"qty\":\"1\",\"tranId\":11897001102,\"time\":1544433328000},{\"from\":\"bbb@test.com\",\"to\":\"ccc@test.com\",\"asset\":\"ETH\",\"qty\":\"2\",\"tranId\":11631474902,\"time\":1544433328000}]}";
+            var responseContent = "{\"success\":true,\"futuresType\":2,\"transfers\":[{\"from\":\"aaa@test.com\",\"to\":\"bbb@test.com\",\"asset\":\"BTC\",\"qty\":\"1\",\"tranId\":11897001102,\"time\":1544433328000}]}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/sub-account/futures/internalTransfer", HttpMethod.Get)
@@ -103,7 +102,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.QuerySubaccountFuturesAssetTransferHistory("aaa@test.com", FuturesType.USDT_MARGINED_FUTURES);
+            var result = await subAccount.QuerySubaccountFuturesAssetTransferHistory("testaccount@email.com", FuturesType.COIN_MARGINED_FUTURES);
 
             Assert.Equal(responseContent, result);
         }
@@ -127,7 +126,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.SubaccountFuturesAssetTransfer("aaa@test.com", "bbb@test.com", FuturesType.USDT_MARGINED_FUTURES, "BNB", 2.187m);
+            var result = await subAccount.SubaccountFuturesAssetTransfer("testaccount@email.com", "testaccount2@email.com", FuturesType.COIN_MARGINED_FUTURES, "BTC", 1.01m);
 
             Assert.Equal(responseContent, result);
         }
@@ -137,7 +136,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void QuerySubaccountAssets_Response()
         {
-            var responseContent = "{\"balances\":[{\"asset\":\"ADA\",\"free\":10000,\"locked\":0},{\"asset\":\"BNB\",\"free\":10003,\"locked\":0},{\"asset\":\"BTC\",\"free\":11467.6399,\"locked\":0},{\"asset\":\"ETH\",\"free\":10004.995,\"locked\":0},{\"asset\":\"USDT\",\"free\":11652.14213,\"locked\":0}]}";
+            var responseContent = "{\"balances\":[{\"asset\":\"ADA\",\"free\":10000,\"locked\":0}]}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v3/sub-account/assets", HttpMethod.Get)
@@ -151,7 +150,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.QuerySubaccountAssets("testsub@gmail.com");
+            var result = await subAccount.QuerySubaccountAssets("testaccount@email.com");
 
             Assert.Equal(responseContent, result);
         }
@@ -161,7 +160,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void QuerySubaccountSpotAssetsSummary_Response()
         {
-            var responseContent = "{\"totalCount\":2,\"masterAccountTotalAsset\":\"0.23231201\",\"spotSubUserAssetBtcVoList\":[{\"email\":\"sub123@test.com\",\"totalAsset\":\"9999.00000000\"},{\"email\":\"test456@test.com\",\"totalAsset\":\"0.00000000\"}]}";
+            var responseContent = "{\"totalCount\":1,\"masterAccountTotalAsset\":\"0.23231201\",\"spotSubUserAssetBtcVoList\":[{\"email\":\"sub123@test.com\",\"totalAsset\":\"9999.00000000\"}]}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/sub-account/spotSummary", HttpMethod.Get)
@@ -199,7 +198,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.GetSubaccountDepositAddress("testsub@gmail.com", "USDT");
+            var result = await subAccount.GetSubaccountDepositAddress("testaccount@email.com", "BNB");
 
             Assert.Equal(responseContent, result);
         }
@@ -209,7 +208,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void GetSubaccountDepositHistory_Response()
         {
-            var responseContent = "[{\"amount\":\"0.00999800\",\"coin\":\"PAXG\",\"network\":\"ETH\",\"status\":1,\"address\":\"0x788cabe9236ce061e5a892e1a59395a81fc8d62c\",\"addressTag\":\"\",\"txId\":\"0xaad4654a3234aa6118af9b4b335f5ae81c360b2394721c019b5d1e75328b09f3\",\"insertTime\":1599621997000,\"transferType\":0,\"confirmTimes\":\"12/12\"},{\"amount\":\"0.50000000\",\"coin\":\"IOTA\",\"network\":\"IOTA\",\"status\":1,\"address\":\"SIZ9VLMHWATXKV99LH99CIGFJFUMLEHGWVZVNNZXRJJVWBPHYWPPBOSDORZ9EQSHCZAMPVAPGFYQAUUV9DROOXJLNW\",\"addressTag\":\"\",\"txId\":\"ESBFVQUTPIWQNJSPXFNHNYHSQNTGKRVKPRABQWTAXCDWOAKDKYWPTVG9BGXNVNKTLEJGESAVXIKIZ9999\",\"insertTime\":1599620082000,\"transferType\":0,\"confirmTimes\":\"1/1\"}]";
+            var responseContent = "[{\"amount\":\"0.00999800\",\"coin\":\"PAXG\",\"network\":\"ETH\",\"status\":1,\"address\":\"0x788cabe9236ce061e5a892e1a59395a81fc8d62c\",\"addressTag\":\"\",\"txId\":\"0xaad4654a3234aa6118af9b4b335f5ae81c360b2394721c019b5d1e75328b09f3\",\"insertTime\":1599621997000,\"transferType\":0,\"confirmTimes\":\"12/12\"}]";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/capital/deposit/subHisrec", HttpMethod.Get)
@@ -223,7 +222,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.GetSubaccountDepositHistory("testsub@gmail.com");
+            var result = await subAccount.GetSubaccountDepositHistory("testaccount@email.com");
 
             Assert.Equal(responseContent, result);
         }
@@ -271,7 +270,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.EnableMarginForSubaccount("123@test.com");
+            var result = await subAccount.EnableMarginForSubaccount("testaccount@email.com");
 
             Assert.Equal(responseContent, result);
         }
@@ -281,7 +280,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void GetDetailOnSubaccountsMarginAccount_Response()
         {
-            var responseContent = "{\"email\":\"123@test.com\",\"marginLevel\":\"11.64405625\",\"totalAssetOfBtc\":\"6.82728457\",\"totalLiabilityOfBtc\":\"0.58633215\",\"totalNetAssetOfBtc\":\"6.24095242\",\"marginTradeCoeffVo\":{\"forceLiquidationBar\":\"1.10000000\",\"marginCallBar\":\"1.50000000\",\"normalBar\":\"2.00000000\"},\"marginUserAssetVoList\":[{\"asset\":\"BTC\",\"borrowed\":\"0.00000000\",\"free\":\"0.00499500\",\"interest\":\"0.00000000\",\"locked\":\"0.00000000\",\"netAsset\":\"0.00499500\"},{\"asset\":\"BNB\",\"borrowed\":\"201.66666672\",\"free\":\"2346.50000000\",\"interest\":\"0.00000000\",\"locked\":\"0.00000000\",\"netAsset\":\"2144.83333328\"},{\"asset\":\"ETH\",\"borrowed\":\"0.00000000\",\"free\":\"0.00000000\",\"interest\":\"0.00000000\",\"locked\":\"0.00000000\",\"netAsset\":\"0.00000000\"},{\"asset\":\"USDT\",\"borrowed\":\"0.00000000\",\"free\":\"0.00000000\",\"interest\":\"0.00000000\",\"locked\":\"0.00000000\",\"netAsset\":\"0.00000000\"}]}";
+            var responseContent = "{\"email\":\"123@test.com\",\"marginLevel\":\"11.64405625\",\"totalAssetOfBtc\":\"6.82728457\",\"totalLiabilityOfBtc\":\"0.58633215\",\"totalNetAssetOfBtc\":\"6.24095242\",\"marginTradeCoeffVo\":{\"forceLiquidationBar\":\"1.10000000\",\"marginCallBar\":\"1.50000000\",\"normalBar\":\"2.00000000\"},\"marginUserAssetVoList\":[{\"asset\":\"BTC\",\"borrowed\":\"0.00000000\",\"free\":\"0.00499500\",\"interest\":\"0.00000000\",\"locked\":\"0.00000000\",\"netAsset\":\"0.00499500\"}]}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/sub-account/margin/account", HttpMethod.Get)
@@ -295,7 +294,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.GetDetailOnSubaccountsMarginAccount("123@test.com");
+            var result = await subAccount.GetDetailOnSubaccountsMarginAccount("testaccount@email.com");
 
             Assert.Equal(responseContent, result);
         }
@@ -305,7 +304,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void GetSummaryOfSubaccountsMarginAccount_Response()
         {
-            var responseContent = "{\"totalAssetOfBtc\":\"4.33333333\",\"totalLiabilityOfBtc\":\"2.11111112\",\"totalNetAssetOfBtc\":\"2.22222221\",\"subAccountList\":[{\"email\":\"123@test.com\",\"totalAssetOfBtc\":\"2.11111111\",\"totalLiabilityOfBtc\":\"1.11111111\",\"totalNetAssetOfBtc\":\"1.00000000\"},{\"email\":\"345@test.com\",\"totalAssetOfBtc\":\"2.22222222\",\"totalLiabilityOfBtc\":\"1.00000001\",\"totalNetAssetOfBtc\":\"1.22222221\"}]}";
+            var responseContent = "{\"totalAssetOfBtc\":\"4.33333333\",\"totalLiabilityOfBtc\":\"2.11111112\",\"totalNetAssetOfBtc\":\"2.22222221\",\"subAccountList\":[{\"email\":\"123@test.com\",\"totalAssetOfBtc\":\"2.11111111\",\"totalLiabilityOfBtc\":\"1.11111111\",\"totalNetAssetOfBtc\":\"1.00000000\"}]}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/sub-account/margin/accountSummary", HttpMethod.Get)
@@ -343,7 +342,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.EnableFuturesForSubaccount("123@test.com");
+            var result = await subAccount.EnableFuturesForSubaccount("testaccount@email.com");
 
             Assert.Equal(responseContent, result);
         }
@@ -367,7 +366,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.GetDetailOnSubaccountsFuturesAccount("123@test.com");
+            var result = await subAccount.GetDetailOnSubaccountsFuturesAccount("testaccount@email.com");
 
             Assert.Equal(responseContent, result);
         }
@@ -377,7 +376,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void GetSummaryOfSubaccountsFuturesAccount_Response()
         {
-            var responseContent = "{\"totalInitialMargin\":\"9.83137400\",\"totalMaintenanceMargin\":\"0.41568700\",\"totalMarginBalance\":\"23.03235621\",\"totalOpenOrderInitialMargin\":\"9.00000000\",\"totalPositionInitialMargin\":\"0.83137400\",\"totalUnrealizedProfit\":\"0.03219710\",\"totalWalletBalance\":\"22.15879444\",\"asset\":\"USD\",\"subAccountList\":[{\"email\":\"123@test.com\",\"totalInitialMargin\":\"9.00000000\",\"totalMaintenanceMargin\":\"0.00000000\",\"totalMarginBalance\":\"22.12659734\",\"totalOpenOrderInitialMargin\":\"9.00000000\",\"totalPositionInitialMargin\":\"0.00000000\",\"totalUnrealizedProfit\":\"0.00000000\",\"totalWalletBalance\":\"22.12659734\",\"asset\":\"USD\"},{\"email\":\"345@test.com\",\"totalInitialMargin\":\"0.83137400\",\"totalMaintenanceMargin\":\"0.41568700\",\"totalMarginBalance\":\"0.90575887\",\"totalOpenOrderInitialMargin\":\"0.00000000\",\"totalPositionInitialMargin\":\"0.83137400\",\"totalUnrealizedProfit\":\"0.03219710\",\"totalWalletBalance\":\"0.87356177\",\"asset\":\"USD\"}]}";
+            var responseContent = "{\"totalInitialMargin\":\"9.83137400\",\"totalMaintenanceMargin\":\"0.41568700\",\"totalMarginBalance\":\"23.03235621\",\"totalOpenOrderInitialMargin\":\"9.00000000\",\"totalPositionInitialMargin\":\"0.83137400\",\"totalUnrealizedProfit\":\"0.03219710\",\"totalWalletBalance\":\"22.15879444\",\"asset\":\"USD\",\"subAccountList\":[{\"email\":\"123@test.com\",\"totalInitialMargin\":\"9.00000000\",\"totalMaintenanceMargin\":\"0.00000000\",\"totalMarginBalance\":\"22.12659734\",\"totalOpenOrderInitialMargin\":\"9.00000000\",\"totalPositionInitialMargin\":\"0.00000000\",\"totalUnrealizedProfit\":\"0.00000000\",\"totalWalletBalance\":\"22.12659734\",\"asset\":\"USD\"}]}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/sub-account/futures/accountSummary", HttpMethod.Get)
@@ -415,7 +414,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.GetFuturesPositionriskOfSubaccount("123@test.com");
+            var result = await subAccount.GetFuturesPositionriskOfSubaccount("testaccount@email.com");
 
             Assert.Equal(responseContent, result);
         }
@@ -439,7 +438,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.FuturesTransferForSubaccount("123@test.com", "USDT", 522.23m, FuturesTransferType.SPOT_TO_USDT_MARGINED_FUTURES);
+            var result = await subAccount.FuturesTransferForSubaccount("testaccount@email.com", "BTC", 1.01m, FuturesTransferType.SPOT_TO_USDT_MARGINED_FUTURES);
 
             Assert.Equal(responseContent, result);
         }
@@ -463,7 +462,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.MarginTransferForSubaccount("123@test.com", "USDT", 522.23m, MarginTransferType.SPOT_TO_MARGIN);
+            var result = await subAccount.MarginTransferForSubaccount("testaccount@email.com", "BTC", 1.01m, MarginTransferType.SPOT_TO_MARGIN);
 
             Assert.Equal(responseContent, result);
         }
@@ -487,7 +486,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.TransferToSubaccountOfSameMaster("123@test.com", "USDT", 522.23m);
+            var result = await subAccount.TransferToSubaccountOfSameMaster("testaccount@email.com", "BTC", 1.01m);
 
             Assert.Equal(responseContent, result);
         }
@@ -511,7 +510,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.TransferToMaster("USDT", 522.23m);
+            var result = await subAccount.TransferToMaster("BTC", 1.01m);
 
             Assert.Equal(responseContent, result);
         }
@@ -521,7 +520,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void SubaccountTransferHistory_Response()
         {
-            var responseContent = "[{\"counterParty\":\"master\",\"email\":\"master@test.com\",\"type\":1,\"asset\":\"BTC\",\"qty\":\"1\",\"fromAccountType\":\"SPOT\",\"toAccountType\":\"SPOT\",\"status\":\"SUCCESS\",\"tranId\":11798835829,\"time\":1544433325000},{\"counterParty\":\"subAccount\",\"email\":\"sub2@test.com\",\"type\":1,\"asset\":\"ETH\",\"qty\":\"2\",\"fromAccountType\":\"SPOT\",\"toAccountType\":\"SPOT\",\"status\":\"SUCCESS\",\"tranId\":11798829519,\"time\":1544433326000}]";
+            var responseContent = "[{\"counterParty\":\"master\",\"email\":\"master@test.com\",\"type\":1,\"asset\":\"BTC\",\"qty\":\"1\",\"fromAccountType\":\"SPOT\",\"toAccountType\":\"SPOT\",\"status\":\"SUCCESS\",\"tranId\":11798835829,\"time\":1544433325000}]";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/sub-account/transfer/subUserHistory", HttpMethod.Get)
@@ -559,7 +558,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.UniversalTransfer(UniversalTransferAccountType.SPOT, UniversalTransferAccountType.USDT_FUTURE, "USDT", 522.23m);
+            var result = await subAccount.UniversalTransfer(UniversalTransferAccountType.SPOT, UniversalTransferAccountType.COIN_FUTURE, "BTC", 1.01m);
 
             Assert.Equal(responseContent, result);
         }
@@ -569,7 +568,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void QueryUniversalTransferHistory_Response()
         {
-            var responseContent = "[{\"tranId\":11945860693,\"fromEmail\":\"master@test.com\",\"toEmail\":\"subaccount1@test.com\",\"asset\":\"BTC\",\"amount\":\"0.1\",\"fromAccountType\":\"SPOT\",\"toAccountType\":\"COIN_FUTURE\",\"status\":\"SUCCESS\",\"createTimeStamp\":1544433325000},{\"tranId\":11945857955,\"fromEmail\":\"master@test.com\",\"toEmail\":\"subaccount2@test.com\",\"asset\":\"ETH\",\"amount\":\"0.2\",\"fromAccountType\":\"SPOT\",\"toAccountType\":\"USDT_FUTURE\",\"status\":\"SUCCESS\",\"createTimeStamp\":1544433326000}]";
+            var responseContent = "[{\"tranId\":11945860693,\"fromEmail\":\"master@test.com\",\"toEmail\":\"subaccount1@test.com\",\"asset\":\"BTC\",\"amount\":\"0.1\",\"fromAccountType\":\"SPOT\",\"toAccountType\":\"COIN_FUTURE\",\"status\":\"SUCCESS\",\"createTimeStamp\":1544433325000}]";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/sub-account/universalTransfer", HttpMethod.Get)
@@ -607,7 +606,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.GetDetailOnSubaccountsFuturesAccountV2("abc@test.com", FuturesType.USDT_MARGINED_FUTURES);
+            var result = await subAccount.GetDetailOnSubaccountsFuturesAccountV2("testaccount@email.com", FuturesType.USDT_MARGINED_FUTURES);
 
             Assert.Equal(responseContent, result);
         }
@@ -617,7 +616,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void GetSummaryOfSubaccountsFuturesAccountV2_Response()
         {
-            var responseContent = "{\"futureAccountSummaryResp\":{\"totalInitialMargin\":\"9.83137400\",\"totalMaintenanceMargin\":\"0.41568700\",\"totalMarginBalance\":\"23.03235621\",\"totalOpenOrderInitialMargin\":\"9.00000000\",\"totalPositionInitialMargin\":\"0.83137400\",\"totalUnrealizedProfit\":\"0.03219710\",\"totalWalletBalance\":\"22.15879444\",\"asset\":\"USD\",\"subAccountList\":[{\"email\":\"123@test.com\",\"totalInitialMargin\":\"9.00000000\",\"totalMaintenanceMargin\":\"0.00000000\",\"totalMarginBalance\":\"22.12659734\",\"totalOpenOrderInitialMargin\":\"9.00000000\",\"totalPositionInitialMargin\":\"0.00000000\",\"totalUnrealizedProfit\":\"0.00000000\",\"totalWalletBalance\":\"22.12659734\",\"asset\":\"USD\"},{\"email\":\"345@test.com\",\"totalInitialMargin\":\"0.83137400\",\"totalMaintenanceMargin\":\"0.41568700\",\"totalMarginBalance\":\"0.90575887\",\"totalOpenOrderInitialMargin\":\"0.00000000\",\"totalPositionInitialMargin\":\"0.83137400\",\"totalUnrealizedProfit\":\"0.03219710\",\"totalWalletBalance\":\"0.87356177\",\"asset\":\"USD\"}]}}";
+            var responseContent = "{\"futureAccountSummaryResp\":{\"totalInitialMargin\":\"9.83137400\",\"totalMaintenanceMargin\":\"0.41568700\",\"totalMarginBalance\":\"23.03235621\",\"totalOpenOrderInitialMargin\":\"9.00000000\",\"totalPositionInitialMargin\":\"0.83137400\",\"totalUnrealizedProfit\":\"0.03219710\",\"totalWalletBalance\":\"22.15879444\",\"asset\":\"USD\",\"subAccountList\":[{\"email\":\"123@test.com\",\"totalInitialMargin\":\"9.00000000\",\"totalMaintenanceMargin\":\"0.00000000\",\"totalMarginBalance\":\"22.12659734\",\"totalOpenOrderInitialMargin\":\"9.00000000\",\"totalPositionInitialMargin\":\"0.00000000\",\"totalUnrealizedProfit\":\"0.00000000\",\"totalWalletBalance\":\"22.12659734\",\"asset\":\"USD\"}]}}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v2/sub-account/futures/accountSummary", HttpMethod.Get)
@@ -655,7 +654,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.GetFuturesPositionriskOfSubaccountV2("abc@test.com", FuturesType.USDT_MARGINED_FUTURES);
+            var result = await subAccount.GetFuturesPositionriskOfSubaccountV2("testaccount@email.com", FuturesType.USDT_MARGINED_FUTURES);
 
             Assert.Equal(responseContent, result);
         }
@@ -679,7 +678,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.EnableLeverageTokenForSubaccount("123@test.com", true);
+            var result = await subAccount.EnableLeverageTokenForSubaccount("testaccount@email.com", true);
 
             Assert.Equal(responseContent, result);
         }
@@ -703,7 +702,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.DepositAssetsIntoTheManagedSubaccount("aaa@test.com", "USDT", 522.23m);
+            var result = await subAccount.DepositAssetsIntoTheManagedSubaccount("testaccount@email.com", "BTC", 1.01m);
 
             Assert.Equal(responseContent, result);
         }
@@ -713,7 +712,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void QueryManagedSubaccountAssetDetails_Response()
         {
-            var responseContent = "[{\"coin\":\"INJ\",\"name\":\"Injective Protocol\",\"totalBalance\":\"0\",\"availableBalance\":\"0\",\"inOrder\":\"0\",\"btcValue\":\"0\"},{\"coin\":\"FILDOWN\",\"name\":\"FILDOWN\",\"totalBalance\":\"0\",\"availableBalance\":\"0\",\"inOrder\":\"0\",\"btcValue\":\"0\"}]";
+            var responseContent = "[{\"coin\":\"INJ\",\"name\":\"Injective Protocol\",\"totalBalance\":\"0\",\"availableBalance\":\"0\",\"inOrder\":\"0\",\"btcValue\":\"0\"}]";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/managed-subaccount/asset", HttpMethod.Get)
@@ -727,7 +726,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.QueryManagedSubaccountAssetDetails("123@test.com");
+            var result = await subAccount.QueryManagedSubaccountAssetDetails("testaccount@email.com");
 
             Assert.Equal(responseContent, result);
         }
@@ -751,7 +750,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.WithdrawlAssetsFromTheManagedSubaccount("aaa@test.com", "USDT", 522.23m);
+            var result = await subAccount.WithdrawlAssetsFromTheManagedSubaccount("testaccount@email.com", "BTC", 1.01m);
 
             Assert.Equal(responseContent, result);
         }
@@ -785,7 +784,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void EnableOrDisableIpRestrictionForASubaccountApiKey_Response()
         {
-            var responseContent = "{\"ipRestrict\":\"true\",\"ipList\":[\"0.0.0.0\"],\"updateTime\":1636369557189,\"apiKey\":\"apikey\"}";
+            var responseContent = "{\"ipRestrict\":\"true\",\"ipList\":[\"0.0.0.0\"],\"updateTime\":1636369557189,\"apiKey\":\"k5V49ldtn4tszj6W3hystegdfvmGbqDzjmkCtpTvC0G74WhK7yd4rfCTo4lShf\"}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/sub-account/subAccountApi/ipRestriction", HttpMethod.Post)
@@ -799,7 +798,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.EnableOrDisableIpRestrictionForASubaccountApiKey("test@email", "api-key", false);
+            var result = await subAccount.EnableOrDisableIpRestrictionForASubaccountApiKey("testaccount@email.com", "subAccountApiKey", true);
 
             Assert.Equal(responseContent, result);
         }
@@ -809,7 +808,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void GetIpRestrictionForASubaccountApiKey_Response()
         {
-            var responseContent = "{\"ipRestrict\":\"true\",\"ipList\":[\"\"],\"updateTime\":1636369557189,\"apiKey\":\"api-key\"}";
+            var responseContent = "{\"ipRestrict\":\"true\",\"ipList\":[\"\"],\"updateTime\":1636369557189,\"apiKey\":\"k5V49ldtn4tszj6W3hystegdfvmGbqDzjmkCtpTvC0G74WhK7yd4rfCTo4lShf\"}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/sub-account/subAccountApi/ipRestriction", HttpMethod.Get)
@@ -823,7 +822,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.GetIpRestrictionForASubaccountApiKey("test@email", "api-key");
+            var result = await subAccount.GetIpRestrictionForASubaccountApiKey("testaccount@email.com", "subAccountApiKey");
 
             Assert.Equal(responseContent, result);
         }
@@ -833,7 +832,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void AddIpListForASubaccountApiKey_Response()
         {
-            var responseContent = "{\"ip\":\"192.168.1.20\",\"updateTime\":1636369557189,\"apiKey\":\"api-key\"}";
+            var responseContent = "{\"ip\":\"8.34.21.1015.24.40.1\",\"updateTime\":1636369557189,\"apiKey\":\"k5V49ldtn4tszj6W3hystegdfvmGbqDzjmkCtpTvC0G74WhK7yd4rfCTo4lShf\"}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/sub-account/subAccountApi/ipRestriction/ipList", HttpMethod.Post)
@@ -847,7 +846,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.AddIpListForASubaccountApiKey("test@email", "api-key", "1.1.1.1");
+            var result = await subAccount.AddIpListForASubaccountApiKey("testaccount@email.com", "subAccountApiKey", "000.000.000.000");
 
             Assert.Equal(responseContent, result);
         }
@@ -857,7 +856,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void DeleteIpListForASubaccountApiKey_Response()
         {
-            var responseContent = "{\"ipRestrict\":\"true\",\"ipList\":[\"\"],\"updateTime\":1636369557189,\"apiKey\":\"api-key\"}";
+            var responseContent = "{\"ipRestrict\":\"true\",\"ipList\":[\"\"],\"updateTime\":1636369557189,\"apiKey\":\"k5V49ldtn4tszj6W3hystegdfvmGbqDzjmkCtpTvC0G74WhK7yd4rfCTo4lShf\"}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/sub-account/subAccountApi/ipRestriction/ipList", HttpMethod.Delete)
@@ -871,7 +870,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await subAccount.DeleteIpListForASubaccountApiKey("test@email", "api-key", "1.1.1.1");
+            var result = await subAccount.DeleteIpListForASubaccountApiKey("testaccount@email.com", "subAccountApiKey", "000.000.000.000");
 
             Assert.Equal(responseContent, result);
         }

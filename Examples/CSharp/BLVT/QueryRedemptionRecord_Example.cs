@@ -22,7 +22,10 @@ namespace Binance.Spot.BLVTExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var blvt = new BLVT(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
+
+            var blvt = new BLVT(httpClient, apiKey, apiSecret);
 
             var result = await blvt.QueryRedemptionRecord();
         }

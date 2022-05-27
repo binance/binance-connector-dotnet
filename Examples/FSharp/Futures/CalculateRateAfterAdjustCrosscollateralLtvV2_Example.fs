@@ -16,8 +16,11 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let futures = new Futures(httpClient)
+    let futures = new Futures(httpClient, apiKey, apiSecret)
     
     let result = futures.CalculateRateAfterAdjustCrosscollateralLtvV2("BTC", "BUSD", 1.2375m, LoanDirection.ADDITIONAL) |> Async.AwaitTask |> Async.RunSynchronously
     

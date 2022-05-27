@@ -22,7 +22,10 @@ namespace Binance.Spot.PayExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var pay = new Pay(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
+
+            var pay = new Pay(httpClient, apiKey, apiSecret);
 
             var result = await pay.GetPayTradeHistory();
         }

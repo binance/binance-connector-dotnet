@@ -1,6 +1,5 @@
 namespace Binance.Spot.Tests
 {
-    using System;
     using System.Net;
     using System.Net.Http;
     using Binance.Spot.Models;
@@ -65,7 +64,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void ExchangeInformation_Response()
         {
-            var responseContent = "{\"timezone\":\"UTC\",\"serverTime\":1565246363776,\"rateLimits\":[{}],\"exchangeFilters\":[],\"symbols\":[{\"symbol\":\"ETHBTC\",\"status\":\"TRADING\",\"baseAsset\":\"ETH\",\"baseAssetPrecision\":8,\"quoteAsset\":\"BTC\",\"quotePrecision\":8,\"quoteAssetPrecision\":8,\"orderTypes\":[\"LIMIT\",\"LIMIT_MAKER\",\"MARKET\",\"STOP_LOSS\",\"STOP_LOSS_LIMIT\",\"TAKE_PROFIT\",\"TAKE_PROFIT_LIMIT\"],\"icebergAllowed\":true,\"ocoAllowed\":true,\"isSpotTradingAllowed\":true,\"isMarginTradingAllowed\":true,\"filters\":[],\"permissions\":[\"SPOT\",\"MARGIN\"]}]}";
+            var responseContent = "{\"timezone\":\"UTC\",\"serverTime\":1592882214236,\"rateLimits\":[{\"rateLimitType\":\"REQUEST_WEIGHT\",\"interval\":\"MINUTE\",\"intervalNum\":1,\"limit\":1200}],\"exchangeFilters\":[{}],\"symbols\":[{\"symbol\":\"ETHBTC\",\"status\":\"TRADING\",\"baseAsset\":\"ETH\",\"baseAssetPrecision\":8,\"quoteAsset\":\"BTC\",\"quoteAssetPrecision\":8,\"baseCommissionPrecision\":8,\"quoteCommissionPrecision\":8,\"orderTypes\":[\"LIMIT\"],\"icebergAllowed\":true,\"ocoAllowed\":true,\"quoteOrderQtyMarketAllowed\":true,\"allowTrailingStop\":false,\"isSpotTradingAllowed\":true,\"isMarginTradingAllowed\":true,\"filters\":[{\"filterType\":\"PRICE_FILTER\",\"minPrice\":\"0.00000100\",\"maxPrice\":\"100000.00000000\",\"tickSize\":\"0.00000100\"}],\"permissions\":[\"SPOT\"]}]}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/api/v3/exchangeInfo", HttpMethod.Get)
@@ -103,7 +102,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await market.OrderBook("BTCUSDT");
+            var result = await market.OrderBook("BNBUSDT");
 
             Assert.Equal(responseContent, result);
         }
@@ -113,7 +112,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void RecentTradesList_Response()
         {
-            var responseContent = "[{\"id\":28457,\"price\":\"4.00000100\",\"qty\":\"12.00000000\",\"quoteQty\":\"48.000012\",\"time\":1499865549590,\"isBuyerMaker\":true,\"isBestMatch\":true}]";
+            var responseContent = "[{\"id\":345196462,\"price\":\"9638.99000000\",\"qty\":\"0.02077200\",\"quoteQty\":\"0.02077200\",\"time\":1592887772684,\"isBuyerMaker\":true,\"isBestMatch\":true}]";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/api/v3/trades", HttpMethod.Get)
@@ -127,7 +126,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await market.RecentTradesList("BTCUSDT");
+            var result = await market.RecentTradesList("BNBUSDT");
 
             Assert.Equal(responseContent, result);
         }
@@ -137,7 +136,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void OldTradeLookup_Response()
         {
-            var responseContent = "[{\"id\":28457,\"price\":\"4.00000100\",\"qty\":\"12.00000000\",\"quoteQty\":\"48.000012\",\"time\":1499865549590,\"isBuyerMaker\":true,\"isBestMatch\":true}]";
+            var responseContent = "[{\"id\":345196462,\"price\":\"9638.99000000\",\"qty\":\"0.02077200\",\"quoteQty\":\"0.02077200\",\"time\":1592887772684,\"isBuyerMaker\":true,\"isBestMatch\":true}]";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/api/v3/historicalTrades", HttpMethod.Get)
@@ -151,7 +150,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await market.OldTradeLookup("BTCUSDT");
+            var result = await market.OldTradeLookup("BNBUSDT");
 
             Assert.Equal(responseContent, result);
         }
@@ -175,7 +174,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await market.CompressedAggregateTradesList("BTCUSDT");
+            var result = await market.CompressedAggregateTradesList("BNBUSDT");
 
             Assert.Equal(responseContent, result);
         }
@@ -185,7 +184,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void KlineCandlestickData_Response()
         {
-            var responseContent = "[[1499040000000,\"0.01634790\",\"0.80000000\",\"0.01575800\",\"0.01577100\",\"148976.11427815\",1499644799999,\"2434.19055334\",308,\"1756.87402397\",\"28.46694368\",\"17928899.62484339\"]]";
+            var responseContent = "[[0]]";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/api/v3/klines", HttpMethod.Get)
@@ -199,7 +198,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await market.KlineCandlestickData("BTCUSDT", Interval.FIFTEEN_MINUTE);
+            var result = await market.KlineCandlestickData("BNBUSDT", Interval.ONE_MINUTE);
 
             Assert.Equal(responseContent, result);
         }
@@ -223,7 +222,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await market.CurrentAveragePrice("BTCUSDT");
+            var result = await market.CurrentAveragePrice("BNBUSDT");
 
             Assert.Equal(responseContent, result);
         }
@@ -233,7 +232,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void TwentyFourHrTickerPriceChangeStatistics_Response()
         {
-            var responseContent = "{\"symbol\":\"BNBBTC\",\"priceChange\":\"-94.99999800\",\"priceChangePercent\":\"-95.960\",\"weightedAvgPrice\":\"0.29628482\",\"prevClosePrice\":\"0.10002000\",\"lastPrice\":\"4.00000200\",\"lastQty\":\"200.00000000\",\"bidPrice\":\"4.00000000\",\"askPrice\":\"4.00000200\",\"openPrice\":\"99.00000000\",\"highPrice\":\"100.00000000\",\"lowPrice\":\"0.10000000\",\"volume\":\"8913.30000000\",\"quoteVolume\":\"15.30000000\",\"openTime\":1499783499040,\"closeTime\":1499869899040,\"firstId\":28385,\"lastId\":28460,\"count\":76}";
+            var responseContent = "{\"symbol\":\"BNBBTC\",\"priceChange\":\"0.17160000\",\"priceChangePercent\":\"1.060\",\"prevClosePrice\":\"16.35920000\",\"lastPrice\":\"27.84000000\",\"bidPrice\":\"16.34488284\",\"bidQty\":\"16.34488284\",\"askPrice\":\"16.35920000\",\"askQty\":\"25.06000000\",\"openPrice\":\"16.18760000\",\"highPrice\":\"16.55000000\",\"lowPrice\":\"16.16940000\",\"volume\":\"1678279.95000000\",\"quoteVolume\":\"27431289.14792300\",\"openTime\":1592808788637,\"closeTime\":1592895188637,\"firstId\":62683296,\"lastId\":62739253,\"count\":55958}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/api/v3/ticker/24hr", HttpMethod.Get)
@@ -257,7 +256,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void SymbolPriceTicker_Response()
         {
-            var responseContent = "{\"symbol\":\"LTCBTC\",\"price\":\"4.00000200\"}";
+            var responseContent = "{\"symbol\":\"BNBBTC\",\"price\":\"0.17160000\"}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/api/v3/ticker/price", HttpMethod.Get)
@@ -281,7 +280,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void SymbolOrderBookTicker_Response()
         {
-            var responseContent = "{\"symbol\":\"LTCBTC\",\"bidPrice\":\"4.00000000\",\"bidQty\":\"431.00000000\",\"askPrice\":\"4.00000200\",\"askQty\":\"9.00000000\"}";
+            var responseContent = "{\"symbol\":\"BNBBTC\",\"bidPrice\":\"16.36240000\",\"bidQty\":\"256.78000000\",\"askPrice\":\"16.36450000\",\"askQty\":\"12.56000000\"}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/api/v3/ticker/bookTicker", HttpMethod.Get)

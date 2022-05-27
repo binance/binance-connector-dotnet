@@ -22,9 +22,12 @@ namespace Binance.Spot.NFTExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var nFT = new NFT(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
 
-            var result = await nFT.GetNftTransactionHistory(1);
+            var nft = new NFT(httpClient, apiKey, apiSecret);
+
+            var result = await nft.GetNftTransactionHistory(1);
         }
     }
 }

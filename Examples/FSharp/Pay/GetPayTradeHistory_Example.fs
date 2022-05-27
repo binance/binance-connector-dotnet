@@ -16,8 +16,11 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let pay = new Pay(httpClient)
+    let pay = new Pay(httpClient, apiKey, apiSecret)
     
     let result = pay.GetPayTradeHistory() |> Async.AwaitTask |> Async.RunSynchronously
     

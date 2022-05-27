@@ -23,12 +23,12 @@ namespace Binance.Spot
         /// <summary>
         /// - This request will generate a virtual sub account under your master account.<para />
         /// - You need to enable "trade" option for the api key which requests this endpoint.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="subAccountString">Please input a string. We will create a virtual email using that string for you to register.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Return the created virtual email.</returns>
-        public async Task<string> CreateAVirtualSubaccount(string subAccountString = null, long? recvWindow = null)
+        public async Task<string> CreateAVirtualSubaccount(string subAccountString, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 CREATE_A_VIRTUAL_SUBACCOUNT,
@@ -46,7 +46,7 @@ namespace Binance.Spot
         private const string QUERY_SUBACCOUNT_LIST = "/sapi/v1/sub-account/list";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
         /// <param name="isFreeze"></param>
@@ -77,7 +77,7 @@ namespace Binance.Spot
         /// <summary>
         /// - fromEmail and toEmail cannot be sent at the same time.<para />
         /// - Return fromEmail equal master account email by default.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="fromEmail">Sub-account email.</param>
         /// <param name="toEmail">Sub-account email.</param>
@@ -110,7 +110,7 @@ namespace Binance.Spot
         private const string QUERY_SUBACCOUNT_FUTURES_ASSET_TRANSFER_HISTORY = "/sapi/v1/sub-account/futures/internalTransfer";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
         /// <param name="futuresType">1:USDT-margined Futures, 2: Coin-margined Futures.</param>
@@ -144,7 +144,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// - Master account can transfer max 2000 times a minute.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="fromEmail">Sender email.</param>
         /// <param name="toEmail">Recipient email.</param>
@@ -176,7 +176,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Fetch sub-account assets.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -200,7 +200,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Get BTC valued asset summary of subaccounts.<para />
-        /// Weight: 5.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
         /// <param name="page">Default 1.</param>
@@ -228,7 +228,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Fetch sub-account deposit address.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
         /// <param name="coin">Coin name.</param>
@@ -256,7 +256,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Fetch sub-account deposit history.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
         /// <param name="coin">Coin name.</param>
@@ -292,7 +292,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// - If no `email` sent, all sub-accounts' information will be returned.<para />
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -315,7 +315,7 @@ namespace Binance.Spot
         private const string ENABLE_MARGIN_FOR_SUBACCOUNT = "/sapi/v1/sub-account/margin/enable";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -338,7 +338,7 @@ namespace Binance.Spot
         private const string GET_DETAIL_ON_SUBACCOUNTS_MARGIN_ACCOUNT = "/sapi/v1/sub-account/margin/account";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -361,7 +361,7 @@ namespace Binance.Spot
         private const string GET_SUMMARY_OF_SUBACCOUNTS_MARGIN_ACCOUNT = "/sapi/v1/sub-account/margin/accountSummary";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Margin sub-account details.</returns>
@@ -382,7 +382,7 @@ namespace Binance.Spot
         private const string ENABLE_FUTURES_FOR_SUBACCOUNT = "/sapi/v1/sub-account/futures/enable";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -405,7 +405,7 @@ namespace Binance.Spot
         private const string GET_DETAIL_ON_SUBACCOUNTS_FUTURES_ACCOUNT = "/sapi/v1/sub-account/futures/account";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -428,7 +428,7 @@ namespace Binance.Spot
         private const string GET_SUMMARY_OF_SUBACCOUNTS_FUTURES_ACCOUNT = "/sapi/v1/sub-account/futures/accountSummary";
 
         /// <summary>
-        /// Weight: 20.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Futures account summary.</returns>
@@ -449,7 +449,7 @@ namespace Binance.Spot
         private const string GET_FUTURES_POSITIONRISK_OF_SUBACCOUNT = "/sapi/v1/sub-account/futures/positionRisk";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -472,17 +472,18 @@ namespace Binance.Spot
         private const string FUTURES_TRANSFER_FOR_SUBACCOUNT = "/sapi/v1/sub-account/futures/transfer";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
         /// <param name="asset"></param>
         /// <param name="amount"></param>
-        /// <param name="type">1: transfer from subaccount's spot account to its USDT-margined futures account.<para />
-        /// 2: transfer from subaccount's USDT-margined futures account to its spot account.<para />
-        /// 3: transfer from subaccount's spot account to its COIN-margined futures account.<para />
-        /// 4:transfer from subaccount's COIN-margined futures account to its spot account.</param>
+        /// <param name="type">* `1` - transfer from subaccount's spot account to its USDT-margined futures account.<para />
+        /// * `2` - transfer from subaccount's USDT-margined futures account to its spot account.<para />
+        /// * `3` - transfer from subaccount's spot account to its COIN-margined futures account.<para />
+        /// * `4` - transfer from subaccount's COIN-margined futures account to its spot account.</param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Transfer id.</returns>
-        public async Task<string> FuturesTransferForSubaccount(string email, string asset, decimal amount, FuturesTransferType type)
+        public async Task<string> FuturesTransferForSubaccount(string email, string asset, decimal amount, FuturesTransferType type, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 FUTURES_TRANSFER_FOR_SUBACCOUNT,
@@ -493,6 +494,7 @@ namespace Binance.Spot
                     { "asset", asset },
                     { "amount", amount },
                     { "type", type },
+                    { "recvWindow", recvWindow },
                     { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
                 });
 
@@ -502,15 +504,16 @@ namespace Binance.Spot
         private const string MARGIN_TRANSFER_FOR_SUBACCOUNT = "/sapi/v1/sub-account/margin/transfer";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
         /// <param name="asset"></param>
         /// <param name="amount"></param>
-        /// <param name="type">1: transfer from subaccount's spot account to margin account.<para />
-        /// 2: transfer from subaccount's margin account to its spot account.</param>
+        /// <param name="type">* `1` - transfer from subaccount's spot account to margin account.<para />
+        /// * `2` - transfer from subaccount's margin account to its spot account.</param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Transfer id.</returns>
-        public async Task<string> MarginTransferForSubaccount(string email, string asset, decimal amount, MarginTransferType type)
+        public async Task<string> MarginTransferForSubaccount(string email, string asset, decimal amount, MarginTransferType type, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 MARGIN_TRANSFER_FOR_SUBACCOUNT,
@@ -521,6 +524,7 @@ namespace Binance.Spot
                     { "asset", asset },
                     { "amount", amount },
                     { "type", type },
+                    { "recvWindow", recvWindow },
                     { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
                 });
 
@@ -530,7 +534,7 @@ namespace Binance.Spot
         private const string TRANSFER_TO_SUBACCOUNT_OF_SAME_MASTER = "/sapi/v1/sub-account/transfer/subToSub";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="toEmail">Recipient email.</param>
         /// <param name="asset"></param>
@@ -557,7 +561,7 @@ namespace Binance.Spot
         private const string TRANSFER_TO_MASTER = "/sapi/v1/sub-account/transfer/subToMaster";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="amount"></param>
@@ -584,11 +588,11 @@ namespace Binance.Spot
         /// <summary>
         /// - If `type` is not sent, the records of type 2: transfer out will be returned by default.<para />
         /// - If `startTime` and `endTime` are not sent, the recent 30-day data will be returned.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="asset"></param>
-        /// <param name="type">1: transfer in.<para />
-        /// 2:  transfer out.</param>
+        /// <param name="type">* `1` - transfer in.<para />
+        /// * `2` - transfer out.</param>
         /// <param name="startTime">UTC timestamp in ms.</param>
         /// <param name="endTime">UTC timestamp in ms.</param>
         /// <param name="limit">Default 500; max 1000.</param>
@@ -629,9 +633,10 @@ namespace Binance.Spot
         /// <param name="fromEmail">Sub-account email.</param>
         /// <param name="toEmail">Sub-account email.</param>
         /// <param name="clientTranId"></param>
+        /// <param name="symbol">Only supported under ISOLATED_MARGIN type.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Transfer id.</returns>
-        public async Task<string> UniversalTransfer(UniversalTransferAccountType fromAccountType, UniversalTransferAccountType toAccountType, string asset, decimal amount, string fromEmail = null, string toEmail = null, string clientTranId = null, long? recvWindow = null)
+        public async Task<string> UniversalTransfer(UniversalTransferAccountType fromAccountType, UniversalTransferAccountType toAccountType, string asset, decimal amount, string fromEmail = null, string toEmail = null, string clientTranId = null, string symbol = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 UNIVERSAL_TRANSFER,
@@ -643,6 +648,7 @@ namespace Binance.Spot
                     { "fromAccountType", fromAccountType },
                     { "toAccountType", toAccountType },
                     { "clientTranId", clientTranId },
+                    { "symbol", symbol },
                     { "asset", asset },
                     { "amount", amount },
                     { "recvWindow", recvWindow },
@@ -663,14 +669,14 @@ namespace Binance.Spot
         /// </summary>
         /// <param name="fromEmail">Sub-account email.</param>
         /// <param name="toEmail">Sub-account email.</param>
+        /// <param name="clientTranId"></param>
         /// <param name="startTime">UTC timestamp in ms.</param>
         /// <param name="endTime">UTC timestamp in ms.</param>
         /// <param name="page">Default 1.</param>
         /// <param name="limit">Default 500, Max 500.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
-        /// <param name="clientTranId"></param>
         /// <returns>Transfer History.</returns>
-        public async Task<string> QueryUniversalTransferHistory(string fromEmail = null, string toEmail = null, long? startTime = null, long? endTime = null, int? page = null, int? limit = null, long? recvWindow = null, string clientTranId = null)
+        public async Task<string> QueryUniversalTransferHistory(string fromEmail = null, string toEmail = null, string clientTranId = null, long? startTime = null, long? endTime = null, int? page = null, int? limit = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 QUERY_UNIVERSAL_TRANSFER_HISTORY,
@@ -694,11 +700,11 @@ namespace Binance.Spot
         private const string GET_DETAIL_ON_SUBACCOUNTS_FUTURES_ACCOUNT_V2 = "/sapi/v2/sub-account/futures/account";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
-        /// <param name="futuresType">1:USDT Margined Futures.<para />
-        /// 2:COIN Margined Futures.</param>
+        /// <param name="futuresType">* `1` - USDT Margined Futures.<para />
+        /// * `2` - COIN Margined Futures.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>USDT or COIN Margined Futures Details.</returns>
         public async Task<string> GetDetailOnSubaccountsFuturesAccountV2(string email, FuturesType futuresType, long? recvWindow = null)
@@ -720,10 +726,10 @@ namespace Binance.Spot
         private const string GET_SUMMARY_OF_SUBACCOUNTS_FUTURES_ACCOUNT_V2 = "/sapi/v2/sub-account/futures/accountSummary";
 
         /// <summary>
-        /// Weight: 20.
+        /// Weight(IP): 10.
         /// </summary>
-        /// <param name="futuresType">1:USDT Margined Futures.<para />
-        /// 2:COIN Margined Futures.</param>
+        /// <param name="futuresType">* `1` - USDT Margined Futures.<para />
+        /// * `2` - COIN Margined Futures.</param>
         /// <param name="page">Default 1.</param>
         /// <param name="limit">Default 10, Max 20.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -748,11 +754,11 @@ namespace Binance.Spot
         private const string GET_FUTURES_POSITIONRISK_OF_SUBACCOUNT_V2 = "/sapi/v2/sub-account/futures/positionRisk";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
-        /// <param name="futuresType">1:USDT Margined Futures.<para />
-        /// 2:COIN Margined Futures.</param>
+        /// <param name="futuresType">* `1` - USDT Margined Futures.<para />
+        /// * `2` - COIN Margined Futures.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>USDT or COIN Margined Futures Position Risk.</returns>
         public async Task<string> GetFuturesPositionriskOfSubaccountV2(string email, FuturesType futuresType, long? recvWindow = null)
@@ -774,7 +780,7 @@ namespace Binance.Spot
         private const string ENABLE_LEVERAGE_TOKEN_FOR_SUBACCOUNT = "/sapi/v1/sub-account/blvt/enable";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
         /// <param name="enableBlvt">Only true for now.</param>
@@ -799,7 +805,7 @@ namespace Binance.Spot
         private const string DEPOSIT_ASSETS_INTO_THE_MANAGED_SUBACCOUNT = "/sapi/v1/managed-subaccount/deposit";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="toEmail">Recipient email.</param>
         /// <param name="asset"></param>
@@ -826,7 +832,7 @@ namespace Binance.Spot
         private const string QUERY_MANAGED_SUBACCOUNT_ASSET_DETAILS = "/sapi/v1/managed-subaccount/asset";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="email">Sub-account email.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -849,7 +855,7 @@ namespace Binance.Spot
         private const string WITHDRAWL_ASSETS_FROM_THE_MANAGED_SUBACCOUNT = "/sapi/v1/managed-subaccount/withdraw";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="fromEmail">Sender email.</param>
         /// <param name="asset"></param>

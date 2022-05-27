@@ -22,9 +22,12 @@ namespace Binance.Spot.SpotAccountTradeExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var spotAccountTrade = new SpotAccountTrade(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
 
-            var result = await spotAccountTrade.TestNewOrder("BTCUSDT", Side.BUY, OrderType.MARKET, quantity: 0.12m);
+            var spotAccountTrade = new SpotAccountTrade(httpClient, apiKey, apiSecret);
+
+            var result = await spotAccountTrade.TestNewOrder("BNBUSDT", Side.SELL, OrderType.MARKET);
         }
     }
 }

@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let subAccount = new SubAccount(httpClient)
+    let subAccount = new SubAccount(httpClient, apiKey, apiSecret)
     
-    let result = subAccount.UniversalTransfer(UniversalTransferAccountType.SPOT, UniversalTransferAccountType.USDT_FUTURE, "USDT", 522.23m) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = subAccount.UniversalTransfer(UniversalTransferAccountType.SPOT, UniversalTransferAccountType.COIN_FUTURE, "BTC", 1.01m) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

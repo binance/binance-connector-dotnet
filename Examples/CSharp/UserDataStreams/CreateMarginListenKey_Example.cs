@@ -22,7 +22,10 @@ namespace Binance.Spot.UserDataStreamsExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var userDataStreams = new UserDataStreams(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
+
+            var userDataStreams = new UserDataStreams(httpClient, apiKey, apiSecret);
 
             var result = await userDataStreams.CreateMarginListenKey();
         }

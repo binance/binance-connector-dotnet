@@ -16,8 +16,11 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let spotAccountTrade = new SpotAccountTrade(httpClient)
+    let spotAccountTrade = new SpotAccountTrade(httpClient, apiKey, apiSecret)
     
     let result = spotAccountTrade.AccountInformation() |> Async.AwaitTask |> Async.RunSynchronously
     

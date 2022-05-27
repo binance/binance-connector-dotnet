@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let subAccount = new SubAccount(httpClient)
+    let subAccount = new SubAccount(httpClient, apiKey, apiSecret)
     
-    let result = subAccount.DepositAssetsIntoTheManagedSubaccount("aaa@test.com", "USDT", 522.23m) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = subAccount.DepositAssetsIntoTheManagedSubaccount("testaccount@email.com", "BTC", 1.01m) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

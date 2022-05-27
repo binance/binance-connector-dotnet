@@ -23,9 +23,9 @@ namespace Binance.Spot
         /// <summary>
         /// - If startTimestamp and endTimestamp are not sent, the recent 30-day data will be returned.<para />
         /// - The max interval between startTimestamp and endTimestamp is 30 days.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
-        /// <param name="tradeType"></param>
+        /// <param name="tradeType">BUY, SELL.</param>
         /// <param name="startTimestamp">UTC timestamp in ms.</param>
         /// <param name="endTimestamp">UTC timestamp in ms.</param>
         /// <param name="page">Default 1.</param>

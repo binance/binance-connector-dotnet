@@ -1,6 +1,5 @@
 namespace Binance.Spot.Tests
 {
-    using System;
     using System.Net;
     using System.Net.Http;
     using Binance.Spot.Models;
@@ -55,7 +54,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await userDataStreams.PingSpotListenKey("pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s61cv6a81va65sdf19v8a65a1");
+            var result = await userDataStreams.PingSpotListenKey("listen-key");
 
             Assert.Equal(responseContent, result);
         }
@@ -79,7 +78,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await userDataStreams.CloseSpotListenKey("pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s61cv6a81va65sdf19v8a65a1");
+            var result = await userDataStreams.CloseSpotListenKey("listen-key");
 
             Assert.Equal(responseContent, result);
         }
@@ -89,7 +88,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void CreateMarginListenKey_Response()
         {
-            var responseContent = "{\"listenKey\":\"T3ee22BIYuWqmvne0HNq2A2WsFlEtLhvWCtItw6ffhhdmjifQ2tRbuKkTHhr\"}";
+            var responseContent = "{\"listenKey\":\"pqia91ma19a5s61cv6a81va65sdf19v8a65a1a5s61cv6a81va65sdf19v8a65a1\"}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/userDataStream", HttpMethod.Post)
@@ -127,7 +126,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await userDataStreams.PingMarginListenKey("T3ee22BIYuWqmvne0HNq2A2WsFlEtLhvWCtItw6ffhhdmjifQ2tRbuKkTHhr");
+            var result = await userDataStreams.PingMarginListenKey("listen-key");
 
             Assert.Equal(responseContent, result);
         }
@@ -151,7 +150,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await userDataStreams.CloseMarginListenKey("T3ee22BIYuWqmvne0HNq2A2WsFlEtLhvWCtItw6ffhhdmjifQ2tRbuKkTHhr");
+            var result = await userDataStreams.CloseMarginListenKey("listen-key");
 
             Assert.Equal(responseContent, result);
         }
@@ -175,7 +174,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await userDataStreams.CreateIsolatedMarginListenKey();
+            var result = await userDataStreams.CreateIsolatedMarginListenKey("BTCUSDT");
 
             Assert.Equal(responseContent, result);
         }
@@ -199,7 +198,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await userDataStreams.PingIsolatedMarginListenKey("T3ee22BIYuWqmvne0HNq2A2WsFlEtLhvWCtItw6ffhhdmjifQ2tRbuKkTHhr");
+            var result = await userDataStreams.PingIsolatedMarginListenKey("BTCUSDT", "listen-key");
 
             Assert.Equal(responseContent, result);
         }
@@ -223,7 +222,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await userDataStreams.CloseIsolatedMarginListenKey("T3ee22BIYuWqmvne0HNq2A2WsFlEtLhvWCtItw6ffhhdmjifQ2tRbuKkTHhr");
+            var result = await userDataStreams.CloseIsolatedMarginListenKey("BTCUSDT", "listen-key");
 
             Assert.Equal(responseContent, result);
         }

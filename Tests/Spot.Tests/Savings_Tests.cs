@@ -1,6 +1,5 @@
 namespace Binance.Spot.Tests
 {
-    using System;
     using System.Net;
     using System.Net.Http;
     using Binance.Spot.Models;
@@ -17,7 +16,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void GetFlexibleProductList_Response()
         {
-            var responseContent = "[{\"asset\":\"BTC\",\"avgAnnualInterestRate\":\"0.00250025\",\"canPurchase\":true,\"canRedeem\":true,\"dailyInterestPerThousand\":\"0.00685000\",\"featured\":true,\"minPurchaseAmount\":\"0.01000000\",\"productId\":\"BTC001\",\"purchasedAmount\":\"16.32467016\",\"status\":\"PURCHASING\",\"upLimit\":\"200.00000000\",\"upLimitPerUser\":\"5.00000000\"},{\"asset\":\"BUSD\",\"avgAnnualInterestRate\":\"0.01228590\",\"canPurchase\":true,\"canRedeem\":true,\"dailyInterestPerThousand\":\"0.03836000\",\"featured\":true,\"minPurchaseAmount\":\"0.10000000\",\"productId\":\"BUSD001\",\"purchasedAmount\":\"10.38932339\",\"status\":\"PURCHASING\",\"upLimit\":\"100000.00000000\",\"upLimitPerUser\":\"50000.00000000\"}]";
+            var responseContent = "[{\"asset\":\"BTC\",\"avgAnnualInterestRate\":\"0.00250025\",\"canPurchase\":true,\"canRedeem\":true,\"dailyInterestPerThousand\":\"0.00685000\",\"featured\":true,\"minPurchaseAmount\":\"0.01000000\",\"productId\":\"BTC001\",\"purchasedAmount\":\"16.32467016\",\"status\":\"PURCHASING\",\"upLimit\":\"200.00000000\",\"upLimitPerUser\":\"5.00000000\"}]";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/lending/daily/product/list", HttpMethod.Get)
@@ -55,7 +54,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await savings.GetLeftDailyPurchaseQuotaOfFlexibleProduct("BTC001");
+            var result = await savings.GetLeftDailyPurchaseQuotaOfFlexibleProduct("1234");
 
             Assert.Equal(responseContent, result);
         }
@@ -79,7 +78,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await savings.PurchaseFlexibleProduct("BTC001", 1.3897m);
+            var result = await savings.PurchaseFlexibleProduct("1234", 1.01m);
 
             Assert.Equal(responseContent, result);
         }
@@ -103,7 +102,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await savings.GetLeftDailyRedemptionQuotaOfFlexibleProduct("BTC001", RedemptionType.FAST);
+            var result = await savings.GetLeftDailyRedemptionQuotaOfFlexibleProduct("1234", RedemptionType.FAST);
 
             Assert.Equal(responseContent, result);
         }
@@ -127,7 +126,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await savings.RedeemFlexibleProduct("BTC001", 1.9864m, RedemptionType.FAST);
+            var result = await savings.RedeemFlexibleProduct("1234", 1.01m, RedemptionType.FAST);
 
             Assert.Equal(responseContent, result);
         }
@@ -151,7 +150,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await savings.GetFlexibleProductPosition("USDT");
+            var result = await savings.GetFlexibleProductPosition("BTC");
 
             Assert.Equal(responseContent, result);
         }
@@ -161,7 +160,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void GetFixedAndActivityProjectList_Response()
         {
-            var responseContent = "[{\"asset\":\"USDT\",\"displayPriority\":1,\"duration\":90,\"interestPerLot\":\"1.35810000\",\"interestRate\":\"0.05510000\",\"lotSize\":\"100.00000000\",\"lotsLowLimit\":1,\"lotsPurchased\":74155,\"lotsUpLimit\":80000,\"maxLotsPerUser\":2000,\"needKyc\":false,\"projectId\":\"CUSDT90DAYSS001\",\"projectName\":\"USDT\",\"status\":\"PURCHASING\",\"type\":\"CUSTOMIZED_FIXED\",\"withAreaLimitation\":false}]";
+            var responseContent = "[{\"asset\":\"USDT\",\"displayPriority\":1,\"duration\":90,\"interestPerLot\":\"1.35810000\",\"interestRate\":\"0.05510000\",\"lotSize\":\"100.00000000\",\"lotsLowLimit\":1,\"lotsPurchased\":74155,\"lotsUpLimit\":80000,\"maxLotsPerUser\":2000,\"needKyc\":true,\"projectId\":\"CUSDT90DAYSS001\",\"projectName\":\"USDT\",\"status\":\"PURCHASING\",\"type\":\"CUSTOMIZED_FIXED\",\"withAreaLimitation\":true}]";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/lending/project/list", HttpMethod.Get)
@@ -199,7 +198,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await savings.PurchaseFixedActivityProject("CUSDT90DAYSS001", 1);
+            var result = await savings.PurchaseFixedActivityProject("1234", 1);
 
             Assert.Equal(responseContent, result);
         }
@@ -223,7 +222,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await savings.GetFixedActivityProjectPosition("USDT");
+            var result = await savings.GetFixedActivityProjectPosition("BTC");
 
             Assert.Equal(responseContent, result);
         }
@@ -233,7 +232,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void LendingAccount_Response()
         {
-            var responseContent = "{\"positionAmountVos\":[{\"amount\":\"75.46000000\",\"amountInBTC\":\"0.01044819\",\"amountInUSDT\":\"75.46000000\",\"asset\":\"USDT\"},{\"amount\":\"1.67072036\",\"amountInBTC\":\"0.00023163\",\"amountInUSDT\":\"1.67289230\",\"asset\":\"BUSD\"}],\"totalAmountInBTC\":\"0.01067982\",\"totalAmountInUSDT\":\"77.13289230\",\"totalFixedAmountInBTC\":\"0.00000000\",\"totalFixedAmountInUSDT\":\"0.00000000\",\"totalFlexibleInBTC\":\"0.01067982\",\"totalFlexibleInUSDT\":\"77.13289230\"}";
+            var responseContent = "{\"positionAmountVos\":[{\"amount\":\"75.46000000\",\"amountInBTC\":\"0.01044819\",\"amountInUSDT\":\"75.46000000\",\"asset\":\"USDT\"}],\"totalAmountInBTC\":\"0.01067982\",\"totalAmountInUSDT\":\"77.13289230\",\"totalFixedAmountInBTC\":\"0.00000000\",\"totalFixedAmountInUSDT\":\"0.00000000\",\"totalFlexibleInBTC\":\"0.01067982\",\"totalFlexibleInUSDT\":\"77.13289230\"}";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/lending/union/account", HttpMethod.Get)
@@ -305,7 +304,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void GetInterestHistory_Response()
         {
-            var responseContent = "[{\"asset\":\"BUSD\",\"interest\":\"0.00006408\",\"lendingType\":\"DAILY\",\"productName\":\"BUSD\",\"time\":1577233578000},{\"asset\":\"USDT\",\"interest\":\"0.00687654\",\"lendingType\":\"DAILY\",\"productName\":\"USDT\",\"time\":1577233562000}]";
+            var responseContent = "[{\"asset\":\"BUSD\",\"interest\":\"0.00006408\",\"lendingType\":\"DAILY\",\"productName\":\"BUSD\",\"time\":1577233578000}]";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/lending/union/interestHistory", HttpMethod.Get)
@@ -343,7 +342,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await savings.ChangeFixedActivityPositionToDailyPosition("BTC001", 1);
+            var result = await savings.ChangeFixedActivityPositionToDailyPosition("1234", 1);
 
             Assert.Equal(responseContent, result);
         }

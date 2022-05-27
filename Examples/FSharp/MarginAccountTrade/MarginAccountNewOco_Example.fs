@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let marginAccountTrade = new MarginAccountTrade(httpClient)
+    let marginAccountTrade = new MarginAccountTrade(httpClient, apiKey, apiSecret)
     
-    let result = marginAccountTrade.MarginAccountNewOco("LTCBTC", Side.BUY, 0.624363m, 522.23m, 515.38276m) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = marginAccountTrade.MarginAccountNewOco("BNBUSDT", Side.SELL, 0.1m, 400.15m, 390.3m) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

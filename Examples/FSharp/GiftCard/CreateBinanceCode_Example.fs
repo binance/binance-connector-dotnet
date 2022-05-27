@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let giftCard = new GiftCard(httpClient)
+    let giftCard = new GiftCard(httpClient, apiKey, apiSecret)
     
-    let result = giftCard.CreateBinanceCode("BUSD", 20.01) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = giftCard.CreateBinanceCode("BTC", 1.01) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

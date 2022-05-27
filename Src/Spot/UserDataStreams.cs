@@ -143,12 +143,17 @@ namespace Binance.Spot
         /// The stream will close after 60 minutes unless a keepalive is sent. If the account has an active `listenKey`, that `listenKey` will be returned and its validity will be extended for 60 minutes.<para />
         /// Weight: 1.
         /// </summary>
+        /// <param name="symbol"></param>
         /// <returns>Isolated margin listen key.</returns>
-        public async Task<string> CreateIsolatedMarginListenKey()
+        public async Task<string> CreateIsolatedMarginListenKey(string symbol)
         {
             var result = await this.SendPublicAsync<string>(
                 CREATE_ISOLATED_MARGIN_LISTEN_KEY,
-                HttpMethod.Post);
+                HttpMethod.Post,
+                query: new Dictionary<string, object>
+                {
+                    { "symbol", symbol },
+                });
 
             return result;
         }
@@ -159,15 +164,17 @@ namespace Binance.Spot
         /// Keepalive a user data stream to prevent a time out. User data streams will close after 60 minutes. It's recommended to send a ping about every 30 minutes.<para />
         /// Weight: 1.
         /// </summary>
+        /// <param name="symbol"></param>
         /// <param name="listenKey">User websocket listen key.</param>
         /// <returns>OK.</returns>
-        public async Task<string> PingIsolatedMarginListenKey(string listenKey)
+        public async Task<string> PingIsolatedMarginListenKey(string symbol, string listenKey)
         {
             var result = await this.SendPublicAsync<string>(
                 PING_ISOLATED_MARGIN_LISTEN_KEY,
                 HttpMethod.Put,
                 query: new Dictionary<string, object>
                 {
+                    { "symbol", symbol },
                     { "listenKey", listenKey },
                 });
 
@@ -180,15 +187,17 @@ namespace Binance.Spot
         /// Close out a user data stream.<para />
         /// Weight: 1.
         /// </summary>
+        /// <param name="symbol"></param>
         /// <param name="listenKey">User websocket listen key.</param>
         /// <returns>OK.</returns>
-        public async Task<string> CloseIsolatedMarginListenKey(string listenKey)
+        public async Task<string> CloseIsolatedMarginListenKey(string symbol, string listenKey)
         {
             var result = await this.SendPublicAsync<string>(
                 CLOSE_ISOLATED_MARGIN_LISTEN_KEY,
                 HttpMethod.Delete,
                 query: new Dictionary<string, object>
                 {
+                    { "symbol", symbol },
                     { "listenKey", listenKey },
                 });
 

@@ -22,9 +22,12 @@ namespace Binance.Spot.WalletExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var wallet = new Wallet(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
 
-            var result = await wallet.Withdraw("BNB", "1HPn8Rx2y6nNSfagQBKy27GB99Vbzg89wv", 2.1m);
+            var wallet = new Wallet(httpClient, apiKey, apiSecret);
+
+            var result = await wallet.Withdraw("BNB", "address", 1.01m);
         }
     }
 }

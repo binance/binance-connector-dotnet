@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let spotAccountTrade = new SpotAccountTrade(httpClient)
+    let spotAccountTrade = new SpotAccountTrade(httpClient, apiKey, apiSecret)
     
-    let result = spotAccountTrade.NewOco("LTCBTC", Side.BUY, 522.23m, 127.54398m, 137.027m) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = spotAccountTrade.NewOco("BNBUSDT", Side.SELL, 0.1m, 400.15m, 390.3m) |> Async.AwaitTask |> Async.RunSynchronously
     
     0
