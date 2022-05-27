@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let subAccount = new SubAccount(httpClient)
+    let subAccount = new SubAccount(httpClient, apiKey, apiSecret)
     
-    let result = subAccount.GetDetailOnSubaccountsFuturesAccountV2("abc@test.com", FuturesType.USDT_MARGINED_FUTURES) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = subAccount.GetDetailOnSubaccountsFuturesAccountV2("testaccount@email.com", FuturesType.USDT_MARGINED_FUTURES) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

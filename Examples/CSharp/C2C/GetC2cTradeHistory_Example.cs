@@ -22,9 +22,12 @@ namespace Binance.Spot.C2CExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var c2C = new C2C(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
 
-            var result = await c2C.GetC2cTradeHistory(Side.BUY);
+            var c2c = new C2C(httpClient, apiKey, apiSecret);
+
+            var result = await c2c.GetC2cTradeHistory(Side.BUY);
         }
     }
 }

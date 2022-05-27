@@ -21,13 +21,14 @@ namespace Binance.Spot
         private const string NEW_FUTURE_ACCOUNT_TRANSFER = "/sapi/v1/futures/transfer";
 
         /// <summary>
-        /// Execute transfer between spot account and futures account.
+        /// Execute transfer between spot account and futures account.<para />
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="asset">The asset being transferred, e.g., USDT.</param>
         /// <param name="amount">The amount to be transferred.</param>
         /// <param name="type">1: transfer from spot account to USDT-Ⓜ futures account. 2: transfer from USDT-Ⓜ futures account to spot account. 3: transfer from spot account to COIN-Ⓜ futures account. 4: transfer from COIN-Ⓜ futures account to spot account.</param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Transaction Id.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Transaction Id..</returns>
         public async Task<string> NewFutureAccountTransfer(string asset, decimal amount, FuturesTransferType type, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -48,9 +49,6 @@ namespace Binance.Spot
         private const string GET_FUTURE_ACCOUNT_TRANSACTION_HISTORY_LIST = "/sapi/v1/futures/transfer";
 
         /// <summary>
-        /// Get Future Account Transaction History.<para />
-        /// - Support query within the last 6 months only.<para />
-        /// - If `startTime` and `endTime` not sent, return records of the last 7 days by default.<para />
         /// Weight(IP): 10.
         /// </summary>
         /// <param name="asset"></param>
@@ -58,8 +56,8 @@ namespace Binance.Spot
         /// <param name="endTime"></param>
         /// <param name="current">Currently querying page. Start from 1. Default:1.</param>
         /// <param name="size">Default:10 Max:100.</param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Future Account Transaction History.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Future Account Transaction History..</returns>
         public async Task<string> GetFutureAccountTransactionHistoryList(string asset, long startTime, long? endTime = null, long? current = null, long? size = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -88,8 +86,8 @@ namespace Binance.Spot
         /// <param name="collateralCoin"></param>
         /// <param name="amount"></param>
         /// <param name="collateralAmount"></param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Borrow Transaction.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Borrow Transaction..</returns>
         public async Task<string> BorrowForCrosscollateral(string coin, string collateralCoin, decimal? amount = null, decimal? collateralAmount = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -117,8 +115,8 @@ namespace Binance.Spot
         /// <param name="startTime"></param>
         /// <param name="endTime"></param>
         /// <param name="limit">default 500, max 1000.</param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Cross-Collateral Borrow History.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Cross-Collateral Borrow History..</returns>
         public async Task<string> CrosscollateralBorrowHistory(string coin = null, long? startTime = null, long? endTime = null, long? limit = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -145,8 +143,8 @@ namespace Binance.Spot
         /// <param name="coin"></param>
         /// <param name="collateralCoin"></param>
         /// <param name="amount"></param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Repay Transaction.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Repay Transaction..</returns>
         public async Task<string> RepayForCrosscollateral(string coin, string collateralCoin, decimal amount, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -173,8 +171,8 @@ namespace Binance.Spot
         /// <param name="startTime"></param>
         /// <param name="endTime"></param>
         /// <param name="limit">default 500, max 1000.</param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Cross-Collateral Repayment History.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Cross-Collateral Repayment History..</returns>
         public async Task<string> CrosscollateralRepaymentHistory(string coin = null, long? startTime = null, long? endTime = null, long? limit = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -198,8 +196,8 @@ namespace Binance.Spot
         /// <summary>
         /// Get Cross-Collateral Wallet.
         /// </summary>
-        /// <param name="recvWindow"></param>
-        /// <returns>Cross-Collateral Wallet.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Cross-Collateral Wallet..</returns>
         public async Task<string> CrosscollateralWallet(long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -219,8 +217,8 @@ namespace Binance.Spot
         /// <summary>
         /// Get Cross-Collateral Wallet V2.
         /// </summary>
-        /// <param name="recvWindow"></param>
-        /// <returns>Cross-Collateral Wallet.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Cross-Collateral Wallet..</returns>
         public async Task<string> CrosscollateralWalletV2(long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -241,8 +239,8 @@ namespace Binance.Spot
         /// Get Cross-Collateral Information.
         /// </summary>
         /// <param name="collateralCoin"></param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Cross-Collateral Information.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Cross-Collateral Information..</returns>
         public async Task<string> CrosscollateralInformation(string collateralCoin = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -265,8 +263,8 @@ namespace Binance.Spot
         /// </summary>
         /// <param name="loanCoin"></param>
         /// <param name="collateralCoin"></param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Cross-Collateral Information.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Cross-Collateral Information..</returns>
         public async Task<string> CrosscollateralInformationV2(string loanCoin = null, string collateralCoin = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -291,8 +289,8 @@ namespace Binance.Spot
         /// <param name="collateralCoin"></param>
         /// <param name="amount"></param>
         /// <param name="direction">"ADDITIONAL", "REDUCED".</param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Collateral Rate.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Collateral Rate..</returns>
         public async Task<string> CalculateRateAfterAdjustCrosscollateralLtv(string collateralCoin, decimal amount, LoanDirection direction, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -319,8 +317,8 @@ namespace Binance.Spot
         /// <param name="collateralCoin"></param>
         /// <param name="amount"></param>
         /// <param name="direction">"ADDITIONAL", "REDUCED".</param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Collateral Rate.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Collateral Rate..</returns>
         public async Task<string> CalculateRateAfterAdjustCrosscollateralLtvV2(string loanCoin, string collateralCoin, decimal amount, LoanDirection direction, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -345,8 +343,8 @@ namespace Binance.Spot
         /// Get Max Amount for Adjust Cross-Collateral LTV.
         /// </summary>
         /// <param name="collateralCoin"></param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Max Amount for Adjust Cross-Collateral LTV.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Max Amount for Adjust Cross-Collateral LTV..</returns>
         public async Task<string> GetMaxAmountForAdjustCrosscollateralLtv(string collateralCoin, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -369,8 +367,8 @@ namespace Binance.Spot
         /// </summary>
         /// <param name="loanCoin"></param>
         /// <param name="collateralCoin"></param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Max Amount for Adjust Cross-Collateral LTV.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Max Amount for Adjust Cross-Collateral LTV..</returns>
         public async Task<string> GetMaxAmountForAdjustCrosscollateralLtvV2(string loanCoin, string collateralCoin, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -395,8 +393,8 @@ namespace Binance.Spot
         /// <param name="collateralCoin"></param>
         /// <param name="amount"></param>
         /// <param name="direction">"ADDITIONAL", "REDUCED".</param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Adjust Cross-Collateral LTV.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Adjust Cross-Collateral LTV..</returns>
         public async Task<string> AdjustCrosscollateralLtv(string collateralCoin, decimal amount, LoanDirection direction, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -423,8 +421,8 @@ namespace Binance.Spot
         /// <param name="collateralCoin"></param>
         /// <param name="amount"></param>
         /// <param name="direction">"ADDITIONAL", "REDUCED".</param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Adjust Cross-Collateral LTV.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Adjust Cross-Collateral LTV..</returns>
         public async Task<string> AdjustCrosscollateralLtvV2(string loanCoin, string collateralCoin, decimal amount, LoanDirection direction, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -453,8 +451,8 @@ namespace Binance.Spot
         /// <param name="startTime"></param>
         /// <param name="endTime"></param>
         /// <param name="limit">default 500, max 1000.</param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Adjust Cross-Collateral LTV History.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Adjust Cross-Collateral LTV History..</returns>
         public async Task<string> AdjustCrosscollateralLtvHistory(string loanCoin = null, string collateralCoin = null, long? startTime = null, long? endTime = null, long? limit = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -484,8 +482,8 @@ namespace Binance.Spot
         /// <param name="startTime"></param>
         /// <param name="endTime"></param>
         /// <param name="limit">default 500, max 1000.</param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Cross-Collateral Liquidation History.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Cross-Collateral Liquidation History..</returns>
         public async Task<string> CrosscollateralLiquidationHistory(string loanCoin = null, string collateralCoin = null, long? startTime = null, long? endTime = null, long? limit = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -508,12 +506,12 @@ namespace Binance.Spot
         private const string CHECK_COLLATERAL_REPAY_LIMIT = "/sapi/v1/futures/loan/collateralRepayLimit";
 
         /// <summary>
-        /// Get Collateral Repay Limit.
+        /// Check the maximum and minimum limit when repay with collateral.
         /// </summary>
         /// <param name="coin"></param>
         /// <param name="collateralCoin"></param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Collateral Repay Limit.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Collateral Repay Limit..</returns>
         public async Task<string> CheckCollateralRepayLimit(string coin, string collateralCoin, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -538,8 +536,8 @@ namespace Binance.Spot
         /// <param name="coin"></param>
         /// <param name="collateralCoin"></param>
         /// <param name="amount">repay amount.</param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Collateral Repay Quote.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>ollateral Repay Quote.</returns>
         public async Task<string> GetCollateralRepayQuote(string coin, string collateralCoin, decimal amount, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -563,8 +561,8 @@ namespace Binance.Spot
         /// Repay with collateral. Get quote before repay with collateral is mandatory, the quote will be valid within 25 seconds.
         /// </summary>
         /// <param name="quoteId"></param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Transaction.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Transaction..</returns>
         public async Task<string> RepayWithCollateral(string quoteId, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -586,8 +584,8 @@ namespace Binance.Spot
         /// Check collateral repayment result.
         /// </summary>
         /// <param name="quoteId"></param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Collateral Repayment Result.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Collateral Repayment Result..</returns>
         public async Task<string> CollateralRepaymentResult(string quoteId, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -613,8 +611,8 @@ namespace Binance.Spot
         /// <param name="endTime"></param>
         /// <param name="current">Currently querying page. Start from 1. Default:1.</param>
         /// <param name="limit">Default:500 Max:1000.</param>
-        /// <param name="recvWindow"></param>
-        /// <returns>Cross-Collateral Interest History.</returns>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Cross-Collateral Interest History..</returns>
         public async Task<string> CrosscollateralInterestHistory(string collateralCoin = null, long? startTime = null, long? endTime = null, long? current = null, long? limit = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(

@@ -22,9 +22,12 @@ namespace Binance.Spot.SavingsExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var savings = new Savings(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
 
-            var result = await savings.GetLeftDailyRedemptionQuotaOfFlexibleProduct("BTC001", RedemptionType.FAST);
+            var savings = new Savings(httpClient, apiKey, apiSecret);
+
+            var result = await savings.GetLeftDailyRedemptionQuotaOfFlexibleProduct("1234", RedemptionType.FAST);
         }
     }
 }

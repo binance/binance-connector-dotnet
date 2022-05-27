@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let savings = new Savings(httpClient)
+    let savings = new Savings(httpClient, apiKey, apiSecret)
     
-    let result = savings.ChangeFixedActivityPositionToDailyPosition("BTC001", 1) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = savings.ChangeFixedActivityPositionToDailyPosition("1234", 1) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

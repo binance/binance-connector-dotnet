@@ -22,7 +22,10 @@ namespace Binance.Spot.FuturesExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var futures = new Futures(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
+
+            var futures = new Futures(httpClient, apiKey, apiSecret);
 
             var result = await futures.CollateralRepaymentResult("3eece81ca2734042b2f538ea0d9cbdd3");
         }

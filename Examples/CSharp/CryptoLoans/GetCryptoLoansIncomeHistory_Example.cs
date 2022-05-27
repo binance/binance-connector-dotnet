@@ -22,7 +22,10 @@ namespace Binance.Spot.CryptoLoansExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var cryptoLoans = new CryptoLoans(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
+
+            var cryptoLoans = new CryptoLoans(httpClient, apiKey, apiSecret);
 
             var result = await cryptoLoans.GetCryptoLoansIncomeHistory("BTC");
         }

@@ -22,9 +22,12 @@ namespace Binance.Spot.MarginAccountTradeExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var marginAccountTrade = new MarginAccountTrade(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
 
-            var result = await marginAccountTrade.IsolatedMarginAccountTransfer("BTC", "BTCUSDT", IsolatedMarginAccountTransferType.SPOT, IsolatedMarginAccountTransferType.ISOLATED_MARGIN, 0.23715m);
+            var marginAccountTrade = new MarginAccountTrade(httpClient, apiKey, apiSecret);
+
+            var result = await marginAccountTrade.IsolatedMarginAccountTransfer("BTC", "BNBUSDT", IsolatedMarginAccountTransferType.SPOT, IsolatedMarginAccountTransferType.ISOLATED_MARGIN, 1.01m);
         }
     }
 }

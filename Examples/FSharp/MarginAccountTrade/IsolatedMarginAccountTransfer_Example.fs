@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let marginAccountTrade = new MarginAccountTrade(httpClient)
+    let marginAccountTrade = new MarginAccountTrade(httpClient, apiKey, apiSecret)
     
-    let result = marginAccountTrade.IsolatedMarginAccountTransfer("BTC", "BTCUSDT", IsolatedMarginAccountTransferType.SPOT, IsolatedMarginAccountTransferType.ISOLATED_MARGIN, 0.23715m) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = marginAccountTrade.IsolatedMarginAccountTransfer("BTC", "BNBUSDT", IsolatedMarginAccountTransferType.SPOT, IsolatedMarginAccountTransferType.ISOLATED_MARGIN, 1.01m) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

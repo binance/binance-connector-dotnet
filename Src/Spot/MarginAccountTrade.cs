@@ -22,12 +22,12 @@ namespace Binance.Spot
 
         /// <summary>
         /// Execute transfer between spot account and cross margin account.<para />
-        /// Weight: 1.
+        /// Weight(IP): 600.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="amount"></param>
-        /// <param name="type">1 -> transfer from main account to margin account .<para />
-        /// 2 -> transfer from margin account to main account.</param>
+        /// <param name="type">* `1` - transfer from main account to margin account.<para />
+        /// * `2` - transfer from margin account to main account.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Transfer Id.</returns>
         public async Task<string> CrossMarginAccountTransfer(string asset, decimal amount, MarginTransferType type, long? recvWindow = null)
@@ -53,11 +53,12 @@ namespace Binance.Spot
         /// Apply for a loan.<para />
         /// - If "isIsolated" = "TRUE", "symbol" must be sent.<para />
         /// - "isIsolated" = "FALSE" for crossed margin loan.<para />
-        /// Weight: 1.
+        /// Weight(UID): 3000.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="amount"></param>
-        /// <param name="isIsolated">For isolated margin or not, 'TRUE', 'FALSE', default 'FALSE'.</param>
+        /// <param name="isIsolated">* `TRUE` - For isolated margin.<para />
+        /// * `FALSE` - Default, not for isolated margin.</param>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Transaction id.</returns>
@@ -85,11 +86,12 @@ namespace Binance.Spot
         /// Repay loan for margin account.<para />
         /// - If "isIsolated" = "TRUE", "symbol" must be sent.<para />
         /// - "isIsolated" = "FALSE" for crossed margin repay.<para />
-        /// Weight: 1.
+        /// Weight(IP): 3000.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="amount"></param>
-        /// <param name="isIsolated">For isolated margin or not, 'TRUE', 'FALSE', default 'FALSE'.</param>
+        /// <param name="isIsolated">* `TRUE` - For isolated margin.<para />
+        /// * `FALSE` - Default, not for isolated margin.</param>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Transaction id.</returns>
@@ -114,7 +116,7 @@ namespace Binance.Spot
         private const string QUERY_MARGIN_ASSET = "/sapi/v1/margin/asset";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="asset"></param>
         /// <returns>Asset details.</returns>
@@ -134,7 +136,7 @@ namespace Binance.Spot
         private const string QUERY_CROSS_MARGIN_PAIR = "/sapi/v1/margin/pair";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <returns>Margin pair details.</returns>
@@ -154,7 +156,7 @@ namespace Binance.Spot
         private const string GET_ALL_MARGIN_ASSETS = "/sapi/v1/margin/allAssets";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <returns>Assets details.</returns>
         public async Task<string> GetAllMarginAssets()
@@ -169,7 +171,7 @@ namespace Binance.Spot
         private const string GET_ALL_CROSS_MARGIN_PAIRS = "/sapi/v1/margin/allPairs";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <returns>Margin pairs.</returns>
         public async Task<string> GetAllCrossMarginPairs()
@@ -184,7 +186,7 @@ namespace Binance.Spot
         private const string QUERY_MARGIN_PRICEINDEX = "/sapi/v1/margin/priceIndex";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <returns>Price index.</returns>
@@ -205,12 +207,13 @@ namespace Binance.Spot
 
         /// <summary>
         /// Post a new order for margin account.<para />
-        /// Weight: 1.
+        /// Weight(UID): 6.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
-        /// <param name="side">SELL or BUY.</param>
+        /// <param name="side"></param>
         /// <param name="type">Order type.</param>
-        /// <param name="isIsolated">For isolated margin or not, 'TRUE', 'FALSE', default 'FALSE'.</param>
+        /// <param name="isIsolated">* `TRUE` - For isolated margin.<para />
+        /// * `FALSE` - Default, not for isolated margin.</param>
         /// <param name="quantity"></param>
         /// <param name="quoteOrderQty">Quote quantity.</param>
         /// <param name="price">Order price.</param>
@@ -218,7 +221,7 @@ namespace Binance.Spot
         /// <param name="newClientOrderId">Used to uniquely identify this cancel. Automatically generated by default.</param>
         /// <param name="icebergQty">Used with LIMIT, STOP_LOSS_LIMIT, and TAKE_PROFIT_LIMIT to create an iceberg order.</param>
         /// <param name="newOrderRespType">Set the response JSON.</param>
-        /// <param name="sideEffectType">Default NO_SIDE_EFFECT.</param>
+        /// <param name="sideEffectType">Default `NO_SIDE_EFFECT`.</param>
         /// <param name="timeInForce">Order time in force.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Margin order info.</returns>
@@ -254,10 +257,11 @@ namespace Binance.Spot
         /// <summary>
         /// Cancel an active order for margin account.<para />
         /// Either `orderId` or `origClientOrderId` must be sent.<para />
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
-        /// <param name="isIsolated">For isolated margin or not, 'TRUE', 'FALSE', default 'FALSE'.</param>
+        /// <param name="isIsolated">* `TRUE` - For isolated margin.<para />
+        /// * `FALSE` - Default, not for isolated margin.</param>
         /// <param name="orderId">Order id.</param>
         /// <param name="origClientOrderId">Order id from client.</param>
         /// <param name="newClientOrderId">Used to uniquely identify this cancel. Automatically generated by default.</param>
@@ -287,10 +291,11 @@ namespace Binance.Spot
         /// <summary>
         /// - Cancels all active orders on a symbol for margin account.<para />
         /// - This includes OCO orders.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
-        /// <param name="isIsolated">For isolated margin or not, 'TRUE', 'FALSE', default 'FALSE'.</param>
+        /// <param name="isIsolated">* `TRUE` - For isolated margin.<para />
+        /// * `FALSE` - Default, not for isolated margin.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Cancelled margin orders.</returns>
         public async Task<string> MarginAccountCancelAllOpenOrdersOnASymbol(string symbol, bool? isIsolated = null, long? recvWindow = null)
@@ -315,10 +320,10 @@ namespace Binance.Spot
         /// - Response in descending order.<para />
         /// - Returns data for last 7 days by default.<para />
         /// - Set `archived` to `true` to query data from 6 months ago.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="asset"></param>
-        /// <param name="type">Tranfer Type.</param>
+        /// <param name="type">Transfer Type.</param>
         /// <param name="startTime">UTC timestamp in ms.</param>
         /// <param name="endTime">UTC timestamp in ms.</param>
         /// <param name="current">Current querying page. Start from 1. Default:1.</param>
@@ -326,7 +331,7 @@ namespace Binance.Spot
         /// <param name="archived">Default: false. Set to true for archived data from 6 months ago.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Margin account transfer history, response in descending order.</returns>
-        public async Task<string> GetCrossMarginTransferHistory(string asset = null, CrossMarginTransferType? type = null, long? startTime = null, long? endTime = null, long? current = null, long? size = null, bool? archived = null, long? recvWindow = null)
+        public async Task<string> GetCrossMarginTransferHistory(string asset = null, CrossMarginTransferType? type = null, long? startTime = null, long? endTime = null, int? current = null, int? size = null, bool? archived = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 GET_CROSS_MARGIN_TRANSFER_HISTORY,
@@ -354,7 +359,7 @@ namespace Binance.Spot
         /// - Response in descending order.<para />
         /// - If `isolatedSymbol` is not sent, crossed margin data will be returned.<para />
         /// - Set `archived` to `true` to query data from 6 months ago.<para />
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="isolatedSymbol">Isolated symbol.</param>
@@ -365,7 +370,7 @@ namespace Binance.Spot
         /// <param name="size">Default:10 Max:100.</param>
         /// <param name="archived">Default: false. Set to true for archived data from 6 months ago.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
-        /// <returns>Load records.</returns>
+        /// <returns>Loan records.</returns>
         public async Task<string> QueryLoanRecord(string asset, string isolatedSymbol = null, long? txId = null, long? startTime = null, long? endTime = null, long? current = null, long? size = null, bool? archived = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
@@ -395,7 +400,7 @@ namespace Binance.Spot
         /// - Response in descending order.<para />
         /// - If `isolatedSymbol` is not sent, crossed margin data will be returned.<para />
         /// - Set `archived` to `true` to query data from 6 months ago.<para />
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="isolatedSymbol">Isolated symbol.</param>
@@ -440,7 +445,7 @@ namespace Binance.Spot
         ///   - `ON_BORROW` first interest charged on borrow.<para />
         ///   - `PERIODIC_CONVERTED` interest charged per hour converted into BNB.<para />
         ///   - `ON_BORROW_CONVERTED` first interest charged on borrow converted into BNB.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="isolatedSymbol">Isolated symbol.</param>
@@ -476,7 +481,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// - Response in descending order.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="startTime">UTC timestamp in ms.</param>
         /// <param name="endTime">UTC timestamp in ms.</param>
@@ -484,8 +489,9 @@ namespace Binance.Spot
         /// <param name="current">Current querying page. Start from 1. Default:1.</param>
         /// <param name="size">Default:10 Max:100.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <param name="archived"></param>
         /// <returns>Force Liquidation History, response in descending order.</returns>
-        public async Task<string> GetForceLiquidationRecord(long? startTime = null, long? endTime = null, string isolatedSymbol = null, long? current = null, long? size = null, long? recvWindow = null)
+        public async Task<string> GetForceLiquidationRecord(long? startTime = null, long? endTime = null, string isolatedSymbol = null, long? current = null, long? size = null, long? recvWindow = null, bool? archived = null)
         {
             var result = await this.SendSignedAsync<string>(
                 GET_FORCE_LIQUIDATION_RECORD,
@@ -499,6 +505,7 @@ namespace Binance.Spot
                     { "size", size },
                     { "recvWindow", recvWindow },
                     { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                    { "archived", archived },
                 });
 
             return result;
@@ -507,7 +514,7 @@ namespace Binance.Spot
         private const string QUERY_CROSS_MARGIN_ACCOUNT_DETAILS = "/sapi/v1/margin/account";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Margin account details.</returns>
@@ -530,10 +537,11 @@ namespace Binance.Spot
         /// <summary>
         /// - Either `orderId` or `origClientOrderId` must be sent.<para />
         /// - For some historical orders `cummulativeQuoteQty` will be &lt; 0, meaning the data is not available at this time.<para />
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
-        /// <param name="isIsolated">For isolated margin or not, 'TRUE', 'FALSE', default 'FALSE'.</param>
+        /// <param name="isIsolated">* `TRUE` - For isolated margin.<para />
+        /// * `FALSE` - Default, not for isolated margin.</param>
         /// <param name="orderId">Order id.</param>
         /// <param name="origClientOrderId">Order id from client.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -562,10 +570,11 @@ namespace Binance.Spot
         /// - If the `symbol` is not sent, orders for all symbols will be returned in an array.<para />
         /// - When all symbols are returned, the number of requests counted against the rate limiter is equal to the number of symbols currently trading on the exchange.<para />
         /// - If isIsolated ="TRUE", symbol must be sent.<para />
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
-        /// <param name="isIsolated">For isolated margin or not, 'TRUE', 'FALSE', default 'FALSE'.</param>
+        /// <param name="isIsolated">* `TRUE` - For isolated margin.<para />
+        /// * `FALSE` - Default, not for isolated margin.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Margin open orders list.</returns>
         public async Task<string> QueryMarginAccountsOpenOrders(string symbol = null, bool? isIsolated = null, long? recvWindow = null)
@@ -589,11 +598,12 @@ namespace Binance.Spot
         /// <summary>
         /// - If `orderId` is set, it will get orders &gt;= that orderId. Otherwise most recent orders are returned.<para />
         /// - For some historical orders `cummulativeQuoteQty` will be &lt; 0, meaning the data is not available at this time.<para />
-        /// Weight: 1.<para />
+        /// Weight(IP): 200.<para />
         /// Request Limit: 60 times/min per IP.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
-        /// <param name="isIsolated">For isolated margin or not, 'TRUE', 'FALSE', default 'FALSE'.</param>
+        /// <param name="isIsolated">* `TRUE` - For isolated margin.<para />
+        /// * `FALSE` - Default, not for isolated margin.</param>
         /// <param name="orderId">Order id.</param>
         /// <param name="startTime">UTC timestamp in ms.</param>
         /// <param name="endTime">UTC timestamp in ms.</param>
@@ -632,14 +642,15 @@ namespace Binance.Spot
         ///   - ICEBERG quantities however do not have to be the same.<para />
         /// - Order Rate Limit.<para />
         ///   - OCO counts as 2 orders against the order rate limit.<para />
-        /// Weight: 1.
+        /// Weight(UID): 6.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
-        /// <param name="side">SELL or BUY.</param>
+        /// <param name="side"></param>
         /// <param name="quantity"></param>
         /// <param name="price">Order price.</param>
         /// <param name="stopPrice"></param>
-        /// <param name="isIsolated">For isolated margin or not, 'TRUE', 'FALSE', default 'FALSE'.</param>
+        /// <param name="isIsolated">* `TRUE` - For isolated margin.<para />
+        /// * `FALSE` - Default, not for isolated margin.</param>
         /// <param name="listClientOrderId">A unique Id for the entire orderList.</param>
         /// <param name="limitClientOrderId">A unique Id for the limit order.</param>
         /// <param name="limitIcebergQty"></param>
@@ -648,7 +659,7 @@ namespace Binance.Spot
         /// <param name="stopIcebergQty"></param>
         /// <param name="stopLimitTimeInForce"></param>
         /// <param name="newOrderRespType">Set the response JSON.</param>
-        /// <param name="sideEffectType">Default NO_SIDE_EFFECT.</param>
+        /// <param name="sideEffectType">Default `NO_SIDE_EFFECT`.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>New Margin OCO details.</returns>
         public async Task<string> MarginAccountNewOco(string symbol, Side side, decimal quantity, decimal price, decimal stopPrice, bool? isIsolated = null, string listClientOrderId = null, string limitClientOrderId = null, decimal? limitIcebergQty = null, string stopClientOrderId = null, decimal? stopLimitPrice = null, decimal? stopIcebergQty = null, TimeInForce? stopLimitTimeInForce = null, NewOrderResponseType? newOrderRespType = null, SideEffectType? sideEffectType = null, long? recvWindow = null)
@@ -686,10 +697,11 @@ namespace Binance.Spot
         /// Cancel an entire Order List for a margin account.<para />
         /// - Canceling an individual leg will cancel the entire OCO.<para />
         /// - Either `orderListId` or `listClientOrderId` must be provided.<para />
-        /// Weight: 1.
+        /// Weight(UID): 1.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
-        /// <param name="isIsolated">For isolated margin or not, 'TRUE', 'FALSE', default 'FALSE'.</param>
+        /// <param name="isIsolated">* `TRUE` - For isolated margin.<para />
+        /// * `FALSE` - Default, not for isolated margin.</param>
         /// <param name="orderListId">Order list id.</param>
         /// <param name="listClientOrderId">A unique Id for the entire orderList.</param>
         /// <param name="newClientOrderId">Used to uniquely identify this cancel. Automatically generated by default.</param>
@@ -719,9 +731,10 @@ namespace Binance.Spot
         /// <summary>
         /// Retrieves a specific OCO based on provided optional parameters.<para />
         /// - Either `orderListId` or `origClientOrderId` must be provided.<para />
-        /// Weight: 2.
+        /// Weight(IP): 10.
         /// </summary>
-        /// <param name="isIsolated">For isolated margin or not, 'TRUE', 'FALSE', default 'FALSE'.</param>
+        /// <param name="isIsolated">* `TRUE` - For isolated margin.<para />
+        /// * `FALSE` - Default, not for isolated margin.</param>
         /// <param name="symbol">Mandatory for isolated margin, not supported for cross margin.</param>
         /// <param name="orderListId">Order list id.</param>
         /// <param name="origClientOrderId">Order id from client.</param>
@@ -749,9 +762,10 @@ namespace Binance.Spot
 
         /// <summary>
         /// Retrieves all OCO for a specific margin account based on provided optional parameters.<para />
-        /// Weight: 10.
+        /// Weight(IP): 200.
         /// </summary>
-        /// <param name="isIsolated">For isolated margin or not, 'TRUE', 'FALSE', default 'FALSE'.</param>
+        /// <param name="isIsolated">* `TRUE` - For isolated margin.<para />
+        /// * `FALSE` - Default, not for isolated margin.</param>
         /// <param name="symbol">Mandatory for isolated margin, not supported for cross margin.</param>
         /// <param name="fromId">If supplied, neither `startTime` or `endTime` can be provided.</param>
         /// <param name="startTime">UTC timestamp in ms.</param>
@@ -782,9 +796,10 @@ namespace Binance.Spot
         private const string QUERY_MARGIN_ACCOUNTS_OPEN_OCO = "/sapi/v1/margin/openOrderList";
 
         /// <summary>
-        /// Weight: 3.
+        /// Weight(IP): 10.
         /// </summary>
-        /// <param name="isIsolated">For isolated margin or not, 'TRUE', 'FALSE', default 'FALSE'.</param>
+        /// <param name="isIsolated">* `TRUE` - For isolated margin.<para />
+        /// * `FALSE` - Default, not for isolated margin.</param>
         /// <param name="symbol">Mandatory for isolated margin, not supported for cross margin.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>List of Open Margin OCO orders.</returns>
@@ -808,10 +823,11 @@ namespace Binance.Spot
 
         /// <summary>
         /// - If `fromId` is set, it will get orders &gt;= that `fromId`. Otherwise most recent trades are returned.<para />
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
-        /// <param name="isIsolated">For isolated margin or not, 'TRUE', 'FALSE', default 'FALSE'.</param>
+        /// <param name="isIsolated">* `TRUE` - For isolated margin.<para />
+        /// * `FALSE` - Default, not for isolated margin.</param>
         /// <param name="startTime">UTC timestamp in ms.</param>
         /// <param name="endTime">UTC timestamp in ms.</param>
         /// <param name="fromId">Trade id to fetch from. Default gets most recent trades.</param>
@@ -843,7 +859,7 @@ namespace Binance.Spot
         /// <summary>
         /// - If `isolatedSymbol` is not sent, crossed margin data will be sent.<para />
         /// - `borrowLimit` is also available from https://www.binance.com/en/margin-fee.<para />
-        /// Weight: 5.
+        /// Weight(IP): 50.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="isolatedSymbol">Isolated symbol.</param>
@@ -869,7 +885,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// - If `isolatedSymbol` is not sent, crossed margin data will be sent.<para />
-        /// Weight: 5.
+        /// Weight(IP): 50.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="isolatedSymbol">Isolated symbol.</param>
@@ -894,7 +910,7 @@ namespace Binance.Spot
         private const string ISOLATED_MARGIN_ACCOUNT_TRANSFER = "/sapi/v1/margin/isolated/transfer";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(UID): 600.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
@@ -925,7 +941,7 @@ namespace Binance.Spot
         private const string GET_ISOLATED_MARGIN_TRANSFER_HISTORY = "/sapi/v1/margin/isolated/transfer";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="asset"></param>
@@ -935,9 +951,10 @@ namespace Binance.Spot
         /// <param name="endTime">UTC timestamp in ms.</param>
         /// <param name="current">Current querying page. Start from 1. Default:1.</param>
         /// <param name="size">Default:10 Max:100.</param>
+        /// <param name="archived">Default: false. Set to true for archived data from 6 months ago.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Isolated Margin Transfer History.</returns>
-        public async Task<string> GetIsolatedMarginTransferHistory(string symbol, string asset = null, IsolatedMarginAccountTransferType? transFrom = null, IsolatedMarginAccountTransferType? transTo = null, long? startTime = null, long? endTime = null, long? current = null, long? size = null, long? recvWindow = null)
+        public async Task<string> GetIsolatedMarginTransferHistory(string symbol, string asset = null, IsolatedMarginAccountTransferType? transFrom = null, IsolatedMarginAccountTransferType? transTo = null, long? startTime = null, long? endTime = null, long? current = null, long? size = null, string archived = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 GET_ISOLATED_MARGIN_TRANSFER_HISTORY,
@@ -952,6 +969,7 @@ namespace Binance.Spot
                     { "endTime", endTime },
                     { "current", current },
                     { "size", size },
+                    { "archived", archived },
                     { "recvWindow", recvWindow },
                     { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
                 });
@@ -964,7 +982,7 @@ namespace Binance.Spot
         /// <summary>
         /// - If "symbols" is not sent, all isolated assets will be returned.<para />
         /// - If "symbols" is sent, only the isolated assets of the sent symbols will be returned.<para />
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="symbols">Max 5 symbols can be sent; separated by ','.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -988,7 +1006,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Disable isolated margin account for a specific symbol. Each trading pair can only be deactivated once every 24 hours .<para />
-        /// Weight: 1.
+        /// Weight(UID): 300.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -1012,7 +1030,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Enable isolated margin account for a specific symbol.<para />
-        /// Weight: 1.
+        /// Weight(UID): 300.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -1036,7 +1054,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Query enabled isolated margin account limit.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Number of enabled Isolated Margin Account and its limit.</returns>
@@ -1057,7 +1075,7 @@ namespace Binance.Spot
         private const string QUERY_ISOLATED_MARGIN_SYMBOL = "/sapi/v1/margin/isolated/pair";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -1080,7 +1098,7 @@ namespace Binance.Spot
         private const string GET_ALL_ISOLATED_MARGIN_SYMBOL = "/sapi/v1/margin/isolated/allPairs";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>All Isolated Margin Symbols.</returns>
@@ -1102,7 +1120,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// - "spotBNBBurn" and "interestBNBBurn" should be sent at least one.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="spotBNBBurn">Determines whether to use BNB to pay for trading fees on SPOT.</param>
         /// <param name="interestBNBBurn">Determines whether to use BNB to pay for margin loan's interest.</param>
@@ -1127,7 +1145,7 @@ namespace Binance.Spot
         private const string GET_BNB_BURN_STATUS = "/sapi/v1/bnbBurn";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Status on BNB to pay for trading fees.</returns>
@@ -1246,6 +1264,33 @@ namespace Binance.Spot
                 {
                     { "symbol", symbol },
                     { "tier", tier },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
+        private const string QUERY_CURRENT_MARGIN_ORDER_COUNT_USAGE = "/sapi/v1/margin/rateLimit/order";
+
+        /// <summary>
+        /// Displays the user's current margin order count usage for all intervals.<para />
+        /// Weight(IP): 20.
+        /// </summary>
+        /// <param name="isIsolated">* `TRUE` - For isolated margin.<para />
+        /// * `FALSE` - Default, not for isolated margin.</param>
+        /// <param name="symbol">isolated symbol, mandatory for isolated margin.</param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Usage..</returns>
+        public async Task<string> QueryCurrentMarginOrderCountUsage(string isIsolated = null, string symbol = null, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                QUERY_CURRENT_MARGIN_ORDER_COUNT_USAGE,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "isIsolated", isIsolated },
+                    { "symbol", symbol },
                     { "recvWindow", recvWindow },
                     { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
                 });

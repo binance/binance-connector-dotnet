@@ -22,9 +22,12 @@ namespace Binance.Spot.SubAccountExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var subAccount = new SubAccount(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
 
-            var result = await subAccount.FuturesTransferForSubaccount("123@test.com", "USDT", 522.23m, FuturesTransferType.SPOT_TO_USDT_MARGINED_FUTURES);
+            var subAccount = new SubAccount(httpClient, apiKey, apiSecret);
+
+            var result = await subAccount.FuturesTransferForSubaccount("testaccount@email.com", "BTC", 1.01m, FuturesTransferType.SPOT_TO_USDT_MARGINED_FUTURES);
         }
     }
 }

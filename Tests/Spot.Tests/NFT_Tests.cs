@@ -1,6 +1,5 @@
 namespace Binance.Spot.Tests
 {
-    using System;
     using System.Net;
     using System.Net.Http;
     using Binance.Spot.Models;
@@ -26,12 +25,12 @@ namespace Binance.Spot.Tests
                     StatusCode = HttpStatusCode.OK,
                     Content = new StringContent(responseContent),
                 });
-            NFT nFT = new NFT(
+            NFT nft = new NFT(
                 new HttpClient(mockMessageHandler.Object),
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await nFT.GetNftTransactionHistory(1);
+            var result = await nft.GetNftTransactionHistory(1);
 
             Assert.Equal(responseContent, result);
         }
@@ -50,12 +49,12 @@ namespace Binance.Spot.Tests
                     StatusCode = HttpStatusCode.OK,
                     Content = new StringContent(responseContent),
                 });
-            NFT nFT = new NFT(
+            NFT nft = new NFT(
                 new HttpClient(mockMessageHandler.Object),
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await nFT.GetNftDepositHistory();
+            var result = await nft.GetNftDepositHistory();
 
             Assert.Equal(responseContent, result);
         }
@@ -74,12 +73,12 @@ namespace Binance.Spot.Tests
                     StatusCode = HttpStatusCode.OK,
                     Content = new StringContent(responseContent),
                 });
-            NFT nFT = new NFT(
+            NFT nft = new NFT(
                 new HttpClient(mockMessageHandler.Object),
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await nFT.GetNftWithdrawHistory();
+            var result = await nft.GetNftWithdrawHistory();
 
             Assert.Equal(responseContent, result);
         }
@@ -98,12 +97,12 @@ namespace Binance.Spot.Tests
                     StatusCode = HttpStatusCode.OK,
                     Content = new StringContent(responseContent),
                 });
-            NFT nFT = new NFT(
+            NFT nft = new NFT(
                 new HttpClient(mockMessageHandler.Object),
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await nFT.GetNftAsset();
+            var result = await nft.GetNftAsset();
 
             Assert.Equal(responseContent, result);
         }

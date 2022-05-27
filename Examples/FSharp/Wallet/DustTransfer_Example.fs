@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let wallet = new Wallet(httpClient)
+    let wallet = new Wallet(httpClient, apiKey, apiSecret)
     
-    let result = wallet.DustTransfer(new string[] {"BTC","USDT"}) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = wallet.DustTransfer(new string[] { "BTC", "USDT" }) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

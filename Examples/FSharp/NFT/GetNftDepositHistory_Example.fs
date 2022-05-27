@@ -16,8 +16,11 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let nFT = new NFT(httpClient)
+    let nFT = new NFT(httpClient, apiKey, apiSecret)
     
     let result = nFT.GetNftDepositHistory() |> Async.AwaitTask |> Async.RunSynchronously
     

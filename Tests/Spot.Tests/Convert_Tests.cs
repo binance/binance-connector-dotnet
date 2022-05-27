@@ -30,7 +30,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await convert.GetConvertTradeHistory(1639646747000, 1642325147000);
+            var result = await convert.GetConvertTradeHistory(1563189166000, 1563282766000);
 
             Assert.Equal(responseContent, result);
         }

@@ -22,7 +22,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Test connectivity to the Rest API.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <returns>OK.</returns>
         public async Task<string> TestConnectivity()
@@ -38,7 +38,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Test connectivity to the Rest API and get the current server time.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <returns>Binance server UTC timestamp.</returns>
         public async Task<string> CheckServerTime()
@@ -55,10 +55,10 @@ namespace Binance.Spot
         /// <summary>
         /// Current exchange trading rules and symbol information.<para />
         /// - If any symbol provided in either symbol or symbols do not exist, the endpoint will throw an error.<para />
-        /// Weight: 10.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
-        /// <param name="symbols">Trading symbols, e.g. ["BTCUSDT","BNBBTC"].</param>
+        /// <param name="symbols"></param>
         /// <returns>Current exchange trading rules and symbol information.</returns>
         public async Task<string> ExchangeInformation(string symbol = null, string symbols = null)
         {
@@ -77,15 +77,15 @@ namespace Binance.Spot
         private const string ORDER_BOOK = "/api/v3/depth";
 
         /// <summary>
-        /// | Limit               | Weight  |.<para />
-        /// | -------------       |---------|.<para />
-        /// | 1-100               | 1       |.<para />
-        /// | 101-500             | 5       |.<para />
-        /// | 501-1000            | 10      |.<para />
-        /// | 1001-5000           | 50      |.
+        /// | Limit               | Weight(IP)  |.<para />
+        /// |---------------------|-------------|.<para />
+        /// | 1-100               | 1           |.<para />
+        /// | 101-500             | 5           |.<para />
+        /// | 501-1000            | 10          |.<para />
+        /// | 1001-5000           | 50          |.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
-        /// <param name="limit">Default 100; max 5000. If limit > 5000, then the response will truncate to 5000.</param>
+        /// <param name="limit">If limit > 5000, then the response will truncate to 5000.</param>
         /// <returns>Order book.</returns>
         public async Task<string> OrderBook(string symbol, int? limit = null)
         {
@@ -105,7 +105,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Get recent trades.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="limit">Default 500; max 1000.</param>
@@ -128,7 +128,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Get older market trades.<para />
-        /// Weight: 5.
+        /// Weight(IP): 5.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="limit">Default 500; max 1000.</param>
@@ -155,7 +155,7 @@ namespace Binance.Spot
         /// Get compressed, aggregate trades. Trades that fill at the time, from the same order, with the same price will have the quantity aggregated.<para />
         /// - If `startTime` and `endTime` are sent, time between startTime and endTime must be less than 1 hour.<para />
         /// - If `fromId`, `startTime`, and `endTime` are not sent, the most recent aggregate trades will be returned.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="fromId">Trade id to fetch from. Default gets most recent trades.</param>
@@ -183,10 +183,10 @@ namespace Binance.Spot
         private const string KLINE_CANDLESTICK_DATA = "/api/v3/klines";
 
         /// <summary>
-        /// Kline/candlestick bars for a symbol..<para />
+        /// Kline/candlestick bars for a symbol.<para />
         /// Klines are uniquely identified by their open time.<para />
         /// - If `startTime` and `endTime` are not sent, the most recent klines are returned.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="interval">kline intervals.</param>
@@ -215,7 +215,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Current average price for a symbol.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <returns>Average price.</returns>
@@ -237,13 +237,14 @@ namespace Binance.Spot
         /// <summary>
         /// 24 hour rolling window price change statistics. Careful when accessing this with no symbol.<para />
         /// - If the symbol is not sent, tickers for all symbols will be returned in an array.<para />
-        /// Weight:.<para />
-        /// `1` for a single symbol;.<para />
-        /// `40` when the symbol parameter is omitted.
+        /// Weight(IP):.<para />
+        /// - `1` for a single symbol;.<para />
+        /// - `40` when the symbol parameter is omitted;.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
+        /// <param name="symbols"></param>
         /// <returns>24hr ticker.</returns>
-        public async Task<string> TwentyFourHrTickerPriceChangeStatistics(string symbol = null)
+        public async Task<string> TwentyFourHrTickerPriceChangeStatistics(string symbol = null, string symbols = null)
         {
             var result = await this.SendPublicAsync<string>(
                 TWENTY_FOUR_HR_TICKER_PRICE_CHANGE_STATISTICS,
@@ -251,6 +252,7 @@ namespace Binance.Spot
                 query: new Dictionary<string, object>
                 {
                     { "symbol", symbol },
+                    { "symbols", symbols },
                 });
 
             return result;
@@ -261,13 +263,14 @@ namespace Binance.Spot
         /// <summary>
         /// Latest price for a symbol or symbols.<para />
         /// - If the symbol is not sent, prices for all symbols will be returned in an array.<para />
-        /// Weight:.<para />
-        /// `1` for a single symbol;.<para />
-        /// `2` when the symbol parameter is omitted.
+        /// Weight(IP):.<para />
+        /// - `1` for a single symbol;.<para />
+        /// - `2` when the symbol parameter is omitted;.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
+        /// <param name="symbols"></param>
         /// <returns>Price ticker.</returns>
-        public async Task<string> SymbolPriceTicker(string symbol = null)
+        public async Task<string> SymbolPriceTicker(string symbol = null, string symbols = null)
         {
             var result = await this.SendPublicAsync<string>(
                 SYMBOL_PRICE_TICKER,
@@ -275,6 +278,7 @@ namespace Binance.Spot
                 query: new Dictionary<string, object>
                 {
                     { "symbol", symbol },
+                    { "symbols", symbols },
                 });
 
             return result;
@@ -285,13 +289,14 @@ namespace Binance.Spot
         /// <summary>
         /// Best price/qty on the order book for a symbol or symbols.<para />
         /// - If the symbol is not sent, bookTickers for all symbols will be returned in an array.<para />
-        /// Weight:.<para />
-        /// 1 for a single symbol;.<para />
-        /// 2 when the symbol parameter is omitted.
+        /// Weight(IP):.<para />
+        /// - `1` for a single symbol;.<para />
+        /// - `2` when the symbol parameter is omitted;.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
+        /// <param name="symbols"></param>
         /// <returns>Order book ticker.</returns>
-        public async Task<string> SymbolOrderBookTicker(string symbol = null)
+        public async Task<string> SymbolOrderBookTicker(string symbol = null, string symbols = null)
         {
             var result = await this.SendPublicAsync<string>(
                 SYMBOL_ORDER_BOOK_TICKER,
@@ -299,6 +304,7 @@ namespace Binance.Spot
                 query: new Dictionary<string, object>
                 {
                     { "symbol", symbol },
+                    { "symbols", symbols },
                 });
 
             return result;

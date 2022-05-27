@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let bSwap = new BSwap(httpClient)
+    let bSwap = new BSwap(httpClient, apiKey, apiSecret)
     
-    let result = bSwap.AddLiquidity(2, "USDT", 522.23m) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = bSwap.AddLiquidity(2, "BTC", 12415.2m) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

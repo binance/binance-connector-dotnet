@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let subAccount = new SubAccount(httpClient)
+    let subAccount = new SubAccount(httpClient, apiKey, apiSecret)
     
-    let result = subAccount.MarginTransferForSubaccount("123@test.com", "USDT", 522.23m, MarginTransferType.SPOT_TO_MARGIN) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = subAccount.MarginTransferForSubaccount("testaccount@email.com", "BTC", 1.01m, MarginTransferType.SPOT_TO_MARGIN) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

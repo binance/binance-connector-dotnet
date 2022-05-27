@@ -1,5 +1,37 @@
 # Changelog
 
+## 1.5.0 - 2022-05-27
+### Added
+- New endpoint for Binance Code:
+  - `GET /sapi/v1/giftcard/cryptography/rsa-public-key` to fetch RSA public key.
+
+- New endpoints for Staking:
+  - `GET /sapi/v1/staking/productList` to get Staking product list
+  - `POST /sapi/v1/staking/purchase` to stake product
+  -   - `POST /sapi/v1/staking/redeem` to redeem product
+  - `GET /sapi/v1/staking/position` to get Staking product holding position
+  - `GET /sapi/v1/staking/stakingRecord` to inquiry Staking history records
+  - `POST /sapi/v1/staking/setAutoStaking` to set Auto Staking function
+  - `GET /sapi/v1/staking/personalLeftQuota` to inquiry Staking left quota
+
+- New endpoint for Portfolio Margin:
+  - `GET /sapi/v1/portfolio/account` to support query portfolio margin account info
+
+- New endpoint for BSwap:
+  - `GET /sapi/v1/bswap/removeLiquidityPreview` to get remove liquidity preview
+
+### Changed
+- Update endpoint for Binance Code:
+  - `POST /sapi/v1/giftcard/redeemCode`: new optional parameter externalUid. Each external unique ID represents a unique user on the partner platform. The function helps you to identify the redemption behavior of different users.
+
+- Update endpoints for Market:
+  - `GET /api/v3/ticker/24hr`, `GET /api/v3/ticker/price` and `GET /api/v3/ticker/bookTicker` new optional parameter symbols.
+
+### Fixed
+- Added missing `Market` examples.
+- Updated endpoint documentation and examples to latest version.
+- Added missing `Mining` endpoint parameters.
+
 ## 1.4.0 - 2022-04-20
 ### Added
 - New endpoint for Sub-Account

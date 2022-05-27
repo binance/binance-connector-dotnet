@@ -16,8 +16,11 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let rebate = new Rebate(httpClient)
+    let rebate = new Rebate(httpClient, apiKey, apiSecret)
     
     let result = rebate.GetSpotRebateHistoryRecords() |> Async.AwaitTask |> Async.RunSynchronously
     

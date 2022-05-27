@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let blvt = new BLVT(httpClient)
+    let bLVT = new BLVT(httpClient, apiKey, apiSecret)
     
-    let result = BLVT.GetBlvtUserLimitInfo() |> Async.AwaitTask |> Async.RunSynchronously
+    let result = bLVT.GetBlvtUserLimitInfo() |> Async.AwaitTask |> Async.RunSynchronously
     
     0

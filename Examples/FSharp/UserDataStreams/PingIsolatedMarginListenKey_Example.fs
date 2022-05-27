@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let userDataStreams = new UserDataStreams(httpClient)
+    let userDataStreams = new UserDataStreams(httpClient, apiKey, apiSecret)
     
-    let result = userDataStreams.PingIsolatedMarginListenKey("T3ee22BIYuWqmvne0HNq2A2WsFlEtLhvWCtItw6ffhhdmjifQ2tRbuKkTHhr") |> Async.AwaitTask |> Async.RunSynchronously
+    let result = userDataStreams.PingIsolatedMarginListenKey("BTCUSDT", "listen-key") |> Async.AwaitTask |> Async.RunSynchronously
     
     0

@@ -22,9 +22,12 @@ namespace Binance.Spot.MarginAccountTradeExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var marginAccountTrade = new MarginAccountTrade(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
 
-            var result = await marginAccountTrade.MarginAccountNewOco("LTCBTC", Side.BUY, 0.624363m, 522.23m, 515.38276m);
+            var marginAccountTrade = new MarginAccountTrade(httpClient, apiKey, apiSecret);
+
+            var result = await marginAccountTrade.MarginAccountNewOco("BNBUSDT", Side.SELL, 0.1m, 400.15m, 390.3m);
         }
     }
 }

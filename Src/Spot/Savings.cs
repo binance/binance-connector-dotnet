@@ -21,10 +21,10 @@ namespace Binance.Spot
         private const string GET_FLEXIBLE_PRODUCT_LIST = "/sapi/v1/lending/daily/product/list";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
-        /// <param name="status">"ALL", "SUBSCRIBABLE", "UNSUBSCRIBABLE"; Default: 'ALL'.</param>
-        /// <param name="featured">"ALL", "TRUE"; Default: "ALL".</param>
+        /// <param name="status">Default `ALL`.</param>
+        /// <param name="featured">Default `ALL`.</param>
         /// <param name="current">Current querying page. Start from 1. Default:1.</param>
         /// <param name="size">Default:10 Max:100.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -50,7 +50,7 @@ namespace Binance.Spot
         private const string GET_LEFT_DAILY_PURCHASE_QUOTA_OF_FLEXIBLE_PRODUCT = "/sapi/v1/lending/daily/userLeftQuota";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="productId"></param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -73,7 +73,7 @@ namespace Binance.Spot
         private const string PURCHASE_FLEXIBLE_PRODUCT = "/sapi/v1/lending/daily/purchase";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="productId"></param>
         /// <param name="amount"></param>
@@ -98,7 +98,7 @@ namespace Binance.Spot
         private const string GET_LEFT_DAILY_REDEMPTION_QUOTA_OF_FLEXIBLE_PRODUCT = "/sapi/v1/lending/daily/userRedemptionQuota";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="productId"></param>
         /// <param name="type">"FAST", "NORMAL".</param>
@@ -123,7 +123,7 @@ namespace Binance.Spot
         private const string REDEEM_FLEXIBLE_PRODUCT = "/sapi/v1/lending/daily/redeem";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="productId"></param>
         /// <param name="amount"></param>
@@ -150,7 +150,7 @@ namespace Binance.Spot
         private const string GET_FLEXIBLE_PRODUCT_POSITION = "/sapi/v1/lending/daily/token/position";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -173,13 +173,13 @@ namespace Binance.Spot
         private const string GET_FIXED_AND_ACTIVITY_PROJECT_LIST = "/sapi/v1/lending/project/list";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="type">"ACTIVITY", "CUSTOMIZED_FIXED".</param>
         /// <param name="asset"></param>
-        /// <param name="status">"ALL", "SUBSCRIBABLE", "UNSUBSCRIBABLE"; Default: 'ALL'.</param>
+        /// <param name="status">Default `ALL`.</param>
         /// <param name="isSortAsc">default "true".</param>
-        /// <param name="sortBy">"START_TIME", "LOT_SIZE", "INTEREST_RATE", "DURATION"; default "START_TIME.</param>
+        /// <param name="sortBy">Default `START_TIME`.</param>
         /// <param name="current">Current querying page. Start from 1. Default:1.</param>
         /// <param name="size">Default:10 Max:100.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -208,7 +208,7 @@ namespace Binance.Spot
         private const string PURCHASE_FIXED_ACTIVITY_PROJECT = "/sapi/v1/lending/customizedFixed/purchase";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="projectId"></param>
         /// <param name="lot"></param>
@@ -233,11 +233,11 @@ namespace Binance.Spot
         private const string GET_FIXED_ACTIVITY_PROJECT_POSITION = "/sapi/v1/lending/project/position/list";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="asset"></param>
         /// <param name="projectId"></param>
-        /// <param name="status">"ALL", "SUBSCRIBABLE", "UNSUBSCRIBABLE"; Default: 'ALL'.</param>
+        /// <param name="status">Default `ALL`.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>List of fixed project positions.</returns>
         public async Task<string> GetFixedActivityProjectPosition(string asset, string projectId = null, PositionStatus? status = null, long? recvWindow = null)
@@ -260,7 +260,7 @@ namespace Binance.Spot
         private const string LENDING_ACCOUNT = "/sapi/v1/lending/union/account";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Lending account.</returns>
@@ -283,9 +283,11 @@ namespace Binance.Spot
         /// <summary>
         /// - The time between startTime and endTime cannot be longer than 30 days.<para />
         /// - If startTime and endTime are both not sent, then the last 30 days' data will be returned.<para />
-        /// Weight: 1.
+        /// Weigh(IP): 1.
         /// </summary>
-        /// <param name="lendingType">"DAILY" for flexible, "ACTIVITY" for activity, "CUSTOMIZED_FIXED" for fixed.</param>
+        /// <param name="lendingType">* `DAILY` - for flexible.<para />
+        /// * `ACTIVITY` - for activity.<para />
+        /// * `CUSTOMIZED_FIXED` for fixed.</param>
         /// <param name="asset"></param>
         /// <param name="startTime">UTC timestamp in ms.</param>
         /// <param name="endTime">UTC timestamp in ms.</param>
@@ -318,9 +320,11 @@ namespace Binance.Spot
         /// <summary>
         /// - The time between startTime and endTime cannot be longer than 30 days.<para />
         /// - If startTime and endTime are both not sent, then the last 30 days' data will be returned.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
-        /// <param name="lendingType">"DAILY" for flexible, "ACTIVITY" for activity, "CUSTOMIZED_FIXED" for fixed.</param>
+        /// <param name="lendingType">* `DAILY` - for flexible.<para />
+        /// * `ACTIVITY` - for activity.<para />
+        /// * `CUSTOMIZED_FIXED` for fixed.</param>
         /// <param name="asset"></param>
         /// <param name="startTime">UTC timestamp in ms.</param>
         /// <param name="endTime">UTC timestamp in ms.</param>
@@ -353,9 +357,11 @@ namespace Binance.Spot
         /// <summary>
         /// - The time between startTime and endTime cannot be longer than 30 days.<para />
         /// - If startTime and endTime are both not sent, then the last 30 days' data will be returned.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
-        /// <param name="lendingType">"DAILY" for flexible, "ACTIVITY" for activity, "CUSTOMIZED_FIXED" for fixed.</param>
+        /// <param name="lendingType">* `DAILY` - for flexible.<para />
+        /// * `ACTIVITY` - for activity.<para />
+        /// * `CUSTOMIZED_FIXED` for fixed.</param>
         /// <param name="asset"></param>
         /// <param name="startTime">UTC timestamp in ms.</param>
         /// <param name="endTime">UTC timestamp in ms.</param>
@@ -387,7 +393,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// - PositionId is mandatory parameter for fixed position.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="projectId"></param>
         /// <param name="lot"></param>

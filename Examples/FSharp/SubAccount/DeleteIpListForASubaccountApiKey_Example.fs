@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let subAccount = new SubAccount(httpClient)
+    let subAccount = new SubAccount(httpClient, apiKey, apiSecret)
     
-    let result = subAccount.DeleteIpListForASubaccountApiKey("test@email", "api-key", "1.1.1.1") |> Async.AwaitTask |> Async.RunSynchronously
+    let result = subAccount.DeleteIpListForASubaccountApiKey("testaccount@email.com", "subAccountApiKey", "000.000.000.000") |> Async.AwaitTask |> Async.RunSynchronously
     
     0

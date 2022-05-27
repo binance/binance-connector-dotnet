@@ -16,8 +16,11 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let futures = new Futures(httpClient)
+    let futures = new Futures(httpClient, apiKey, apiSecret)
     
     let result = futures.NewFutureAccountTransfer("USDT", 522.23m, FuturesTransferType.SPOT_TO_USDT_MARGINED_FUTURES) |> Async.AwaitTask |> Async.RunSynchronously
     

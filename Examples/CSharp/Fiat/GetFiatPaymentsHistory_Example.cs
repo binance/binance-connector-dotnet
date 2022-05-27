@@ -22,7 +22,10 @@ namespace Binance.Spot.FiatExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var fiat = new Fiat(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
+
+            var fiat = new Fiat(httpClient, apiKey, apiSecret);
 
             var result = await fiat.GetFiatPaymentsHistory(FiatPaymentTransactionType.BUY);
         }

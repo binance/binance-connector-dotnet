@@ -22,9 +22,12 @@ namespace Binance.Spot.MiningExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            var mining = new Mining(httpClient);
+            string apiKey = "api-key";
+            string apiSecret = "api-secret";
 
-            var result = await mining.HashrateResaleDetail();
+            var mining = new Mining(httpClient, apiKey, apiSecret);
+
+            var result = await mining.HashrateResaleDetail("168", "username");
         }
     }
 }

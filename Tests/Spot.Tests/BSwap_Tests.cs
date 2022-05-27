@@ -1,6 +1,5 @@
 namespace Binance.Spot.Tests
 {
-    using System;
     using System.Net;
     using System.Net.Http;
     using Binance.Spot.Models;
@@ -17,7 +16,7 @@ namespace Binance.Spot.Tests
         [Fact]
         public async void ListAllSwapPools_Response()
         {
-            var responseContent = "[{\"poolId\":2,\"poolName\":\"BUSD/USDT\",\"assets\":[\"BUSD\",\"USDT\"]},{\"poolId\":3,\"poolName\":\"BUSD/DAI\",\"assets\":[\"BUSD\",\"DAI\"]},{\"poolId\":4,\"poolName\":\"USDT/DAI\",\"assets\":[\"USDT\",\"DAI\"]}]";
+            var responseContent = "[{\"poolId\":2,\"poolName\":\"BUSD/USDT\",\"assets\":[\"\"]}]";
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
                 .SetupSendAsync("/sapi/v1/bswap/pools", HttpMethod.Get)
@@ -79,7 +78,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await bSwap.AddLiquidity(2, "USDT", 522.23m);
+            var result = await bSwap.AddLiquidity(2, "BTC", 12415.2m);
 
             Assert.Equal(responseContent, result);
         }
@@ -103,7 +102,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await bSwap.RemoveLiquidity(2, LiquidityRemovalType.SINGLE, 522.23m);
+            var result = await bSwap.RemoveLiquidity(2, LiquidityRemovalType.SINGLE, 12415.2m);
 
             Assert.Equal(responseContent, result);
         }
@@ -151,7 +150,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await bSwap.RequestQuote("USDT", "BUSD", 300000m);
+            var result = await bSwap.RequestQuote("USDT", "BUSD", 12415.2m);
 
             Assert.Equal(responseContent, result);
         }
@@ -175,7 +174,7 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await bSwap.Swap("USDT", "BUSD", 300000m);
+            var result = await bSwap.Swap("USDT", "BUSD", 12415.2m);
 
             Assert.Equal(responseContent, result);
         }
@@ -247,7 +246,31 @@ namespace Binance.Spot.Tests
                 apiKey: this.apiKey,
                 apiSecret: this.apiSecret);
 
-            var result = await bSwap.AddLiquidityPreview(2, "SINGLE", "USDT", 1.1m);
+            var result = await bSwap.AddLiquidityPreview(2, "SINGLE", "USDT", 12415.2m);
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
+        #region RemoveLiquidityPreview
+        [Fact]
+        public async void RemoveLiquidityPreview_Response()
+        {
+            var responseContent = "{\"quoteAsset\":\"USDT\",\"baseAsset\":\"BUSD\",\"quoteAmt\":300000,\"baseAmt\":299975,\"price\":1.00008334}";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/bswap/removeLiquidityPreview", HttpMethod.Get)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            BSwap bSwap = new BSwap(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await bSwap.RemoveLiquidityPreview(2, "SINGLE", "USDT", 12415.2m);
 
             Assert.Equal(responseContent, result);
         }

@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let wallet = new Wallet(httpClient)
+    let wallet = new Wallet(httpClient, apiKey, apiSecret)
     
-    let result = wallet.UserUniversalTransfer(UniversalTransferType.MAIN_UMFUTURE, "BNB", 2.1m) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = wallet.UserUniversalTransfer(UniversalTransferType.MAIN_UMFUTURE, "BTC", 1.01m) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

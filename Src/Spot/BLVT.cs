@@ -21,7 +21,7 @@ namespace Binance.Spot
         private const string GET_BLVT_INFO = "/sapi/v1/blvt/tokenInfo";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="tokenName">BTCDOWN, BTCUP.</param>
         /// <returns>List of token information.</returns>
@@ -41,7 +41,7 @@ namespace Binance.Spot
         private const string SUBSCRIBE_BLVT = "/sapi/v1/blvt/subscribe";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="tokenName">BTCDOWN, BTCUP.</param>
         /// <param name="cost">Spot balance.</param>
@@ -67,7 +67,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// - Only the data of the latest 90 days is available.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="tokenName">BTCDOWN, BTCUP.</param>
         /// <param name="id"></param>
@@ -98,7 +98,7 @@ namespace Binance.Spot
         private const string REDEEM_BLVT = "/sapi/v1/blvt/redeem";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="tokenName">BTCDOWN, BTCUP.</param>
         /// <param name="amount"></param>
@@ -124,7 +124,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// - Only the data of the latest 90 days is available.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="tokenName">BTCDOWN, BTCUP.</param>
         /// <param name="id"></param>
@@ -155,7 +155,7 @@ namespace Binance.Spot
         private const string GET_BLVT_USER_LIMIT_INFO = "/sapi/v1/blvt/userLimit";
 
         /// <summary>
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="tokenName">BTCDOWN, BTCUP.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>

@@ -19,6 +19,6 @@ let main argv =
     
     let market = new Market(httpClient)
     
-    let result = market.CurrentAveragePrice("BTCUSDT") |> Async.AwaitTask |> Async.RunSynchronously
+    let result = market.CurrentAveragePrice("BNBUSDT") |> Async.AwaitTask |> Async.RunSynchronously
     
     0

@@ -16,9 +16,12 @@ let main argv =
 
     let loggingHandler = new BinanceLoggingHandler(logger)
     let httpClient = new HttpClient(loggingHandler)
+
+    let apiKey = "api-key";
+    let apiSecret = "api-secret";
     
-    let subAccount = new SubAccount(httpClient)
+    let subAccount = new SubAccount(httpClient, apiKey, apiSecret)
     
-    let result = subAccount.EnableOrDisableIpRestrictionForASubaccountApiKey("test@email", "api-key", false) |> Async.AwaitTask |> Async.RunSynchronously
+    let result = subAccount.EnableOrDisableIpRestrictionForASubaccountApiKey("testaccount@email.com", "subAccountApiKey", true) |> Async.AwaitTask |> Async.RunSynchronously
     
     0

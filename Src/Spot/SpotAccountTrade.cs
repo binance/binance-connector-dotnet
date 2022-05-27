@@ -23,10 +23,10 @@ namespace Binance.Spot
         /// <summary>
         /// Test new order creation and signature/recvWindow long.<para />
         /// Creates and validates a new order but does not send it into the matching engine.<para />
-        /// Weight: 1.
-        /// </summary>        
+        /// Weight(IP): 1.
+        /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
-        /// <param name="side">SELL or BUY.</param>
+        /// <param name="side"></param>
         /// <param name="type">Order type.</param>
         /// <param name="timeInForce">Order time in force.</param>
         /// <param name="quantity">Order quantity.</param>
@@ -80,10 +80,10 @@ namespace Binance.Spot
         /// Trigger order price rules against market price for both `MARKET` and `LIMIT` versions:.<para />
         /// - Price above market price: `STOP_LOSS` `BUY`, `TAKE_PROFIT` `SELL`.<para />
         /// - Price below market price: `STOP_LOSS` `SELL`, `TAKE_PROFIT` `BUY`.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
-        /// <param name="side">SELL or BUY.</param>
+        /// <param name="side"></param>
         /// <param name="type">Order type.</param>
         /// <param name="timeInForce">Order time in force.</param>
         /// <param name="quantity">Order quantity.</param>
@@ -127,7 +127,7 @@ namespace Binance.Spot
         /// <summary>
         /// Cancel an active order.<para />
         /// Either `orderId` or `origClientOrderId` must be sent.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="orderId">Order id.</param>
@@ -156,9 +156,9 @@ namespace Binance.Spot
         private const string CANCEL_ALL_OPEN_ORDERS_ON_A_SYMBOL = "/api/v3/openOrders";
 
         /// <summary>
-        /// Cancels all active orders on a symbol..<para />
+        /// Cancels all active orders on a symbol.<para />
         /// This includes OCO orders.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -184,7 +184,7 @@ namespace Binance.Spot
         /// Check an order's status.<para />
         /// - Either `orderId` or `origClientOrderId` must be sent.<para />
         /// - For some historical orders `cummulativeQuoteQty` will be &lt; 0, meaning the data is not available at this time.<para />
-        /// Weight: 2.
+        /// Weight(IP): 2.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="orderId">Order id.</param>
@@ -212,9 +212,9 @@ namespace Binance.Spot
 
         /// <summary>
         /// Get all open orders on a symbol. Careful when accessing this with no symbol.<para />
-        /// Weight:.<para />
-        /// `3` for a single symbol;.<para />
-        /// `40` when the symbol parameter is omitted.
+        /// Weight(IP):.<para />
+        /// - `3` for a single symbol;.<para />
+        /// - `40` when the symbol parameter is omitted;.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
@@ -237,11 +237,11 @@ namespace Binance.Spot
         private const string ALL_ORDERS = "/api/v3/allOrders";
 
         /// <summary>
-        /// Get all account orders; active, canceled, or filled.<para />
+        /// Get all account orders; active, canceled, or filled..<para />
         /// - If `orderId` is set, it will get orders &gt;= that `orderId`. Otherwise most recent orders are returned.<para />
         /// - For some historical orders `cummulativeQuoteQty` will be &lt; 0, meaning the data is not available at this time.<para />
         /// - If `startTime` and/or `endTime` provided, `orderId` is not required.<para />
-        /// Weight: 10.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="orderId">Order id.</param>
@@ -282,10 +282,10 @@ namespace Binance.Spot
         /// - Order Rate Limit.<para />
         ///     - `OCO` counts as 2 orders against the order rate limit.<para />
         ///     .<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
-        /// <param name="side">SELL or BUY.</param>
+        /// <param name="side"></param>
         /// <param name="quantity"></param>
         /// <param name="price">Order price.</param>
         /// <param name="stopPrice"></param>
@@ -300,7 +300,7 @@ namespace Binance.Spot
         /// <param name="newOrderRespType">Set the response JSON.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>New OCO details.</returns>
-        public async Task<string> NewOco(string symbol, Side side, decimal quantity, decimal price, decimal stopPrice, string listClientOrderId = null, string limitClientOrderId = null, decimal? trailingDelta = null, decimal? limitIcebergQty = null, string stopClientOrderId = null, decimal? stopLimitPrice = null, decimal? stopIcebergQty = null, TimeInForce? stopLimitTimeInForce = null, NewOrderResponseType? newOrderRespType = null, long? recvWindow = null)
+        public async Task<string> NewOco(string symbol, Side side, decimal quantity, decimal price, decimal stopPrice, string listClientOrderId = null, string limitClientOrderId = null, decimal? limitIcebergQty = null, decimal? trailingDelta = null, string stopClientOrderId = null, decimal? stopLimitPrice = null, decimal? stopIcebergQty = null, TimeInForce? stopLimitTimeInForce = null, NewOrderResponseType? newOrderRespType = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 NEW_OCO,
@@ -333,7 +333,7 @@ namespace Binance.Spot
         /// <summary>
         /// Cancel an entire Order List.<para />
         /// Canceling an individual leg will cancel the entire OCO.<para />
-        /// Weight: 1.
+        /// Weight(IP): 1.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="orderListId">Order list id.</param>
@@ -363,7 +363,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Retrieves a specific OCO based on provided optional parameters.<para />
-        /// Weight: 2.
+        /// Weight(IP): 2.
         /// </summary>
         /// <param name="orderListId">Order list id.</param>
         /// <param name="origClientOrderId">Order id from client.</param>
@@ -389,7 +389,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Retrieves all OCO based on provided optional parameters.<para />
-        /// Weight: 10.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="fromId">Trade id to fetch from. Default gets most recent trades.</param>
         /// <param name="startTime">UTC timestamp in ms.</param>
@@ -418,7 +418,7 @@ namespace Binance.Spot
         private const string QUERY_OPEN_OCO = "/api/v3/openOrderList";
 
         /// <summary>
-        /// Weight: 3.
+        /// Weight(IP): 3.
         /// </summary>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>List of OCO orders.</returns>
@@ -440,7 +440,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// Get current account information.<para />
-        /// Weight: 10.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Account details.</returns>
@@ -463,7 +463,7 @@ namespace Binance.Spot
         /// <summary>
         /// Get trades for a specific account and symbol.<para />
         /// If `fromId` is set, it will get id &gt;= that `fromId`. Otherwise most recent orders are returned.<para />
-        /// Weight: 10.
+        /// Weight(IP): 10.
         /// </summary>
         /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
         /// <param name="orderId">This can only be used in combination with symbol.</param>
