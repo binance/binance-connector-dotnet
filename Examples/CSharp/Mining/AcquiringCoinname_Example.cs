@@ -25,7 +25,7 @@ namespace Binance.Spot.MiningExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var mining = new Mining(httpClient, apiKey, apiSecret);
+            var mining = new Mining(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await mining.AcquiringCoinname();
         }

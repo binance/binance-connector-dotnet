@@ -21,6 +21,18 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+    - name: Restore CSharp examples dependencies
+      working-directory: ./Examples/CSharp
+      run: dotnet restore
+    - name: Build CSharp examples
+      working-directory: ./Examples/CSharp
+      run: dotnet build --no-restore
+    - name: Restore FSharp examples dependencies
+      working-directory: ./Examples/FSharp
+      run: dotnet restore
+    - name: Build FSharp examples
+      working-directory: ./Examples/FSharp
+      run: dotnet build --no-restore
     - name: Install formatter
       run: dotnet tool update --global dotnet-format
     - name: Diagnose Formatting

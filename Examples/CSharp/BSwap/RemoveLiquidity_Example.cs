@@ -25,7 +25,7 @@ namespace Binance.Spot.BSwapExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var bSwap = new BSwap(httpClient, apiKey, apiSecret);
+            var bSwap = new BSwap(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await bSwap.RemoveLiquidity(2, LiquidityRemovalType.SINGLE, 12415.2m);
         }

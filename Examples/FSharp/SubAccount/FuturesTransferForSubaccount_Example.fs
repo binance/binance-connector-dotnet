@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let subAccount = new SubAccount(httpClient, apiKey, apiSecret)
+    let subAccount = new SubAccount(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = subAccount.FuturesTransferForSubaccount("testaccount@email.com", "BTC", 1.01m, FuturesTransferType.SPOT_TO_USDT_MARGINED_FUTURES) |> Async.AwaitTask |> Async.RunSynchronously
     

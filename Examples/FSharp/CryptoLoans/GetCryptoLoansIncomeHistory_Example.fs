@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let cryptoLoans = new CryptoLoans(httpClient, apiKey, apiSecret)
+    let cryptoLoans = new CryptoLoans(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = cryptoLoans.GetCryptoLoansIncomeHistory("BTC") |> Async.AwaitTask |> Async.RunSynchronously
     

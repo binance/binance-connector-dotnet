@@ -25,7 +25,7 @@ namespace Binance.Spot.SpotAccountTradeExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var spotAccountTrade = new SpotAccountTrade(httpClient, apiKey, apiSecret);
+            var spotAccountTrade = new SpotAccountTrade(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await spotAccountTrade.NewOco("BNBUSDT", Side.SELL, 0.1m, 400.15m, 390.3m);
         }

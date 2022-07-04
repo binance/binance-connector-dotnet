@@ -25,7 +25,7 @@ namespace Binance.Spot.UserDataStreamsExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var userDataStreams = new UserDataStreams(httpClient, apiKey, apiSecret);
+            var userDataStreams = new UserDataStreams(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await userDataStreams.CreateIsolatedMarginListenKey("BTCUSDT");
         }

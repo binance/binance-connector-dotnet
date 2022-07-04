@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let market = new Market(httpClient, apiKey, apiSecret)
+    let market = new Market(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = market.OldTradeLookup("BNBUSDT") |> Async.AwaitTask |> Async.RunSynchronously
     

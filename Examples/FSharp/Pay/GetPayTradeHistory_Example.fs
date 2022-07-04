@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let pay = new Pay(httpClient, apiKey, apiSecret)
+    let pay = new Pay(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = pay.GetPayTradeHistory() |> Async.AwaitTask |> Async.RunSynchronously
     

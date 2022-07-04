@@ -25,7 +25,7 @@ namespace Binance.Spot.GiftCardExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var giftCard = new GiftCard(httpClient, apiKey, apiSecret);
+            var giftCard = new GiftCard(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await giftCard.RedeemBinanceCode("000000");
         }

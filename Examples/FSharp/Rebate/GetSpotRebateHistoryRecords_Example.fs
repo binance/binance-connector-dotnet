@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let rebate = new Rebate(httpClient, apiKey, apiSecret)
+    let rebate = new Rebate(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = rebate.GetSpotRebateHistoryRecords() |> Async.AwaitTask |> Async.RunSynchronously
     

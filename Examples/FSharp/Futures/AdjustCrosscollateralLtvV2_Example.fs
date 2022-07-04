@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let futures = new Futures(httpClient, apiKey, apiSecret)
+    let futures = new Futures(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = futures.AdjustCrosscollateralLtvV2("BUSD", "BTC", 5m, LoanDirection.ADDITIONAL) |> Async.AwaitTask |> Async.RunSynchronously
     

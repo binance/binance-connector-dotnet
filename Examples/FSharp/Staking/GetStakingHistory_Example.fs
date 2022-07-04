@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let staking = new Staking(httpClient, apiKey, apiSecret)
+    let staking = new Staking(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = staking.GetStakingHistory("STAKING", "SUBSCRIPTION") |> Async.AwaitTask |> Async.RunSynchronously
     

@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let savings = new Savings(httpClient, apiKey, apiSecret)
+    let savings = new Savings(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = savings.GetLeftDailyRedemptionQuotaOfFlexibleProduct("1234", RedemptionType.FAST) |> Async.AwaitTask |> Async.RunSynchronously
     

@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let bLVT = new BLVT(httpClient, apiKey, apiSecret)
+    let bLVT = new BLVT(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = bLVT.QuerySubscriptionRecord() |> Async.AwaitTask |> Async.RunSynchronously
     

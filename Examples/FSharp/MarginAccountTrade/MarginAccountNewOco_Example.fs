@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let marginAccountTrade = new MarginAccountTrade(httpClient, apiKey, apiSecret)
+    let marginAccountTrade = new MarginAccountTrade(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = marginAccountTrade.MarginAccountNewOco("BNBUSDT", Side.SELL, 0.1m, 400.15m, 390.3m) |> Async.AwaitTask |> Async.RunSynchronously
     

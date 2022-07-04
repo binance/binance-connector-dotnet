@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.6.0 - 2022-07-04
+
+### Added
+- New endpoint for Market:
+  - `GET /api/v3/ticker` for rolling window price change statistics based on windowSize provided.
+
+- New endpoint for Account Trade:
+  - `POST /api/v3/order/cancelReplace` to cancel an existing order and place a new order on the same symbol.
+  
+### Changed
+- Update endpoint for Fiat:
+  - `GET /sapi/v1/fiat/orders`: Weight changes from IP(1) to UID(90000)
+
+- Update endpoint for Pay:
+  - `GET /sapi/v1/pay/transactions`: Param names changed: startTimestamp -> startTime; endTimestamp -> endTime.
+
+### Fixed
+- Included `Examples/CSharp` and `Examples/FSharp` build process in CI pipeline.
+
+- Explicitly set optional parameters in examples.
+
 ## 1.5.0 - 2022-05-27
 ### Added
 - New endpoint for Binance Code:

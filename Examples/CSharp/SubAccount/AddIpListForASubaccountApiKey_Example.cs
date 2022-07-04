@@ -25,7 +25,7 @@ namespace Binance.Spot.SubAccountExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var subAccount = new SubAccount(httpClient, apiKey, apiSecret);
+            var subAccount = new SubAccount(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await subAccount.AddIpListForASubaccountApiKey("testaccount@email.com", "subAccountApiKey", "000.000.000.000");
         }

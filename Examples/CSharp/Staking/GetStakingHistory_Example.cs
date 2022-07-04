@@ -25,7 +25,7 @@ namespace Binance.Spot.StakingExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var staking = new Staking(httpClient, apiKey, apiSecret);
+            var staking = new Staking(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await staking.GetStakingHistory("STAKING", "SUBSCRIPTION");
         }

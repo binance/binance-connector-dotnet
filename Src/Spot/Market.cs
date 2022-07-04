@@ -309,5 +309,40 @@ namespace Binance.Spot
 
             return result;
         }
+
+        private const string ROLLING_WINDOW_PRICE_CHANGE_STATISTICS = "/api/v3/ticker";
+
+        /// <summary>
+        /// The window used to compute statistics is typically slightly wider than requested windowSize.<para />
+        /// openTime for /api/v3/ticker always starts on a minute, while the closeTime is the current time of the request. As such, the effective window might be up to 1 minute wider than requested.<para />
+        /// E.g. If the closeTime is 1641287867099 (January 04, 2022 09:17:47:099 UTC) , and the windowSize is 1d. the openTime will be: 1641201420000 (January 3, 2022, 09:17:00 UTC).<para />
+        /// Weight(IP): 2 for each requested symbol regardless of windowSize.<para />
+        /// The weight for this request will cap at 100 once the number of symbols in the request is more than 50.
+        /// </summary>
+        /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
+        /// <param name="symbols">Either symbol or symbols must be provided.<para />
+        /// Examples of accepted format for the symbols parameter: ["BTCUSDT","BNBUSDT"] or %5B%22BTCUSDT%22,%22BNBUSDT%22%5D.<para />
+        /// The maximum number of symbols allowed in a request is 100.</param>
+        /// <param name="windowSize">Defaults to 1d if no parameter provided.<para />
+        /// Supported windowSize values:.<para />
+        /// 1m,2m....59m for minutes.<para />
+        /// 1h, 2h....23h - for hours.<para />
+        /// 1d...7d - for days.<para />
+        /// Units cannot be combined (e.g. 1d2h is not allowed).</param>
+        /// <returns>Rolling price ticker.</returns>
+        public async Task<string> RollingWindowPriceChangeStatistics(string symbol = null, string symbols = null, string windowSize = null)
+        {
+            var result = await this.SendPublicAsync<string>(
+                ROLLING_WINDOW_PRICE_CHANGE_STATISTICS,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "symbol", symbol },
+                    { "symbols", symbols },
+                    { "windowSize", windowSize },
+                });
+
+            return result;
+        }
     }
 }
