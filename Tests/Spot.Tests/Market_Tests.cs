@@ -299,5 +299,29 @@ namespace Binance.Spot.Tests
             Assert.Equal(responseContent, result);
         }
         #endregion
+
+        #region RollingWindowPriceChangeStatistics
+        [Fact]
+        public async void RollingWindowPriceChangeStatistics_Response()
+        {
+            var responseContent = "{\"symbol\":\"BNBBTC\",\"priceChange\":\"-8.00000000\",\"priceChangePercent\":\"-88.889\",\"weightedAvgPrice\":\"2.60427807\",\"openPrice\":\"9.00000000\",\"highPrice\":\"9.00000000\",\"lowPrice\":\"1.00000000\",\"lastPrice\":\"1.00000000\",\"volume\":\"187.00000000\",\"quoteVolume\":\"487.00000000\",\"openTime\":1641859200000,\"closeTime\":1642031999999,\"firstId\":0,\"lastId\":60,\"count\":61}";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/api/v3/ticker", HttpMethod.Get)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            Market market = new Market(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await market.RollingWindowPriceChangeStatistics();
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
     }
 }

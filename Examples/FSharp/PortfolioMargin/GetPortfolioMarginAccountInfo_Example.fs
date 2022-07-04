@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let portfolioMargin = new PortfolioMargin(httpClient, apiKey, apiSecret)
+    let portfolioMargin = new PortfolioMargin(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = portfolioMargin.GetPortfolioMarginAccountInfo() |> Async.AwaitTask |> Async.RunSynchronously
     

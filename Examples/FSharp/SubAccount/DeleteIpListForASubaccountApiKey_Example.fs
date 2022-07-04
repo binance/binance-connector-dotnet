@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let subAccount = new SubAccount(httpClient, apiKey, apiSecret)
+    let subAccount = new SubAccount(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = subAccount.DeleteIpListForASubaccountApiKey("testaccount@email.com", "subAccountApiKey", "000.000.000.000") |> Async.AwaitTask |> Async.RunSynchronously
     

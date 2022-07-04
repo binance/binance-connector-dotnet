@@ -25,7 +25,7 @@ namespace Binance.Spot.NFTExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var nft = new NFT(httpClient, apiKey, apiSecret);
+            var nft = new NFT(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await nft.GetNftDepositHistory();
         }

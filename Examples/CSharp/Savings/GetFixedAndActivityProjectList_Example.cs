@@ -25,7 +25,7 @@ namespace Binance.Spot.SavingsExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var savings = new Savings(httpClient, apiKey, apiSecret);
+            var savings = new Savings(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await savings.GetFixedAndActivityProjectList(FixedAndActivityProjectType.ACTIVITY);
         }

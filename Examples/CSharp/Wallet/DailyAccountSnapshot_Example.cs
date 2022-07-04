@@ -25,7 +25,7 @@ namespace Binance.Spot.WalletExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var wallet = new Wallet(httpClient, apiKey, apiSecret);
+            var wallet = new Wallet(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await wallet.DailyAccountSnapshot(AccountType.SPOT);
         }

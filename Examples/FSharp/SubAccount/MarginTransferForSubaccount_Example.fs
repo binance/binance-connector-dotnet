@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let subAccount = new SubAccount(httpClient, apiKey, apiSecret)
+    let subAccount = new SubAccount(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = subAccount.MarginTransferForSubaccount("testaccount@email.com", "BTC", 1.01m, MarginTransferType.SPOT_TO_MARGIN) |> Async.AwaitTask |> Async.RunSynchronously
     

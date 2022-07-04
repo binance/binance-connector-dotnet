@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let wallet = new Wallet(httpClient, apiKey, apiSecret)
+    let wallet = new Wallet(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = wallet.DepositAddress("BNB") |> Async.AwaitTask |> Async.RunSynchronously
     

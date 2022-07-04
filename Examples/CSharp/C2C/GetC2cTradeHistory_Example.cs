@@ -25,7 +25,7 @@ namespace Binance.Spot.C2CExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var c2c = new C2C(httpClient, apiKey, apiSecret);
+            var c2c = new C2C(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await c2c.GetC2cTradeHistory(Side.BUY);
         }

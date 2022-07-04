@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let nFT = new NFT(httpClient, apiKey, apiSecret)
+    let nFT = new NFT(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = nFT.GetNftTransactionHistory(1) |> Async.AwaitTask |> Async.RunSynchronously
     

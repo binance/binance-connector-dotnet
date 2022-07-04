@@ -25,7 +25,7 @@ namespace Binance.Spot.RebateExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var rebate = new Rebate(httpClient, apiKey, apiSecret);
+            var rebate = new Rebate(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await rebate.GetSpotRebateHistoryRecords();
         }

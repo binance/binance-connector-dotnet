@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let fiat = new Fiat(httpClient, apiKey, apiSecret)
+    let fiat = new Fiat(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = fiat.GetFiatDepositWithdrawHistory(FiatOrderTransactionType.DEPOSIT) |> Async.AwaitTask |> Async.RunSynchronously
     

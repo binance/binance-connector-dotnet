@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let futures = new Futures(httpClient, apiKey, apiSecret)
+    let futures = new Futures(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = futures.NewFutureAccountTransfer("USDT", 522.23m, FuturesTransferType.SPOT_TO_USDT_MARGINED_FUTURES) |> Async.AwaitTask |> Async.RunSynchronously
     

@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let marginAccountTrade = new MarginAccountTrade(httpClient, apiKey, apiSecret)
+    let marginAccountTrade = new MarginAccountTrade(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = marginAccountTrade.IsolatedMarginAccountTransfer("BTC", "BNBUSDT", IsolatedMarginAccountTransferType.SPOT, IsolatedMarginAccountTransferType.ISOLATED_MARGIN, 1.01m) |> Async.AwaitTask |> Async.RunSynchronously
     

@@ -25,7 +25,7 @@ namespace Binance.Spot.PayExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var pay = new Pay(httpClient, apiKey, apiSecret);
+            var pay = new Pay(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await pay.GetPayTradeHistory();
         }

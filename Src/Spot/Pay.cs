@@ -38,8 +38,8 @@ namespace Binance.Spot
                 HttpMethod.Get,
                 query: new Dictionary<string, object>
                 {
-                    { "startTimestamp", startTimestamp },
-                    { "endTimestamp", endTimestamp },
+                    { "startTime", startTimestamp },
+                    { "endTime", endTimestamp },
                     { "limit", limit },
                     { "recvWindow", recvWindow },
                     { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },

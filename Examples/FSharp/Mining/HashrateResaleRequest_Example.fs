@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let mining = new Mining(httpClient, apiKey, apiSecret)
+    let mining = new Mining(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = mining.HashrateResaleRequest("username", "sha256", "username", 100000000) |> Async.AwaitTask |> Async.RunSynchronously
     

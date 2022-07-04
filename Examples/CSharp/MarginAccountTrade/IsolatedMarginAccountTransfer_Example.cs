@@ -25,7 +25,7 @@ namespace Binance.Spot.MarginAccountTradeExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var marginAccountTrade = new MarginAccountTrade(httpClient, apiKey, apiSecret);
+            var marginAccountTrade = new MarginAccountTrade(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await marginAccountTrade.IsolatedMarginAccountTransfer("BTC", "BNBUSDT", IsolatedMarginAccountTransferType.SPOT, IsolatedMarginAccountTransferType.ISOLATED_MARGIN, 1.01m);
         }

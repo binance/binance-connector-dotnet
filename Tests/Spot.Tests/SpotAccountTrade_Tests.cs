@@ -371,5 +371,29 @@ namespace Binance.Spot.Tests
             Assert.Equal(responseContent, result);
         }
         #endregion
+
+        #region CancelAnExistingOrderAndSendANewOrder
+        [Fact]
+        public async void CancelAnExistingOrderAndSendANewOrder_Response()
+        {
+            var responseContent = "{\"cancelResult\":\"SUCCESS\",\"newOrderResult\":\"SUCCESS\",\"cancelResponse\":{\"symbol\":\"BTCUSDT\",\"origClientOrderId\":\"DnLo3vTAQcjha43lAZhZ0y\",\"orderId\":9,\"orderListId\":-1,\"clientOrderId\":\"osxN3JXAtJvKvCqGeMWMVR\",\"price\":\"0.01000000\",\"origQty\":\"0.000100\",\"executedQty\":\"0.00000000\",\"cummulativeQuoteQty\":\"0.00000000\",\"status\":\"CANCELED\",\"timeInForce\":\"GTC\",\"type\":\"LIMIT\",\"side\":\"SELL\"},\"newOrderResponse\":{\"symbol\":\"BTCUSDT\",\"orderId\":10,\"orderListId\":-1,\"clientOrderId\":\"wOceeeOzNORyLiQfw7jd8S\",\"transactTime\":1652928801803,\"price\":\"0.02000000\",\"origQty\":\"0.040000\",\"executedQty\":\"0.00000000\",\"cummulativeQuoteQty\":\"0.00000000\",\"status\":\"NEW\",\"timeInForce\":\"GTC\",\"type\":\"LIMIT\",\"side\":\"BUY\",\"fills\":[]}}";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/api/v3/order/cancelReplace", HttpMethod.Post)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            SpotAccountTrade spotAccountTrade = new SpotAccountTrade(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await spotAccountTrade.CancelAnExistingOrderAndSendANewOrder("BNBUSDT", Side.SELL, OrderType.LIMIT, "STOP_ON_FAILURE", cancelOrderId: 12, timeInForce: TimeInForce.GTC, quantity: 10.1m, price: 295.92m);
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
     }
 }

@@ -25,7 +25,7 @@ namespace Binance.Spot.FiatExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var fiat = new Fiat(httpClient, apiKey, apiSecret);
+            var fiat = new Fiat(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await fiat.GetFiatPaymentsHistory(FiatPaymentTransactionType.BUY);
         }

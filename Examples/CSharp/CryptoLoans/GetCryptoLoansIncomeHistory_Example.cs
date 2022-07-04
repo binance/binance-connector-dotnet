@@ -25,7 +25,7 @@ namespace Binance.Spot.CryptoLoansExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var cryptoLoans = new CryptoLoans(httpClient, apiKey, apiSecret);
+            var cryptoLoans = new CryptoLoans(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await cryptoLoans.GetCryptoLoansIncomeHistory("BTC");
         }

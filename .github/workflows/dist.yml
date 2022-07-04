@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        operating-system: [ubuntu-latest, windows-latest, macOS-latest]
+        operating-system: [ubuntu-latest, windows-latest]
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET on 3.1.x, 5.0.x, 6.0.x

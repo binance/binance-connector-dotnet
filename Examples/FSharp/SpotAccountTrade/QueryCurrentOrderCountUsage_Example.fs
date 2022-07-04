@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let spotAccountTrade = new SpotAccountTrade(httpClient, apiKey, apiSecret)
+    let spotAccountTrade = new SpotAccountTrade(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = spotAccountTrade.QueryCurrentOrderCountUsage() |> Async.AwaitTask |> Async.RunSynchronously
     

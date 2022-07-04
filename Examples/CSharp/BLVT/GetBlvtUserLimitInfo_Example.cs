@@ -25,7 +25,7 @@ namespace Binance.Spot.BLVTExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var blvt = new BLVT(httpClient, apiKey, apiSecret);
+            var blvt = new BLVT(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await blvt.GetBlvtUserLimitInfo();
         }

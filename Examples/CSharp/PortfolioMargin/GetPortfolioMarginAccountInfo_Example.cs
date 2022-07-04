@@ -25,7 +25,7 @@ namespace Binance.Spot.PortfolioMarginExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var portfolioMargin = new PortfolioMargin(httpClient, apiKey, apiSecret);
+            var portfolioMargin = new PortfolioMargin(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await portfolioMargin.GetPortfolioMarginAccountInfo();
         }

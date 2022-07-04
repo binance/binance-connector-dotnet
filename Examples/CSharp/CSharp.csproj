@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <StartupObject>Binance.Spot.MarketDataWebSocketExamples.DepthStream_Example</StartupObject>
+    <StartupObject>Binance.Spot.SpotAccountTradeExamples.AccountInformation_Example</StartupObject>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

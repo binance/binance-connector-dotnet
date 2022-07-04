@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let userDataStreams = new UserDataStreams(httpClient, apiKey, apiSecret)
+    let userDataStreams = new UserDataStreams(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = userDataStreams.PingIsolatedMarginListenKey("BTCUSDT", "listen-key") |> Async.AwaitTask |> Async.RunSynchronously
     

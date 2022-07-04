@@ -11,7 +11,7 @@
         <releaseNotes>https://github.com/binance/binance-connector-dotnet/blob/master/CHANGELOG.md</releaseNotes>
         <readme>README.md</readme>
         <repository type="git" url="https://github.com/binance/binance-connector-dotnet" branch="master"></repository>
-        <version>1.5.0</version>
+        <version>1.6.0</version>
         <authors>binance</authors>
 
         <dependencies>

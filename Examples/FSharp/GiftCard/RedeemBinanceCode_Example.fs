@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let giftCard = new GiftCard(httpClient, apiKey, apiSecret)
+    let giftCard = new GiftCard(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = giftCard.RedeemBinanceCode("000000") |> Async.AwaitTask |> Async.RunSynchronously
     

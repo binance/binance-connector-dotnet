@@ -20,7 +20,7 @@ jobs:
       run: dotnet build --configuration Release
     - name: Pack
       run: dotnet pack Src/Spot -p:NuspecFile=.nuspec -p:RepositoryBranch=${{ github.event.release.tag_name }} -o Release
-    - name: Upload
+    - name: Upload to Github Release
       uses: actions/upload-release-asset@v1.0.1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -29,4 +29,7 @@ jobs:
         asset_path: ./Release/Binance.Spot.${{ github.event.release.tag_name }}.nupkg
         asset_name: Binance.Spot.${{ github.event.release.tag_name }}.nupkg
         asset_content_type: binary/octet-stream
-
+    - name: Publish to Nuget
+      env:
+        NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
+      run: dotnet nuget push ./Release/Binance.Spot.${{ github.event.release.tag_name }}.nupkg -k "$NUGET_TOKEN" -s https://api.nuget.org/v3/index.json

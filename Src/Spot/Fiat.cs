@@ -22,7 +22,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// - If beginTime and endTime are not sent, the recent 30-day data will be returned.<para />
-        /// Weight(IP): 1.
+        /// Weight(IP): 90000.
         /// </summary>
         /// <param name="transactionType">* `0` - deposit.<para />
         /// * `1` - withdraw.</param>

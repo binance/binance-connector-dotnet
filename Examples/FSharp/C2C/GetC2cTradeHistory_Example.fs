@@ -20,7 +20,7 @@ let main argv =
     let apiKey = "api-key";
     let apiSecret = "api-secret";
     
-    let c2C = new C2C(httpClient, apiKey, apiSecret)
+    let c2C = new C2C(httpClient, apiKey = apiKey, apiSecret = apiSecret)
     
     let result = c2C.GetC2cTradeHistory(Side.BUY) |> Async.AwaitTask |> Async.RunSynchronously
     

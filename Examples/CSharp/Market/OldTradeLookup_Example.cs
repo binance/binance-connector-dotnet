@@ -25,7 +25,7 @@ namespace Binance.Spot.MarketExamples
             string apiKey = "api-key";
             string apiSecret = "api-secret";
 
-            var market = new Market(httpClient, apiKey, apiSecret);
+            var market = new Market(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
             var result = await market.OldTradeLookup("BNBUSDT");
         }
