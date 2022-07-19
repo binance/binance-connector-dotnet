@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.7.0 - 2022-07-19
+
+### Added
+- New endpoint for Margin:
+  - `POST /sapi/v3/asset/getUserAsset` to get user assets.
+
+- New endpoint for Wallet:
+  - `GET /sapi/v1/margin/dribblet` to query the historical information of user's margin account small-value asset conversion BNB.
+
+### Changed
+- Update endpoint for Convert:
+  - `GET /sapi/v1/fiat/orders`: Weight changes from IP(3000) to IP(100)
+
 ## 1.6.0 - 2022-07-04
 
 ### Added

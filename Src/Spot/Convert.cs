@@ -22,7 +22,7 @@ namespace Binance.Spot
 
         /// <summary>
         /// - The max interval between startTime and endTime is 30 days.<para />
-        /// Weight(UID): 3000.
+        /// Weight(UID): 100.
         /// </summary>
         /// <param name="startTime">UTC timestamp in ms.</param>
         /// <param name="endTime">UTC timestamp in ms.</param>

@@ -492,6 +492,30 @@ namespace Binance.Spot.Tests
         }
         #endregion
 
+        #region UserAsset
+        [Fact]
+        public async void UserAsset_Response()
+        {
+            var responseContent = "[{\"asset\":\"AVAX\",\"free\":\"1\",\"locked\":\"0\",\"freeze\":\"0\",\"withdrawing\":\"0\",\"ipoable\":\"0\",\"btcValuation\":\"0\"},{\"asset\":\"BCH\",\"free\":\"0.9\",\"locked\":\"0\",\"freeze\":\"0\",\"withdrawing\":\"0\",\"ipoable\":\"0\",\"btcValuation\":\"0\"}]";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v3/asset/getUserAsset", HttpMethod.Post)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            Wallet wallet = new Wallet(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await wallet.UserAsset();
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
+
         #region GetApiKeyPermission
         [Fact]
         public async void GetApiKeyPermission_Response()
