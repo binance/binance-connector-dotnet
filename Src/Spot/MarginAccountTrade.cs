@@ -1297,5 +1297,31 @@ namespace Binance.Spot
 
             return result;
         }
+
+        private const string MARGIN_DUSTLOG = "/sapi/v1/margin/dribblet";
+
+        /// <summary>
+        /// Query the historical information of user's margin account small-value asset conversion BNB.<para />
+        /// Weight(IP): 1.
+        /// </summary>
+        /// <param name="startTime">UTC timestamp in ms.</param>
+        /// <param name="endTime">UTC timestamp in ms.</param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>Usage..</returns>
+        public async Task<string> MarginDustlog(long? startTime = null, long? endTime = null, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                MARGIN_DUSTLOG,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "startTime", startTime },
+                    { "endTime", endTime },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
     }
 }

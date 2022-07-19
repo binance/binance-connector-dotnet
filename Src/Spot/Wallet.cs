@@ -603,6 +603,32 @@ namespace Binance.Spot
             return result;
         }
 
+        private const string USER_ASSET = "/sapi/v3/asset/getUserAsset";
+
+        /// <summary>
+        /// Get user assets, just for positive data.<para />
+        /// Weight(IP): 5.
+        /// </summary>
+        /// <param name="asset">If asset is blank, then query all positive assets user have.</param>
+        /// <param name="needBtcValuation"></param>
+        /// <param name="recvWindow">The value cannot be greater than 60000.</param>
+        /// <returns>User assets.</returns>
+        public async Task<string> UserAsset(string asset = null, string needBtcValuation = null, long? recvWindow = null)
+        {
+            var result = await this.SendSignedAsync<string>(
+                USER_ASSET,
+                HttpMethod.Post,
+                query: new Dictionary<string, object>
+                {
+                    { "asset", asset },
+                    { "needBtcValuation", needBtcValuation },
+                    { "recvWindow", recvWindow },
+                    { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
+                });
+
+            return result;
+        }
+
         private const string GET_API_KEY_PERMISSION = "/sapi/v1/account/apiRestrictions";
 
         /// <summary>

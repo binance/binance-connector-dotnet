@@ -1043,5 +1043,29 @@ namespace Binance.Spot.Tests
             Assert.Equal(responseContent, result);
         }
         #endregion
+
+        #region MarginDustlog
+        [Fact]
+        public async void MarginDustlog_Response()
+        {
+            var responseContent = "{\"total\":8,\"userAssetDribblets\":[{\"operateTime\":1615985535000,\"totalTransferedAmount\":\"0.00132256\",\"totalServiceChargeAmount\":\"0.00002699\",\"transId\":45178372831,\"userAssetDribbletDetails\":[{\"transId\":4359321,\"serviceChargeAmount\":\"0.000009\",\"amount\":\"0.0009\",\"operateTime\":1615985535000,\"transferedAmount\":\"0.000441\",\"fromAsset\":\"USDT\"},{\"transId\":4359321,\"serviceChargeAmount\":\"0.00001799\",\"amount\":\"0.0009\",\"operateTime\":1615985535000,\"transferedAmount\":\"0.00088156\",\"fromAsset\":\"ETH\"}]}]}";
+            var mockMessageHandler = new Mock<HttpMessageHandler>();
+            mockMessageHandler.Protected()
+                .SetupSendAsync("/sapi/v1/margin/dribblet", HttpMethod.Get)
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(responseContent),
+                });
+            MarginAccountTrade marginAccountTrade = new MarginAccountTrade(
+                new HttpClient(mockMessageHandler.Object),
+                apiKey: this.apiKey,
+                apiSecret: this.apiSecret);
+
+            var result = await marginAccountTrade.MarginDustlog();
+
+            Assert.Equal(responseContent, result);
+        }
+        #endregion
     }
 }
