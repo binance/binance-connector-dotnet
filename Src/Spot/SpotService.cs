@@ -11,5 +11,10 @@ namespace Binance.Spot
         : base(httpClient, baseUrl: baseUrl, apiKey: apiKey, apiSecret: apiSecret)
         {
         }
+
+        public SpotService(HttpClient httpClient, string apiKey, IBinanceSignatureService signatureService, string baseUrl = DEFAULT_SPOT_BASE_URL)
+        : base(httpClient, baseUrl: baseUrl, apiKey: apiKey, signatureService: signatureService)
+        {
+        }
     }
 }

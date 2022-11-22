@@ -5,7 +5,6 @@ namespace Binance.Common
     using System.Globalization;
     using System.Linq;
     using System.Net.Http;
-    using System.Security.Cryptography;
     using System.Text;
     using System.Threading.Tasks;
     using System.Web;
@@ -17,7 +16,7 @@ namespace Binance.Common
     public abstract class BinanceService
     {
         private string apiKey;
-        private string apiSecret;
+        private IBinanceSignatureService signatureService;
         private string baseUrl;
         private HttpClient httpClient;
 
@@ -26,7 +25,15 @@ namespace Binance.Common
             this.httpClient = httpClient;
             this.baseUrl = baseUrl;
             this.apiKey = apiKey;
-            this.apiSecret = apiSecret;
+            this.signatureService = new BinanceHmac(apiSecret);
+        }
+
+        public BinanceService(HttpClient httpClient, string baseUrl, string apiKey, IBinanceSignatureService signatureService)
+        {
+            this.httpClient = httpClient;
+            this.baseUrl = baseUrl;
+            this.apiKey = apiKey;
+            this.signatureService = signatureService;
         }
 
         protected async Task<T> SendPublicAsync<T>(string requestUri, HttpMethod httpMethod, Dictionary<string, object> query = null, object content = null)
@@ -53,31 +60,18 @@ namespace Binance.Common
                 queryStringBuilder = this.BuildQueryString(query, queryStringBuilder);
             }
 
-            string signature = Sign(queryStringBuilder.ToString(), this.apiSecret);
+            string signature = this.signatureService.Sign(queryStringBuilder.ToString());
 
             if (queryStringBuilder.Length > 0)
             {
                 queryStringBuilder.Append("&");
             }
 
-            queryStringBuilder.Append("signature=").Append(signature);
+            queryStringBuilder.Append("signature=").Append(HttpUtility.UrlEncode(signature));
 
             requestUri += "?" + queryStringBuilder.ToString();
 
             return await this.SendAsync<T>(requestUri, httpMethod, content);
-        }
-
-        private static string Sign(string source, string key)
-        {
-            byte[] keyBytes = Encoding.UTF8.GetBytes(key);
-            using (HMACSHA256 hmacsha256 = new HMACSHA256(keyBytes))
-            {
-                byte[] sourceBytes = Encoding.UTF8.GetBytes(source);
-
-                byte[] hash = hmacsha256.ComputeHash(sourceBytes);
-
-                return BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();
-            }
         }
 
         private StringBuilder BuildQueryString(Dictionary<string, object> queryParameters, StringBuilder builder)

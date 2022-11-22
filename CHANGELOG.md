@@ -1,6 +1,9 @@
 # Changelog
 
-## 1.8.0 - 2022-08-12
+## 2.0.0 - 2022-11-22
+- Add RSA Key signature
+
+## 1.8.0 - 2022-10-11
 
 ### Added
 - New endpoint for Portfolio Margin:
@@ -14,6 +17,8 @@
   - `POST /api/v3/order` New optional fields `strategyId` and `strategyType`.
   - `POST /api/v3/order/cancelReplace` New optional fields `strategyId` and `strategyType`.
   - `POST /api/v3/order/oco` New optional fields `limitStrategyId`, `limitStrategyType`, `stopStrategyId` and `stopStrategyType`.
+- Fixing null value appended in the stream
+- Update WebSocket example code
 
 ## 1.7.0 - 2022-07-19
 

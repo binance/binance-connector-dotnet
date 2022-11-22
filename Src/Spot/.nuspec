@@ -11,11 +11,11 @@
         <releaseNotes>https://github.com/binance/binance-connector-dotnet/blob/master/CHANGELOG.md</releaseNotes>
         <readme>README.md</readme>
         <repository type="git" url="https://github.com/binance/binance-connector-dotnet" branch="master"></repository>
-        <version>1.8.0</version>
+        <version>2.0.0</version>
         <authors>binance</authors>
 
         <dependencies>
-            <group targetFramework="netstandard2.0"> 
+            <group targetFramework="netstandard2.0">
                 <dependency id="Newtonsoft.Json" version="13.0.1" />
             </group>
         </dependencies>
