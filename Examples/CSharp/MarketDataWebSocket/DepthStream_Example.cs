@@ -22,20 +22,16 @@ namespace Binance.Spot.MarketDataWebSocketExamples
 
             var websocket = new MarketDataWebSocket("btcusdt@depth5");
 
-            var onlyOneMessage = new TaskCompletionSource<string>();
-
             websocket.OnMessageReceived(
                 async (data) =>
             {
-                onlyOneMessage.SetResult(data);
+                logger.LogInformation(data);
             }, CancellationToken.None);
 
             await websocket.ConnectAsync(CancellationToken.None);
-
-            string message = await onlyOneMessage.Task;
-
-            logger.LogInformation(message);
-
+            // wait for 5s before disconnnected
+            await Task.Delay(5000);
+            logger.LogInformation("Disconnect with WebSocket Server");
             await websocket.DisconnectAsync(CancellationToken.None);
         }
     }

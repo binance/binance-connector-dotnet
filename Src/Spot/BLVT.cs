@@ -4,6 +4,7 @@ namespace Binance.Spot
     using System.Collections.Generic;
     using System.Net.Http;
     using System.Threading.Tasks;
+    using Binance.Common;
     using Binance.Spot.Models;
 
     public class BLVT : SpotService
@@ -15,6 +16,11 @@ namespace Binance.Spot
 
         public BLVT(HttpClient httpClient, string baseUrl = DEFAULT_SPOT_BASE_URL, string apiKey = null, string apiSecret = null)
         : base(httpClient, baseUrl: baseUrl, apiKey: apiKey, apiSecret: apiSecret)
+        {
+        }
+
+        public BLVT(HttpClient httpClient, IBinanceSignatureService signatureService, string baseUrl = DEFAULT_SPOT_BASE_URL, string apiKey = null)
+        : base(httpClient, baseUrl: baseUrl, apiKey: apiKey, signatureService: signatureService)
         {
         }
 

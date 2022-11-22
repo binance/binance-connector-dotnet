@@ -33,11 +33,11 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        Wallet wallet = new Wallet();
+        Market market = new Market();
 
-        string status = await wallet.SystemStatus();
+        string serverTime = await market.CheckServerTime();
 
-        Console.WriteLine(status);
+        Console.WriteLine(serverTime);
     }
 }
 ```
@@ -70,6 +70,33 @@ class Program
 }
 ```
 More websocket examples are available in the `Examples` folder
+
+
+## Authentication
+
+For API endpoints that requires signature, new authentication interfaces are introduced to generate the signature since V2.
+
+```csharp
+// HMAC signature
+new SpotAccountTrade(httpClient, new BinanceHmac("api-secret"), apiKey: apiKey)
+
+// RSA signature
+string private_key = File.ReadAllText("/Users/john/ssl/Private_key.txt");
+new SpotAccountTrade(httpClient, new BinanceRsa(private_key), apiKey: apiKey)
+
+// Encrypted RSA signature
+new SpotAccountTrade(httpClient, new BinanceRsa(private_key, "the_private_key_password"), apiKey: apiKey)
+
+```
+
+For V1.x, it's required to pass `apiKey` and `apiSecret` directly.
+
+```csharp
+new SpotAccountTrade(httpClient, apiKey: apiKey, apiSecret: apiSecret)
+```
+
+For more details, please find the example from the endpoints `/api/v3/account` in file `AccountInformation_Example`.
+
 
 ### Heartbeat
 

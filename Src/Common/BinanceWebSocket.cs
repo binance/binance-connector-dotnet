@@ -99,7 +99,7 @@ namespace Binance.Common
                         break;
                     }
 
-                    string content = Encoding.UTF8.GetString(buffer.ToArray());
+                    string content = Encoding.UTF8.GetString(buffer.ToArray(), buffer.Offset, buffer.Count);
                     this.onMessageReceivedFunctions.ForEach(omrf => omrf(content));
                 }
             }

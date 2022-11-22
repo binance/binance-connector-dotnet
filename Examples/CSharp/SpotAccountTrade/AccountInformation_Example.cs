@@ -3,6 +3,7 @@ namespace Binance.Spot.SpotAccountTradeExamples
     using System;
     using System.Net;
     using System.Net.Http;
+    using System.IO;
     using System.Threading.Tasks;
     using Binance.Common;
     using Binance.Spot;
@@ -13,6 +14,7 @@ namespace Binance.Spot.SpotAccountTradeExamples
     {
         public static async Task Main(string[] args)
         {
+            string apiKey;
             using var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddConsole();
@@ -22,12 +24,17 @@ namespace Binance.Spot.SpotAccountTradeExamples
             HttpMessageHandler loggingHandler = new BinanceLoggingHandler(logger: logger);
             HttpClient httpClient = new HttpClient(handler: loggingHandler);
 
-            string apiKey = "api-key";
-            string apiSecret = "api-secret";
+           // Sign by API secret key
+            apiKey = "the_api_key";
+            string apiSecret = "the_api_secret";
+            var spotAccountTradeHMAC = new SpotAccountTrade(httpClient, new BinanceHmac(apiSecret), apiKey: apiKey, baseUrl: "https://testnet.binance.vision");
+            var resultHMAC = await spotAccountTradeHMAC.AccountInformation();
 
-            var spotAccountTrade = new SpotAccountTrade(httpClient, apiKey: apiKey, apiSecret: apiSecret);
-
-            var result = await spotAccountTrade.AccountInformation();
+            // Sign by RSA key
+            apiKey = "the_api_key";
+            string private_key = File.ReadAllText("/Users/john/ssl/Private_key.pem");
+            var spotAccountTradeRSA = new SpotAccountTrade(httpClient, new BinanceRsa(private_key), apiKey: apiKey, baseUrl: "https://testnet.binance.vision");
+            var resultRSA = await spotAccountTradeRSA.AccountInformation();
         }
     }
 }
