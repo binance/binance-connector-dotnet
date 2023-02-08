@@ -7,19 +7,19 @@ namespace Binance.Futures
     using Binance.Common;
     using Binance.Shared.Models;
 
-    public class Market : FuturesService
+    public class FMarket : FuturesService
     {
-        public Market(string baseUrl = DEFAULT_FUTURES_BASE_URL, string apiKey = null, string apiSecret = null)
+        public FMarket(string baseUrl = DEFAULT_FUTURES_BASE_URL, string apiKey = null, string apiSecret = null)
         : this(new HttpClient(), baseUrl: baseUrl, apiKey: apiKey, apiSecret: apiSecret)
         {
         }
 
-        public Market(HttpClient httpClient, string baseUrl = DEFAULT_FUTURES_BASE_URL, string apiKey = null, string apiSecret = null)
+        public FMarket(HttpClient httpClient, string baseUrl = DEFAULT_FUTURES_BASE_URL, string apiKey = null, string apiSecret = null)
         : base(httpClient, baseUrl: baseUrl, apiKey: apiKey, apiSecret: apiSecret)
         {
         }
 
-        public Market(HttpClient httpClient, IBinanceSignatureService signatureService, string baseUrl = DEFAULT_FUTURES_BASE_URL, string apiKey = null)
+        public FMarket(HttpClient httpClient, IBinanceSignatureService signatureService, string baseUrl = DEFAULT_FUTURES_BASE_URL, string apiKey = null)
         : base(httpClient, baseUrl: baseUrl, apiKey: apiKey, signatureService: signatureService)
         {
         }
@@ -203,6 +203,71 @@ namespace Binance.Futures
         public async Task<string> KlineCandlestickData(string symbol, Interval interval, long? startTime = null, long? endTime = null, int? limit = null)
         {
             var result = await this.SendPublicAsync<string>(
+                KLINE_CANDLESTICK_DATA,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "symbol", symbol },
+                    { "interval", interval },
+                    { "startTime", startTime },
+                    { "endTime", endTime },
+                    { "limit", limit },
+                });
+
+            return result;
+        }
+
+        /// <summary>
+        /// Kline/candlestick bars for a symbol.<para />
+        /// Klines are uniquely identified by their open time.<para />
+        /// - If `startTime` and `endTime` are not sent, the most recent klines are returned.<para />
+        /// Weight(IP): 1.
+        /// </summary>
+        /// <param name="symbol">Trading symbol, e.g. BNBUSDT.</param>
+        /// <param name="interval">kline intervals.</param>
+        /// <param name="startTime">UTC timestamp in ms.</param>
+        /// <param name="endTime">UTC timestamp in ms.</param>
+        /// <param name="limit">Default 500; max 1000.</param>
+        /// <returns>Kline data.</returns>
+        public async Task<List<Candlestick>> KlineCandlestick(string symbol, Interval interval, long? startTime = null, long? endTime = null, int? limit = null)
+        {
+            var result = await this.SendPublicAsync<string>(
+                KLINE_CANDLESTICK_DATA,
+                HttpMethod.Get,
+                query: new Dictionary<string, object>
+                {
+                    { "symbol", symbol },
+                    { "interval", interval },
+                    { "startTime", startTime },
+                    { "endTime", endTime },
+                    { "limit", limit },
+                });
+            List<Candlestick> data = ConvertStringToSymbolPrice(result);
+            return data;
+        }
+        public List<Candlestick> ConvertStringToSymbolPrice(string content)
+        {
+            string[] cArray = content.Split(new string[] { "],[" }, StringSplitOptions.RemoveEmptyEntries);
+            List<Candlestick> list = new List<Candlestick>();
+            foreach (string s in cArray)
+            {
+                string[] fields = s.Split(',');
+                Candlestick uc = new Candlestick();
+                uc.OpenTime = Helper.GetJsonTime(fields[0]);
+                uc.OpenPrice = Helper.ConvertStringToDecimal(fields[1]);
+                uc.HighPrice = Helper.ConvertStringToDecimal(fields[2]);
+                uc.LowPrice = Helper.ConvertStringToDecimal(fields[3]);
+                uc.ClosePrice = Helper.ConvertStringToDecimal(fields[4]);
+                uc.Volume = Helper.ConvertStringToDecimal(fields[5]);
+                uc.CloseTime = Helper.GetJsonTime(fields[6]);
+                uc.NumberOfTrades = Helper.ConvertStringToLong(fields[7]);
+                list.Add(uc);
+            }
+            return list;
+        }
+        public async Task<T> KlineCandlestickData<T>(string symbol, Interval interval, long? startTime = null, long? endTime = null, int? limit = null)
+        {
+            var result = await this.SendPublicAsync<T>(
                 KLINE_CANDLESTICK_DATA,
                 HttpMethod.Get,
                 query: new Dictionary<string, object>
