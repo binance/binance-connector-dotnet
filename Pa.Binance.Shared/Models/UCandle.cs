@@ -4,6 +4,8 @@ namespace Binance.Shared.Models
 {
     public class Candlestick
     {
+        public string SymbolName { get; set; }
+        public string Interval { get; set; }
         public DateTime OpenTime { get; set; }
         public double OpenPrice { get; set; }
         public double HighPrice { get; set; }
@@ -44,7 +46,9 @@ namespace Binance.Shared.Models
         }
         public string GetSerialize()
         {
-            return string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\",\"{10}\"",
+            return string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\",\"{10}\",\"{11}\",\"{12}\"",
+                SymbolName,
+                Interval,
                 Helper.DateTimeToUnixTimeStamp(OpenUTC),
                 Helper.DateTimeToUnixTimeStamp(CloseUTC),
                 OpenPrice,
@@ -54,13 +58,16 @@ namespace Binance.Shared.Models
                 RSI,
                 ATR,
                 SMA,
-                EMA
+                EMA,
+                RMA
                 );
         }
 
         public override string ToString()
         {
-            return string.Format("[{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}]",
+            return string.Format("[{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12}]",
+                SymbolName,
+                Interval,
                 Helper.DateTimeToUnixTimeStamp(OpenUTC),
                 Helper.DateTimeToUnixTimeStamp(CloseUTC),
                 OpenPrice,

@@ -2,7 +2,7 @@ namespace Binance.Shared.Models
 {
     public struct Interval
     {
-        private Interval(string value)
+        public Interval(string value)
         {
             this.Value = value;
         }

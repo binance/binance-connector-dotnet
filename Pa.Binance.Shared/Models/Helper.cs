@@ -77,6 +77,54 @@ namespace Binance.Shared.Models
             i += 2;
             return Math.Round(val, i);
         }
+        public static TimeSpan GetSleepTime(Interval interval, DateTime now)
+        {
+            DateTime d1 = now;
+            DateTime d2 = DateTime.Now;
+            switch (interval.ToString())
+            {
+                case "1m":
+                case "3m":
+                default:
+                    return new TimeSpan(0, 1, 0);
+                case "5m":
+                    d2 = d1.Add(new TimeSpan(0, 6 - ((d1.Minute + 5) % 5), 0));
+                    return d2 - d1;
+                case "15m":
+                    d2 = d1.Add(new TimeSpan(0, 16 - ((d1.Minute + 15) % 15), 0));
+                    return d2 - d1;
+                case "30m":
+                    d2 = d1.Add(new TimeSpan(0, 31 - ((d1.Minute + 30) % 30), 0));
+                    return d2 - d1;
+                case "1h":
+                    d2 = d1.Add(new TimeSpan(1, -(d1.Minute - 1), 0));
+                    return d2 - d1;
+                case "2h":
+                    d2 = d1.Add(new TimeSpan(2, -(d1.Minute - 1), 0));
+                    return d2 - d1;
+                case "4h":
+                    d2 = d1.Add(new TimeSpan(4, -(d1.Minute - 1), 0));
+                    return d2 - d1;
+                case "6h":
+                    d2 = d1.Add(new TimeSpan(6, -(d1.Minute - 1), 0));
+                    return d2 - d1;
+                case "8h":
+                    d2 = d1.Add(new TimeSpan(8, -(d1.Minute - 1), 0));
+                    return d2 - d1;
+                case "12h":
+                    d2 = d1.Add(new TimeSpan(12, -(d1.Minute - 1), 0));
+                    return d2 - d1;
+                case "1d":
+                    d2 = d1.Add(new TimeSpan(1, -d1.Hour, -(d1.Minute - 1), 0));
+                    return d2 - d1;
+                case "1w":
+                    d2 = d1.Add(new TimeSpan(7, -d1.Hour, -(d1.Minute - 1), 0));
+                    return d2 - d1;
+                case "1M":
+                    d2 = d1.Add(new TimeSpan(30 - d1.Day, -d1.Hour, -(d1.Minute - 1), 0));
+                    return d2 - d1;
+            }
+        }
 
         public static double BtcUsdt { get; set; }
         public static double EthUsdt { get; set; }

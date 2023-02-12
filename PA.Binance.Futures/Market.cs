@@ -55,6 +55,12 @@ namespace Binance.Futures
 
             return result;
         }
+        public async Task<DateTime> GetServerTime()
+        {
+            var d = await CheckServerTime();
+            long dn = Helper.ConvertStringToLong(d);
+            return Helper.UnixTimeStampToDateTime(dn);
+        }
 
         private const string EXCHANGE_INFORMATION = "/fapi/v1/exchangeInfo";
 
