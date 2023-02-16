@@ -20,9 +20,9 @@ namespace Binance.Shared.Models
                 temp[i] = Math.Max(max, diff2); ;
             }
 
-            var atr = RMACalculator.Calculate(temp, period);
+           // var atr = RMACalculator.Calculate(temp, period);
 
-            return atr;
+            return temp;
         }
     }
 }

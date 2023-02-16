@@ -15,7 +15,14 @@ namespace Binance.Shared.Models
         public DateTime CloseTime { get; set; }
         public double QuoteAssetVolume { get; set; }
         public long NumberOfTrades { get; set; }
-
+        public int FullBodyPercent { get; set; }
+        public bool IsFullBody
+        {
+            get
+            {
+                return ((Math.Abs(ClosePrice - OpenPrice) / Math.Abs(HighPrice - LowPrice)) * 100) >= FullBodyPercent;
+            }
+        }
         public DateTime OpenUTC
         {
             get
@@ -43,6 +50,7 @@ namespace Binance.Shared.Models
         public Candlestick()
         {
             HighPrice = 3.7;
+            FullBodyPercent = 60;
         }
         public string GetSerialize()
         {
