@@ -20,7 +20,14 @@ namespace Binance.Shared.Models
         {
             get
             {
-                return ((Math.Abs(ClosePrice - OpenPrice) / Math.Abs(HighPrice - LowPrice)) * 100) >= FullBodyPercent;
+                return BodyLen >= FullBodyPercent;
+            }
+        }
+        public double BodyLen
+        {
+            get
+            {
+                return (Math.Abs(ClosePrice - OpenPrice) / Math.Abs(HighPrice - LowPrice)) * 100;
             }
         }
         public DateTime OpenUTC
