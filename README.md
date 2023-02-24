@@ -8,8 +8,10 @@ This is a lightweight library that works as a connector to [Binance public API](
 - Supported APIs:
     - `/api/*`
     - `/sapi/*`
+    - `/fapi/*`
     - Spot Websocket Market Stream
     - Spot User Data Stream
+    - Futures Websocket Market Stream
 - Test cases and examples
 - Customizable base URL, request timeout and HTTP proxy
 - Response Metadata
