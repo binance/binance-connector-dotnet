@@ -30,6 +30,21 @@ namespace Binance.Shared.Models
                 return (Math.Abs(ClosePrice - OpenPrice) / Math.Abs(HighPrice - LowPrice)) * 100;
             }
         }
+        public bool Ascending
+        {
+            get
+            {
+                return ClosePrice - OpenPrice > 0;
+            }
+        }
+        public bool IsStandard
+        {
+            get
+            {
+                double height = HighPrice - LowPrice;
+                return height >= (ATR * 80 / 100) && height <= (ATR * 3);
+            }
+        }
         public DateTime OpenUTC
         {
             get
