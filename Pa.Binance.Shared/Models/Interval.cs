@@ -1,3 +1,5 @@
+using System;
+
 namespace Binance.Shared.Models
 {
     public struct Interval
@@ -28,5 +30,27 @@ namespace Binance.Shared.Models
         public static implicit operator string(Interval enm) => enm.Value;
 
         public override string ToString() => this.Value.ToString();
+        public TimeSpan IntervalTime()
+        {
+            switch (Value)
+            {
+                case "1m": return new TimeSpan(0, 1, 0);
+                case "3m": return new TimeSpan(0, 3, 0);
+                case "5m": return new TimeSpan(0, 5, 0);
+                case "15m": return new TimeSpan(0, 15, 0);
+                case "30m": return new TimeSpan(0, 30, 0);
+                case "1h": return new TimeSpan(1, 0, 0);
+                case "2h": return new TimeSpan(2, 0, 0);
+                case "4h": return new TimeSpan(4, 0, 0);
+                case "6h": return new TimeSpan(6, 0, 0);
+                case "8h": return new TimeSpan(8, 0, 0);
+                case "12h": return new TimeSpan(12, 0, 0);
+                default:
+                case "1d": return new TimeSpan(1, 0, 0, 0);
+                case "3d": return new TimeSpan(3, 0, 0, 0);
+                case "1w": return new TimeSpan(7, 0, 0, 0);
+                case "1M": return new TimeSpan(30, 0, 0, 0);
+            }
+        }
     }
 }
