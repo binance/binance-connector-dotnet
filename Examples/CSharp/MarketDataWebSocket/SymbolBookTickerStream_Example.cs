@@ -20,16 +20,18 @@ namespace Binance.Spot.MarketDataWebSocketExamples
             });
             ILogger logger = loggerFactory.CreateLogger<SymbolBookTickerStream_Example>();
 
-            string[] streams = { "btcusdt@bookTicker", "bnbusdt@bookTicker"};
+            string[] streams = { "btcusdt@bookTicker", "bnbusdt@bookTicker" };
             var websocket = new MarketDataWebSocket(streams);
 
             websocket.OnMessageReceived(
                 async (data) =>
             {
                 logger.LogInformation(data);
+                await Task.CompletedTask;
             }, CancellationToken.None);
 
             await websocket.ConnectAsync(CancellationToken.None);
+
             // wait for 5s before disconnnected
             await Task.Delay(5000);
             logger.LogInformation("Disconnect with WebSocket Server");

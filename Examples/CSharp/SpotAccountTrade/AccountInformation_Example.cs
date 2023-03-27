@@ -1,9 +1,9 @@
 namespace Binance.Spot.SpotAccountTradeExamples
 {
     using System;
+    using System.IO;
     using System.Net;
     using System.Net.Http;
-    using System.IO;
     using System.Threading.Tasks;
     using Binance.Common;
     using Binance.Spot;

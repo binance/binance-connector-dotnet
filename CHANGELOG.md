@@ -1,6 +1,14 @@
 # Changelog
 
+## 2.0.1 - 2023-03-28
+
+### Updated
+- Replaced `BouncyCastle` cryptographic package to `BouncyCastle.Cryptography`.
+- Updated Examples and Tests project file to `net7.0`.
+
 ## 2.0.0 - 2022-11-22
+
+### Added
 - Add RSA Key signature
 
 ## 1.8.0 - 2022-10-11
