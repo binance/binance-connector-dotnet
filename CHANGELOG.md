@@ -1,6 +1,17 @@
 # Changelog
 
+## 3.0.0 - 2023-03-28
+
+### Removed
+- End of compatibility verification for .NET `3.1.x` and `5.0.x` due to these versions reaching their end of life.
+
+### Updated
+- Replaced `BouncyCastle` cryptographic package to `BouncyCastle.Cryptography`.
+- Updated Examples and Tests project file to `net7.0`.
+
 ## 2.0.0 - 2022-11-22
+
+### Added
 - Add RSA Key signature
 
 ## 1.8.0 - 2022-10-11

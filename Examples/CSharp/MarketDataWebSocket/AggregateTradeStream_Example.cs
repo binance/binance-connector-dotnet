@@ -26,9 +26,11 @@ namespace Binance.Spot.MarketDataWebSocketExamples
                 async (data) =>
             {
                 logger.LogInformation(data);
+                await Task.CompletedTask;
             }, CancellationToken.None);
 
             await websocket.ConnectAsync(CancellationToken.None);
+
             // wait for 5s before disconnnected
             await Task.Delay(5000);
             logger.LogInformation("Disconnect with WebSocket Server");
