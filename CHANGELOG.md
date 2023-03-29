@@ -7,7 +7,7 @@
 
 ### Updated
 - Replaced `BouncyCastle` cryptographic package to `BouncyCastle.Cryptography`.
-- Updated Examples and Tests project file to `net7.0`.
+- Updated Examples and Tests project file to `net6.0`.
 
 ## 2.0.0 - 2022-11-22
 
