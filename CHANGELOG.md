@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.0.0 - 2023-03-28
+## 3.0.0 - 2023-03-29
 
 ### Removed
 - End of compatibility verification for .NET `3.1.x` and `5.0.x` due to these versions reaching their end of life.
