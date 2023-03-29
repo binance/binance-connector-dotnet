@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.1 - 2023-03-29
+
+### Updated
+- Updated Examples and Tests project file to `net7.0`.
+
 ## 3.0.0 - 2023-03-29
 
 ### Removed
