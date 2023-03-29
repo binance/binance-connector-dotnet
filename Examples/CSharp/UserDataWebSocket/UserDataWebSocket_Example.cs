@@ -37,6 +37,7 @@ namespace Binance.Spot.UserDataWebSocketExamples
                 async (data) =>
             {
                 onlyOneMessage.SetResult(data);
+                await Task.CompletedTask;
             }, CancellationToken.None);
 
             await websocket.ConnectAsync(CancellationToken.None);
