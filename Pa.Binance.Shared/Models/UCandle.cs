@@ -41,8 +41,8 @@ namespace Binance.Shared.Models
         {
             get
             {
-                double height = HighPrice - LowPrice;
-                return height >= (ATR * 80 / 100) && height <= (ATR * 3);
+                decimal height = (decimal)HighPrice - (decimal)LowPrice;
+                return height >= (WATR * 80 / 100) && height <= (WATR * 3);
             }
         }
         public DateTime OpenUTC
@@ -59,15 +59,27 @@ namespace Binance.Shared.Models
                 return CloseTime.ToUniversalTime();
             }
         }
-        public double RSI
+        public decimal WATR
+        {
+            get
+            {
+                return ((ATR264 * 8) + (ATR132 * 5) + (ATR66 * 3) + (ATR21 * 2) + (ATR10) + (ATR5)) / 20;
+            }
+        }
+        public decimal RSI
         {
             get;
             set;
         }
-        public double ATR { get; set; }
-        public double EMA { get; set; }
-        public double SMA { get; set; }
-        public double RMA { get; set; }
+        public decimal ATR264 { get; set; }
+        public decimal ATR132 { get; set; }
+        public decimal ATR66 { get; set; }
+        public decimal ATR21 { get; set; }
+        public decimal ATR10 { get; set; }
+        public decimal ATR5 { get; set; }
+        public decimal EMA { get; set; }
+        public decimal SMA { get; set; }
+        public decimal RMA { get; set; }
 
         public Candlestick()
         {
@@ -86,7 +98,7 @@ namespace Binance.Shared.Models
                 LowPrice,
                 ClosePrice,
                 RSI,
-                ATR,
+                WATR,
                 SMA,
                 EMA,
                 RMA
@@ -105,11 +117,35 @@ namespace Binance.Shared.Models
                 LowPrice,
                 ClosePrice,
                 RSI,
-                ATR,
+                WATR,
                 SMA,
                 EMA,
                 RMA
                 );
+        }
+
+        public void CopyFrom(Candlestick instance)
+        {
+            this.ATR264 = instance.ATR264;
+            this.ATR132 = instance.ATR132;
+            this.ATR66 = instance.ATR66;
+            this.ATR21 = instance.ATR21;
+            this.ATR10 = instance.ATR10;
+            this.ATR5 = instance.ATR5;
+            this.SMA = instance.SMA;
+            this.EMA = instance.EMA;
+            this.RSI = instance.RSI;
+            this.ClosePrice = instance.ClosePrice;
+            this.OpenPrice = instance.OpenPrice;
+            this.HighPrice = instance.HighPrice;
+            this.LowPrice = instance.LowPrice;
+            this.FullBodyPercent = instance.FullBodyPercent;
+            this.Interval = instance.Interval;
+            this.CloseTime = instance.CloseTime;
+            this.OpenTime = instance.OpenTime;
+            this.RMA = instance.RMA;
+            this.SymbolName = instance.SymbolName;
+            this.Volume = instance.Volume;
         }
     }
 }

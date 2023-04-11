@@ -1,11 +1,9 @@
 namespace Binance.Spot
 {
-    using System;
     using System.Collections.Generic;
     using System.Net.Http;
     using System.Threading.Tasks;
     using Binance.Common;
-    using Binance.Spot.Models;
 
     public class UserDataStreams : SpotService
     {

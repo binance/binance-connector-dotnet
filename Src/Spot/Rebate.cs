@@ -5,7 +5,6 @@ namespace Binance.Spot
     using System.Net.Http;
     using System.Threading.Tasks;
     using Binance.Common;
-    using Binance.Spot.Models;
 
     public class Rebate : SpotService
     {
