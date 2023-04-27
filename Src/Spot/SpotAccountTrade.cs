@@ -263,7 +263,7 @@ namespace Binance.Spot
         /// <param name="endTime">UTC timestamp in ms.</param>
         /// <param name="limit">Default 500; max 1000.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
-        /// <returns>Current open orders.</returns>
+        /// <returns>Account orders.</returns>
         public async Task<string> AllOrders(string symbol, long? orderId = null, long? startTime = null, long? endTime = null, int? limit = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(

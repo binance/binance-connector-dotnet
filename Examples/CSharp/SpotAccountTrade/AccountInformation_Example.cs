@@ -32,8 +32,8 @@ namespace Binance.Spot.SpotAccountTradeExamples
 
             // Sign by RSA key
             apiKey = "the_api_key";
-            string private_key = File.ReadAllText("/Users/john/ssl/Private_key.pem");
-            var spotAccountTradeRSA = new SpotAccountTrade(httpClient, new BinanceRsa(private_key), apiKey: apiKey, baseUrl: "https://testnet.binance.vision");
+            string privateKey = File.ReadAllText("/Users/john/ssl/Private_key.pem");
+            var spotAccountTradeRSA = new SpotAccountTrade(httpClient, new BinanceRsa(privateKey), apiKey: apiKey, baseUrl: "https://testnet.binance.vision");
             var resultRSA = await spotAccountTradeRSA.AccountInformation();
         }
     }

@@ -1,5 +1,20 @@
 # Changelog
 
+## 4.0.0rc1 - 2023-04-27
+
+### Added
+- Added WebSocket API support.
+- Added new Models `SelfTradePreventionMode` and `TickerType`.
+
+### Updated
+- Updated `MarketDataWebSocket.cs` and `UserDataWebSocket.cs` path to be under `WebSocketStream`.
+- Updated `Interval` Model with `ONE_SECOND`.
+- Updated dependencies versions:
+  - `Microsoft.Extensions.Logging` to `6.0.0`.
+  - `Microsoft.Extensions.Logging.Console` to `6.0.0`.
+  - `Microsoft.Extensions.Logging.Abstractions` to `6.0.0`.
+  - `Microsoft.NET.Test.Sdk` to `17.5.0`.
+
 ## 3.0.0 - 2023-03-29
 
 ### Removed

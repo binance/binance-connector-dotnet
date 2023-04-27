@@ -7,6 +7,7 @@ namespace Binance.Spot.Models
             this.Value = value;
         }
 
+        public static Interval ONE_SECOND { get => new Interval("1s"); }
         public static Interval ONE_MINUTE { get => new Interval("1m"); }
         public static Interval THREE_MINUTE { get => new Interval("3m"); }
         public static Interval FIVE_MINUTE { get => new Interval("5m"); }
