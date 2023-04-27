@@ -1,6 +1,6 @@
 # Changelog
 
-## 4.0.0rc1 - 2023-04-27
+## 4.0.0-rc1 - 2023-04-27
 
 ### Added
 - Added WebSocket API support.
