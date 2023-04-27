@@ -27,7 +27,7 @@ namespace Binance.Spot.SpotAccountTradeExamples
 
             var spotAccountTrade = new SpotAccountTrade(httpClient, apiKey: apiKey, apiSecret: apiSecret);
 
-            var result = await spotAccountTrade.NewOrder("BNBUSDT", Side.SELL, OrderType.MARKET);
+            var result = await spotAccountTrade.NewOrder("BNBUSDT", Side.SELL, OrderType.MARKET, quantity: 1);
         }
     }
 }

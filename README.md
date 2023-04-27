@@ -8,8 +8,9 @@ This is a lightweight library that works as a connector to [Binance public API](
 - Supported APIs:
     - `/api/*`
     - `/sapi/*`
-    - Spot Websocket Market Stream
+    - Spot WebSocket Market Stream
     - Spot User Data Stream
+    - Spot WebSocket API
 - Test cases and examples
 - Customizable base URL, request timeout and HTTP proxy
 - Response Metadata
@@ -41,10 +42,12 @@ class Program
     }
 }
 ```
-Please find more  examples folder to check for more endpoints.
 
-## Websocket
+Please find `Examples` folder to check for more endpoints.
 
+## WebSocket Stream
+
+Usage Example
 ```csharp
 using System;
 using System.Threading;
@@ -71,21 +74,58 @@ class Program
 ```
 More websocket examples are available in the `Examples` folder
 
+## WebSocket API
 
-## Authentication
+Usage Example
+```csharp
+using System.Threading;
+using System.Threading.Tasks;
+using Binance.Common;
+using Binance.Spot;
+
+public class NewOrder_Example
+{
+    public static async Task Main(string[] args)
+    {
+        var websocket = new WebSocketApi("wss://testnet.binance.vision/ws-api/v3", "apiKey", new BinanceHmac("apiSecret"));
+
+        websocket.OnMessageReceived(
+            async (data) =>
+        {
+            Console.WriteLine(data);
+            await Task.CompletedTask;
+        }, CancellationToken.None);
+
+        await websocket.ConnectAsync(CancellationToken.None);
+
+        await websocket.AccountTrade.NewOrderAsync(symbol: "BNBUSDT", side: Models.Side.BUY, type: Models.OrderType.LIMIT, timeInForce: Models.TimeInForce.GTC, price: 300, quantity: 1, cancellationToken: CancellationToken.None);
+
+        await Task.Delay(5000);
+        Console.WriteLine("Disconnect with WebSocket API Server");
+        await websocket.DisconnectAsync(CancellationToken.None);
+    }
+}
+```
+
+- The `requestId` param is optional. If not sent, it defaults to a randomly created `GUID` (Globally Unique Identifier).
+- The `cancellationToken` is optional. If not sent, it defaults to `CancellationToken.None`.
+
+More websocket API examples are available in the `Examples` folder
+
+## Authentication - RESTful APIs
 
 For API endpoints that requires signature, new authentication interfaces are introduced to generate the signature since V2.
 
 ```csharp
 // HMAC signature
-new SpotAccountTrade(httpClient, new BinanceHmac("api-secret"), apiKey: apiKey)
+new SpotAccountTrade(httpClient, new BinanceHmac("apiSecret"), apiKey: "apiKey")
 
 // RSA signature
-string private_key = File.ReadAllText("/Users/john/ssl/Private_key.txt");
-new SpotAccountTrade(httpClient, new BinanceRsa(private_key), apiKey: apiKey)
+string privateKey = File.ReadAllText("/Users/john/ssl/PrivateKey.pem");
+new SpotAccountTrade(httpClient, new BinanceRsa(privateKey), apiKey: "apiKey")
 
 // Encrypted RSA signature
-new SpotAccountTrade(httpClient, new BinanceRsa(private_key, "the_private_key_password"), apiKey: apiKey)
+new SpotAccountTrade(httpClient, new BinanceRsa(privateKey, "thePrivateKeyPassword"), apiKey: "apiKey")
 
 ```
 
@@ -97,6 +137,20 @@ new SpotAccountTrade(httpClient, apiKey: apiKey, apiSecret: apiSecret)
 
 For more details, please find the example from the endpoints `/api/v3/account` in file `AccountInformation_Example`.
 
+## Authentication - WebSocket API
+
+```csharp
+// HMAC signature
+new WebSocketApi(apiKey: "apiKey", signatureService: new BinanceHmac("apiSecret"));
+
+// RSA signature
+string privateKey = File.ReadAllText("/Users/john/ssl/PrivateKey.pem");
+new WebSocketApi(apiKey: "apiKey", signatureService: new BinanceRsa(privateKey));
+
+// Encrypted RSA signature
+new WebSocketApi(apiKey: "apiKey", signatureService: new BinanceRsa(privateKey, "thePrivateKeyPassword"));
+
+```
 
 ### Heartbeat
 
@@ -105,8 +159,7 @@ a 10 minutes period. This package handles the pong responses automatically.
 
 ### Testnet
 
-While `/sapi/*` endpoints don't have testnet environment yet, `/api/*` endpoints can be tested in 
-[Spot Testnet](https://testnet.binance.vision/).
+[Spot Testnet](https://testnet.binance.vision/) can be used to test `/api/*` endpoints, Spot Websocket Stream and WebSocket API.
 
 ```csharp
 using Binance.Spot;
@@ -123,7 +176,10 @@ in case of performance issues:
 - `https://api1.binance.com`
 - `https://api2.binance.com`
 - `https://api3.binance.com`
+- `https://api4.binance.com`
 
+For Websocket Stream, `baseUrl` defaults to `wss://stream.binance.com:9443"`.
+For Websocket API, `baseUrl` defaults to `wss://ws-api.binance.com:443/ws-api/v3`.
 
 ### RecvWindow parameter
 
@@ -229,7 +285,7 @@ Futures and Vanilla Options APIs are not supported:
 - /fapi/*
 - /dapi/*
 - /vapi/*
-- Associated Websocket Market and User Data Streams
+- Associated WebSocket Market and User Data Streams
 
 ## Contributing
 
