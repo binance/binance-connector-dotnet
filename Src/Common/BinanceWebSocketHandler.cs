@@ -10,11 +10,14 @@ namespace Binance.Common
     /// </summary>
     public class BinanceWebSocketHandler : IBinanceWebSocketHandler
     {
+        private static readonly string UserAgent = "binance-connector-dotnet/" + VersionInfo.GetVersion;
+
         private ClientWebSocket webSocket;
 
         public BinanceWebSocketHandler(ClientWebSocket clientWebSocket)
         {
             this.webSocket = clientWebSocket;
+            this.webSocket.Options.SetRequestHeader("User-Agent", UserAgent);
         }
 
         public WebSocketState State

@@ -15,6 +15,7 @@ namespace Binance.Common
     /// </summary>
     public abstract class BinanceService
     {
+        private static readonly string UserAgent = "binance-connector-dotnet/" + VersionInfo.GetVersion;
         private string apiKey;
         private IBinanceSignatureService signatureService;
         private string baseUrl;
@@ -100,6 +101,7 @@ namespace Binance.Common
         {
             using (var request = new HttpRequestMessage(httpMethod, this.baseUrl + requestUri))
             {
+                request.Headers.Add("User-Agent", UserAgent);
                 if (!(content is null))
                 {
                     request.Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
