@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.0.1 - 2023-10-04
+
+### Updated
+- Fix parameter type issue in method `AggregateTradesListAsync`, `KlinesAsync` and `UiKlinesAsync`
+
 ## 4.0.0 - 2023-06-28
 
 ### Added
@@ -72,7 +77,7 @@
 
 - New endpoint for Account Trade:
   - `POST /api/v3/order/cancelReplace` to cancel an existing order and place a new order on the same symbol.
-  
+
 ### Changed
 - Update endpoint for Fiat:
   - `GET /sapi/v1/fiat/orders`: Weight changes from IP(1) to UID(90000)
@@ -201,7 +206,7 @@
   - DELETE /sapi/v1/account/apiRestrictions/ipRestriction/ipList to support master account delete IP list for a sub-account API Key
 
 - Issue templates
-  - Added templates for bug report and documentation changes 
+  - Added templates for bug report and documentation changes
 
 - Actions
   - Added release action
