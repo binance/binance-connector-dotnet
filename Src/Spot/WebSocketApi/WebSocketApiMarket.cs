@@ -92,7 +92,7 @@ namespace Binance.Spot
         /// <param name="requestId">Request ID.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Aggregated Trades list.</returns>
-        public async Task AggregateTradesListAsync(string symbol, int? fromId = null, int? startTime = null, int? endTime = null, int? limit = null, object requestId = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task AggregateTradesListAsync(string symbol, int? fromId = null, long? startTime = null, long? endTime = null, int? limit = null, object requestId = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
@@ -118,7 +118,7 @@ namespace Binance.Spot
         /// <param name="requestId">Request ID.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Klines.</returns>
-        public async Task KlinesAsync(string symbol, Interval interval, int? startTime = null, int? endTime = null, int? limit = null, object requestId = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task KlinesAsync(string symbol, Interval interval, long? startTime = null, long? endTime = null, int? limit = null, object requestId = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
@@ -144,7 +144,7 @@ namespace Binance.Spot
         /// <param name="requestId">Request ID.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>UI Klines.</returns>
-        public async Task UiKlinesAsync(string symbol, Interval interval, int? startTime = null, int? endTime = null, int? limit = null, object requestId = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task UiKlinesAsync(string symbol, Interval interval, long? startTime = null, long? endTime = null, int? limit = null, object requestId = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
