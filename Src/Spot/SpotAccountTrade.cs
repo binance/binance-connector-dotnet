@@ -106,9 +106,10 @@ namespace Binance.Spot
         /// <param name="trailingDelta">Used with STOP_LOSS, STOP_LOSS_LIMIT, TAKE_PROFIT, and TAKE_PROFIT_LIMIT orders.</param>
         /// <param name="icebergQty">Used with LIMIT, STOP_LOSS_LIMIT, and TAKE_PROFIT_LIMIT to create an iceberg order.</param>
         /// <param name="newOrderRespType">Set the response JSON. MARKET and LIMIT order types default to FULL, all other orders default to ACK.</param>
+        /// <param name="selfTradePreventionMode">The allowed enums is dependent on what is configured on the symbol. The possible supported values are EXPIRE_TAKER, EXPIRE_MAKER, EXPIRE_BOTH, NONE.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Order result.</returns>
-        public async Task<string> NewOrder(string symbol, Side side, OrderType type, TimeInForce? timeInForce = null, decimal? quantity = null, decimal? quoteOrderQty = null, decimal? price = null, string newClientOrderId = null, int? strategyId = null, int? strategyType = null, decimal? stopPrice = null, decimal? trailingDelta = null, decimal? icebergQty = null, NewOrderResponseType? newOrderRespType = null, long? recvWindow = null)
+        public async Task<string> NewOrder(string symbol, Side side, OrderType type, TimeInForce? timeInForce = null, decimal? quantity = null, decimal? quoteOrderQty = null, decimal? price = null, string newClientOrderId = null, int? strategyId = null, int? strategyType = null, decimal? stopPrice = null, decimal? trailingDelta = null, decimal? icebergQty = null, NewOrderResponseType? newOrderRespType = null, SelfTradePreventionMode? selfTradePreventionMode = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 NEW_ORDER,
@@ -129,6 +130,7 @@ namespace Binance.Spot
                     { "trailingDelta", trailingDelta },
                     { "icebergQty", icebergQty },
                     { "newOrderRespType", newOrderRespType },
+                    { "selfTradePreventionMode", selfTradePreventionMode },
                     { "recvWindow", recvWindow },
                     { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
                 });
@@ -316,9 +318,10 @@ namespace Binance.Spot
         /// <param name="stopIcebergQty"></param>
         /// <param name="stopLimitTimeInForce"></param>
         /// <param name="newOrderRespType">Set the response JSON.</param>
+        /// <param name="selfTradePreventionMode">The allowed enums is dependent on what is configured on the symbol. The possible supported values are EXPIRE_TAKER, EXPIRE_MAKER, EXPIRE_BOTH, NONE.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>New OCO details.</returns>
-        public async Task<string> NewOco(string symbol, Side side, decimal quantity, decimal price, decimal stopPrice, string listClientOrderId = null, string limitClientOrderId = null, int? limitStrategyId = null, int? limitStrategyType = null, decimal? limitIcebergQty = null, decimal? trailingDelta = null, string stopClientOrderId = null, int? stopStrategyId = null, int? stopStrategyType = null, decimal? stopLimitPrice = null, decimal? stopIcebergQty = null, TimeInForce? stopLimitTimeInForce = null, NewOrderResponseType? newOrderRespType = null, long? recvWindow = null)
+        public async Task<string> NewOco(string symbol, Side side, decimal quantity, decimal price, decimal stopPrice, string listClientOrderId = null, string limitClientOrderId = null, int? limitStrategyId = null, int? limitStrategyType = null, decimal? limitIcebergQty = null, decimal? trailingDelta = null, string stopClientOrderId = null, int? stopStrategyId = null, int? stopStrategyType = null, decimal? stopLimitPrice = null, decimal? stopIcebergQty = null, TimeInForce? stopLimitTimeInForce = null, NewOrderResponseType? newOrderRespType = null, SelfTradePreventionMode? selfTradePreventionMode = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 NEW_OCO,
@@ -343,6 +346,7 @@ namespace Binance.Spot
                     { "stopIcebergQty", stopIcebergQty },
                     { "stopLimitTimeInForce", stopLimitTimeInForce },
                     { "newOrderRespType", newOrderRespType },
+                    { "selfTradePreventionMode", selfTradePreventionMode },
                     { "recvWindow", recvWindow },
                     { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
                 });
@@ -564,9 +568,10 @@ namespace Binance.Spot
         /// <param name="trailingDelta">Used with STOP_LOSS, STOP_LOSS_LIMIT, TAKE_PROFIT, and TAKE_PROFIT_LIMIT orders.</param>
         /// <param name="icebergQty">Used with LIMIT, STOP_LOSS_LIMIT, and TAKE_PROFIT_LIMIT to create an iceberg order.</param>
         /// <param name="newOrderRespType">Set the response JSON. MARKET and LIMIT order types default to FULL, all other orders default to ACK.</param>
+        /// <param name="selfTradePreventionMode">The allowed enums is dependent on what is configured on the symbol. The possible supported values are EXPIRE_TAKER, EXPIRE_MAKER, EXPIRE_BOTH, NONE.</param>
         /// <param name="recvWindow">The value cannot be greater than 60000.</param>
         /// <returns>Operation details.</returns>
-        public async Task<string> CancelAnExistingOrderAndSendANewOrder(string symbol, Side side, OrderType type, string cancelReplaceMode, TimeInForce? timeInForce = null, decimal? quantity = null, decimal? quoteOrderQty = null, decimal? price = null, string cancelNewClientOrderId = null, string cancelOrigClientOrderId = null, long? cancelOrderId = null, string newClientOrderId = null, int? strategyId = null, int? strategyType = null, decimal? stopPrice = null, decimal? trailingDelta = null, decimal? icebergQty = null, NewOrderResponseType? newOrderRespType = null, long? recvWindow = null)
+        public async Task<string> CancelAnExistingOrderAndSendANewOrder(string symbol, Side side, OrderType type, string cancelReplaceMode, TimeInForce? timeInForce = null, decimal? quantity = null, decimal? quoteOrderQty = null, decimal? price = null, string cancelNewClientOrderId = null, string cancelOrigClientOrderId = null, long? cancelOrderId = null, string newClientOrderId = null, int? strategyId = null, int? strategyType = null, decimal? stopPrice = null, decimal? trailingDelta = null, decimal? icebergQty = null, NewOrderResponseType? newOrderRespType = null, SelfTradePreventionMode? selfTradePreventionMode = null, long? recvWindow = null)
         {
             var result = await this.SendSignedAsync<string>(
                 CANCEL_AN_EXISTING_ORDER_AND_SEND_A_NEW_ORDER,
@@ -591,6 +596,7 @@ namespace Binance.Spot
                     { "trailingDelta", trailingDelta },
                     { "icebergQty", icebergQty },
                     { "newOrderRespType", newOrderRespType },
+                    { "selfTradePreventionMode", selfTradePreventionMode },
                     { "recvWindow", recvWindow },
                     { "timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() },
                 });
