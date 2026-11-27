@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <StartupObject>Binance.C2C.Examples.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/Binance.C2C/Binance.C2C.csproj" />
+  </ItemGroup>
+</Project>

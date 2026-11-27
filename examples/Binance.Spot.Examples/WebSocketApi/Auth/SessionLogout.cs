@@ -1,0 +1,43 @@
+//
+// Binance .NET Connector
+// https://github.com/binance/binance-connector-dotnet
+//
+// Distributed under the MIT License. See the LICENCE file.
+// Documentation: https://binance.github.io/binance-connector-dotnet/
+//
+
+using Binance.Common;
+using Binance.Spot.WebSocketApi;
+
+namespace Binance.Spot.Examples.WebSocketApi.Auth;
+
+public static class SessionLogout
+{
+    public static async Task Main()
+    {
+        var client = new SpotWebSocketApi(new WebSocketApiConfig
+        {
+            Url = Environment.GetEnvironmentVariable("WS_URL") ?? SpotWebSocketApi.ProductionUrl,
+            ApiKey = Environment.GetEnvironmentVariable("API_KEY"),
+            ApiSecret = Environment.GetEnvironmentVariable("API_SECRET"),
+        });
+
+        try
+        {
+            await using var connection = await client.ConnectAsync();
+
+            var responses = await connection.SessionLogoutAsync();
+
+            foreach (var response in responses)
+            {
+                Console.WriteLine("Rate limits: " + string.Join("; ", response.RateLimits));
+                Console.WriteLine(SpotWebSocketApiJson.ToJson(response.Data()));
+            }
+        }
+        catch (BinanceException e)
+        {
+            Console.Error.WriteLine($"SessionLogoutAsync() failed: {e.Kind} {e.Code} {e.Message}");
+        }
+    }
+}
+

@@ -1,0 +1,28 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": ".",
+          "files": [
+            "src/Binance.*/*.csproj"
+          ],
+          "exclude": ["**/bin/**", "**/obj/**"]
+        }
+      ],
+      "dest": "docs/api"
+    }
+  ],
+  "build": {
+    "content": [
+      { "files": ["docs/api/**.yml", "docs/api/toc.yml", "docs/api/index.md"] },
+      { "files": ["docs/*.md", "docs/toc.yml", "README.md", "MIGRATION.md", "CHANGELOG.md"] },
+      { "files": ["src/Binance.*/README.md", "src/Binance.*/docs/**/*.md", "examples/Binance.*/README.md", "tests/README.md"] }
+    ],
+    "dest": "docs/_site",
+    "globalMetadata": {
+      "_appTitle": "Binance .NET Connector",
+      "_enableSearch": true
+    }
+  }
+}

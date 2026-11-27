@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <StartupObject>Binance.CopyTrading.Examples.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/Binance.CopyTrading/Binance.CopyTrading.csproj" />
+  </ItemGroup>
+</Project>

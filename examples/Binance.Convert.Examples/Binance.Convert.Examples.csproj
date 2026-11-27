@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <StartupObject>Binance.Convert.Examples.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/Binance.Convert/Binance.Convert.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Official Binance Pay Connector - A lightweight library that provides a convenient interface to Binance's Pay REST API.</Description>
+  </PropertyGroup>
+</Project>

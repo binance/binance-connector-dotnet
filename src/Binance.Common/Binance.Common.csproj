@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <IsAotCompatible>true</IsAotCompatible>
+    <NoWarn>$(NoWarn);CA1720</NoWarn>
+
+    <PackageId>Binance.Common</PackageId>
+    <Description>Shared infrastructure for the Binance .NET connectors: configuration, errors, logging and transport.</Description>
+    <PackageTags>binance api binance-api exchange connector dotnet csharp</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Binance.Common.Tests" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <None Include="README.md" Pack="true" PackagePath="/" />
+    <None Include="runtimes/**/native/*.dylib;runtimes/**/native/*.so;runtimes/**/native/*.dll" Pack="true" PackagePath="runtimes/" />
+  </ItemGroup>
+</Project>

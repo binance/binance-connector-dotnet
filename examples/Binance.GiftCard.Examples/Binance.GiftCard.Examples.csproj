@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <StartupObject>Binance.GiftCard.Examples.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/Binance.GiftCard/Binance.GiftCard.csproj" />
+  </ItemGroup>
+</Project>

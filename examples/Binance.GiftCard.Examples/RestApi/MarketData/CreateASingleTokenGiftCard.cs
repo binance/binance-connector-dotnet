@@ -1,0 +1,43 @@
+//
+// Binance .NET Connector
+// https://github.com/binance/binance-connector-dotnet
+//
+// Distributed under the MIT License. See the LICENCE file.
+// Documentation: https://binance.github.io/binance-connector-dotnet/
+//
+
+using Binance.Common;
+using Binance.GiftCard.RestApi;
+
+namespace Binance.GiftCard.Examples.RestApi.MarketData;
+
+public static class CreateASingleTokenGiftCard
+{
+    public static async Task Main()
+    {
+        // This request changes the account of the API key: it can place or cancel real orders or move funds.
+        using var client = new GiftCardRestApi(new RestApiConfig
+        {
+            BasePath = Environment.GetEnvironmentVariable("BASE_PATH") ?? GiftCardRestApi.ProductionUrl,
+            ApiKey = Environment.GetEnvironmentVariable("API_KEY"),
+            ApiSecret = Environment.GetEnvironmentVariable("API_SECRET"),
+        });
+
+        try
+        {
+            var response = await client.CreateASingleTokenGiftCardAsync(new()
+            {
+                Token = "BNB",
+                Amount = 1m,
+            });
+
+            Console.WriteLine("Rate limits: " + string.Join("; ", response.RateLimits));
+            Console.WriteLine(GiftCardRestApiJson.ToJson(response.Data()));
+        }
+        catch (BinanceException e)
+        {
+            Console.Error.WriteLine($"CreateASingleTokenGiftCardAsync() failed: {e.Kind} {e.Code} {e.Message}");
+        }
+    }
+}
+

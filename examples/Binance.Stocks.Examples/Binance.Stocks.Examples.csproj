@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <StartupObject>Binance.Stocks.Examples.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/Binance.Stocks/Binance.Stocks.csproj" />
+  </ItemGroup>
+</Project>

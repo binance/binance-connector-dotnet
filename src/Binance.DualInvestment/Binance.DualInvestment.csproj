@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Official Binance Dual Investment Connector - A lightweight library that provides a convenient interface to Binance's Dual Investment REST API.</Description>
+  </PropertyGroup>
+</Project>

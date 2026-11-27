@@ -1,0 +1,148 @@
+//
+// Binance .NET Connector
+// https://github.com/binance/binance-connector-dotnet
+//
+// Distributed under the MIT License. See the LICENCE file.
+// Documentation: https://binance.github.io/binance-connector-dotnet/
+//
+
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Binance.Common;
+
+namespace Binance.Spot.RestApi;
+
+public sealed class GetOrderResponse
+{
+    /// <summary>symbol.</summary>
+    [JsonPropertyName("symbol")]
+    public string? Symbol { get; set; }
+
+    /// <summary>order Id.</summary>
+    [JsonPropertyName("orderId")]
+    public long? OrderId { get; set; }
+
+    /// <summary>This field will always have a value of -1 if not an order list.</summary>
+    [JsonPropertyName("orderListId")]
+    public long? OrderListId { get; set; }
+
+    /// <summary>client Order Id.</summary>
+    [JsonPropertyName("clientOrderId")]
+    public string? ClientOrderId { get; set; }
+
+    /// <summary>price.</summary>
+    [JsonPropertyName("price")]
+    public string? Price { get; set; }
+
+    /// <summary>orig Qty.</summary>
+    [JsonPropertyName("origQty")]
+    public string? OrigQty { get; set; }
+
+    /// <summary>executed Qty.</summary>
+    [JsonPropertyName("executedQty")]
+    public string? ExecutedQty { get; set; }
+
+    /// <summary>orig Quote Order Qty.</summary>
+    [JsonPropertyName("origQuoteOrderQty")]
+    public string? OrigQuoteOrderQty { get; set; }
+
+    /// <summary>cummulative Quote Qty.</summary>
+    [JsonPropertyName("cummulativeQuoteQty")]
+    public string? CummulativeQuoteQty { get; set; }
+
+    /// <summary>status.</summary>
+    [JsonPropertyName("status")]
+    public string? Status { get; set; }
+
+    /// <summary>time In Force.</summary>
+    [JsonPropertyName("timeInForce")]
+    public string? TimeInForce { get; set; }
+
+    /// <summary>type.</summary>
+    [JsonPropertyName("type")]
+    public string? Type { get; set; }
+
+    /// <summary>side.</summary>
+    [JsonPropertyName("side")]
+    public string? Side { get; set; }
+
+    /// <summary>Appears for STOP_LOSS, TAKE_PROFIT, STOP_LOSS_LIMIT, and TAKE_PROFIT_LIMIT orders.</summary>
+    [JsonPropertyName("stopPrice")]
+    public string? StopPrice { get; set; }
+
+    /// <summary>Appears only if the parameter icebergQty was sent in the request.</summary>
+    [JsonPropertyName("icebergQty")]
+    public string? IcebergQty { get; set; }
+
+    /// <summary>time.</summary>
+    [JsonPropertyName("time")]
+    public long? Time { get; set; }
+
+    /// <summary>update Time.</summary>
+    [JsonPropertyName("updateTime")]
+    public long? UpdateTime { get; set; }
+
+    /// <summary>is Working.</summary>
+    [JsonPropertyName("isWorking")]
+    public bool? IsWorking { get; set; }
+
+    /// <summary>working Time.</summary>
+    [JsonPropertyName("workingTime")]
+    public long? WorkingTime { get; set; }
+
+    /// <summary>self Trade Prevention Mode.</summary>
+    [JsonPropertyName("selfTradePreventionMode")]
+    public string? SelfTradePreventionMode { get; set; }
+
+    /// <summary>Appears only if the order expired due to STP.</summary>
+    [JsonPropertyName("preventedMatchId")]
+    public long? PreventedMatchId { get; set; }
+
+    /// <summary>Order quantity that expired due to STP.</summary>
+    [JsonPropertyName("preventedQuantity")]
+    public string? PreventedQuantity { get; set; }
+
+    /// <summary>Appears only if the strategyId parameter was provided upon order placement.</summary>
+    [JsonPropertyName("strategyId")]
+    public long? StrategyId { get; set; }
+
+    /// <summary>Appears only if the strategyType parameter was provided upon order placement.</summary>
+    [JsonPropertyName("strategyType")]
+    public long? StrategyType { get; set; }
+
+    /// <summary>Delta price change required before order activation.</summary>
+    [JsonPropertyName("trailingDelta")]
+    public long? TrailingDelta { get; set; }
+
+    /// <summary>Time when the trailing order is now active and tracking price changes.</summary>
+    [JsonPropertyName("trailingTime")]
+    public long? TrailingTime { get; set; }
+
+    /// <summary>Field that determines whether order used SOR.</summary>
+    [JsonPropertyName("usedSor")]
+    public bool? UsedSor { get; set; }
+
+    /// <summary>Determines whether the order is being filled by the SOR or by the order book.</summary>
+    [JsonPropertyName("workingFloor")]
+    public string? WorkingFloor { get; set; }
+
+    /// <summary>Price peg type. Only for pegged orders.</summary>
+    [JsonPropertyName("pegPriceType")]
+    public string? PegPriceType { get; set; }
+
+    /// <summary>Price peg offset type. Only for pegged orders, if requested.</summary>
+    [JsonPropertyName("pegOffsetType")]
+    public string? PegOffsetType { get; set; }
+
+    /// <summary>Price peg offset value. Only for pegged orders, if requested.</summary>
+    [JsonPropertyName("pegOffsetValue")]
+    public long? PegOffsetValue { get; set; }
+
+    /// <summary>Current price order is pegged at. Only for pegged orders, once determined.</summary>
+    [JsonPropertyName("peggedPrice")]
+    public string? PeggedPrice { get; set; }
+
+    /// <summary>Cause of the order's expiration. Appears when an order has expired.</summary>
+    [JsonPropertyName("expiryReason")]
+    public string? ExpiryReason { get; set; }
+}

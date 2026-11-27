@@ -1,0 +1,29 @@
+# Key Pair Based Authentication
+
+The streams of this product are signed. You can sign the connections with an `RSA` or `Ed25519` key instead of `ApiSecret`, given as PEM text (`PrivateKeyPem`) or as the path of a PEM file (`PrivateKeyFile`).
+
+```csharp
+using Binance.Common;
+using Binance.Cms.WebSocketStreams;
+
+var config = new WebSocketStreamsConfig
+{
+    ApiKey = "your-api-key",
+    PrivateKeyFile = "/path/to/private-key.pem",
+    PrivateKeyPassphrase = "your-passphrase", // only if the key is encrypted
+};
+var client = CmsWebSocketStreams.Production(config);
+await using var connection = await client.ConnectAsync();
+
+using var subscription = connection.ComAnnouncementEn();
+
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+try
+{
+    await foreach (var e in subscription.Events.ReadAllAsync(cts.Token))
+        Console.WriteLine(CmsWebSocketStreamsJson.ToJson(e));
+}
+catch (OperationCanceledException)
+{
+}
+```

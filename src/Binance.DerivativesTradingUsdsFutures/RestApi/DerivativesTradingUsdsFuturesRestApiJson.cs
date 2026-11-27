@@ -1,0 +1,142 @@
+//
+// Binance .NET Connector
+// https://github.com/binance/binance-connector-dotnet
+//
+// Distributed under the MIT License. See the LICENCE file.
+// Documentation: https://binance.github.io/binance-connector-dotnet/
+//
+
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace Binance.DerivativesTradingUsdsFutures.RestApi;
+
+/// <summary>The System.Text.Json context of the DerivativesTradingUsdsFutures RestApi models: <c>JsonSerializer.Serialize(value, DerivativesTradingUsdsFuturesRestApiJson.Default.TypeName)</c>, also under Native AOT.</summary>
+[JsonSourceGenerationOptions(NumberHandling = JsonNumberHandling.AllowReadingFromString, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
+[JsonSerializable(typeof(AcceptTheOfferedQuoteResponse), TypeInfoPropertyName = "AcceptTheOfferedQuoteResponse")]
+[JsonSerializable(typeof(AccountInformationV2Response), TypeInfoPropertyName = "AccountInformationV2Response")]
+[JsonSerializable(typeof(AccountInformationV3Response), TypeInfoPropertyName = "AccountInformationV3Response")]
+[JsonSerializable(typeof(AdlRiskResponse), TypeInfoPropertyName = "AdlRiskResponse")]
+[JsonSerializable(typeof(AdlRiskResponse1), TypeInfoPropertyName = "AdlRiskResponse1")]
+[JsonSerializable(typeof(AssetIndexResponse), TypeInfoPropertyName = "AssetIndexResponse")]
+[JsonSerializable(typeof(AssetIndexResponse1), TypeInfoPropertyName = "AssetIndexResponse1")]
+[JsonSerializable(typeof(AutoCancelAllOpenOrdersResponse), TypeInfoPropertyName = "AutoCancelAllOpenOrdersResponse")]
+[JsonSerializable(typeof(CancelAlgoOrderResponse), TypeInfoPropertyName = "CancelAlgoOrderResponse")]
+[JsonSerializable(typeof(CancelAllAlgoOpenOrdersResponse), TypeInfoPropertyName = "CancelAllAlgoOpenOrdersResponse")]
+[JsonSerializable(typeof(CancelAllOpenOrdersResponse), TypeInfoPropertyName = "CancelAllOpenOrdersResponse")]
+[JsonSerializable(typeof(CancelOrderResponse), TypeInfoPropertyName = "CancelOrderResponse")]
+[JsonSerializable(typeof(ChangeInitialLeverageResponse), TypeInfoPropertyName = "ChangeInitialLeverageResponse")]
+[JsonSerializable(typeof(ChangeMarginTypeResponse), TypeInfoPropertyName = "ChangeMarginTypeResponse")]
+[JsonSerializable(typeof(ChangeMultiAssetsModeResponse), TypeInfoPropertyName = "ChangeMultiAssetsModeResponse")]
+[JsonSerializable(typeof(ChangePositionModeResponse), TypeInfoPropertyName = "ChangePositionModeResponse")]
+[JsonSerializable(typeof(CheckServerTimeResponse), TypeInfoPropertyName = "CheckServerTimeResponse")]
+[JsonSerializable(typeof(ClassicPortfolioMarginAccountInformationResponse), TypeInfoPropertyName = "ClassicPortfolioMarginAccountInformationResponse")]
+[JsonSerializable(typeof(ExchangeInformationResponse), TypeInfoPropertyName = "ExchangeInformationResponse")]
+[JsonSerializable(typeof(FuturesAccountConfigurationResponse), TypeInfoPropertyName = "FuturesAccountConfigurationResponse")]
+[JsonSerializable(typeof(FuturesTradfiPerpsContractResponse), TypeInfoPropertyName = "FuturesTradfiPerpsContractResponse")]
+[JsonSerializable(typeof(FuturesTradingQuantitativeRulesIndicatorsResponse), TypeInfoPropertyName = "FuturesTradingQuantitativeRulesIndicatorsResponse")]
+[JsonSerializable(typeof(GetBnbBurnStatusResponse), TypeInfoPropertyName = "GetBnbBurnStatusResponse")]
+[JsonSerializable(typeof(GetCurrentMultiAssetsModeResponse), TypeInfoPropertyName = "GetCurrentMultiAssetsModeResponse")]
+[JsonSerializable(typeof(GetCurrentPositionModeResponse), TypeInfoPropertyName = "GetCurrentPositionModeResponse")]
+[JsonSerializable(typeof(GetDownloadIdForFuturesOrderHistoryResponse), TypeInfoPropertyName = "GetDownloadIdForFuturesOrderHistoryResponse")]
+[JsonSerializable(typeof(GetDownloadIdForFuturesTradeHistoryResponse), TypeInfoPropertyName = "GetDownloadIdForFuturesTradeHistoryResponse")]
+[JsonSerializable(typeof(GetDownloadIdForFuturesTransactionHistoryResponse), TypeInfoPropertyName = "GetDownloadIdForFuturesTransactionHistoryResponse")]
+[JsonSerializable(typeof(GetFuturesOrderHistoryDownloadLinkByIdResponse), TypeInfoPropertyName = "GetFuturesOrderHistoryDownloadLinkByIdResponse")]
+[JsonSerializable(typeof(GetFuturesTradeDownloadLinkByIdResponse), TypeInfoPropertyName = "GetFuturesTradeDownloadLinkByIdResponse")]
+[JsonSerializable(typeof(GetFuturesTransactionHistoryDownloadLinkByIdResponse), TypeInfoPropertyName = "GetFuturesTransactionHistoryDownloadLinkByIdResponse")]
+[JsonSerializable(typeof(JsonElement), TypeInfoPropertyName = "JsonElement")]
+[JsonSerializable(typeof(KeepaliveUserDataStreamResponse), TypeInfoPropertyName = "KeepaliveUserDataStreamResponse")]
+[JsonSerializable(typeof(List<AccountTradeListResponseInner>), TypeInfoPropertyName = "ListAccountTradeListResponseInner")]
+[JsonSerializable(typeof(List<AdlRiskResponse2Inner>), TypeInfoPropertyName = "ListAdlRiskResponse2Inner")]
+[JsonSerializable(typeof(List<AllOrdersResponseInner>), TypeInfoPropertyName = "ListAllOrdersResponseInner")]
+[JsonSerializable(typeof(List<AssetIndexResponse2Inner>), TypeInfoPropertyName = "ListAssetIndexResponse2Inner")]
+[JsonSerializable(typeof(List<BasisResponseInner>), TypeInfoPropertyName = "ListBasisResponseInner")]
+[JsonSerializable(typeof(List<CancelMultipleOrdersResponseInner>), TypeInfoPropertyName = "ListCancelMultipleOrdersResponseInner")]
+[JsonSerializable(typeof(List<CompositeIndexSymbolInformationResponseInner>), TypeInfoPropertyName = "ListCompositeIndexSymbolInformationResponseInner")]
+[JsonSerializable(typeof(List<CompressedAggregateTradesListResponseInner>), TypeInfoPropertyName = "ListCompressedAggregateTradesListResponseInner")]
+[JsonSerializable(typeof(List<CurrentAllAlgoOpenOrdersResponseInner>), TypeInfoPropertyName = "ListCurrentAllAlgoOpenOrdersResponseInner")]
+[JsonSerializable(typeof(List<CurrentAllOpenOrdersResponseInner>), TypeInfoPropertyName = "ListCurrentAllOpenOrdersResponseInner")]
+[JsonSerializable(typeof(List<FuturesAccountBalanceV2ResponseInner>), TypeInfoPropertyName = "ListFuturesAccountBalanceV2ResponseInner")]
+[JsonSerializable(typeof(List<GetFundingRateHistoryResponseInner>), TypeInfoPropertyName = "ListGetFundingRateHistoryResponseInner")]
+[JsonSerializable(typeof(List<GetFundingRateInfoResponseInner>), TypeInfoPropertyName = "ListGetFundingRateInfoResponseInner")]
+[JsonSerializable(typeof(List<GetIncomeHistoryResponseInner>), TypeInfoPropertyName = "ListGetIncomeHistoryResponseInner")]
+[JsonSerializable(typeof(List<GetOrderModifyHistoryResponseInner>), TypeInfoPropertyName = "ListGetOrderModifyHistoryResponseInner")]
+[JsonSerializable(typeof(List<GetPositionMarginChangeHistoryResponseInner>), TypeInfoPropertyName = "ListGetPositionMarginChangeHistoryResponseInner")]
+[JsonSerializable(typeof(List<List<ContinuousContractKlineCandlestickDataItemInner>>), TypeInfoPropertyName = "ListListContinuousContractKlineCandlestickDataItemInner")]
+[JsonSerializable(typeof(List<List<IndexPriceKlineCandlestickDataItemInner>>), TypeInfoPropertyName = "ListListIndexPriceKlineCandlestickDataItemInner")]
+[JsonSerializable(typeof(List<List<KlineCandlestickDataItemInner>>), TypeInfoPropertyName = "ListListKlineCandlestickDataItemInner")]
+[JsonSerializable(typeof(List<List<MarkPriceKlineCandlestickDataItemInner>>), TypeInfoPropertyName = "ListListMarkPriceKlineCandlestickDataItemInner")]
+[JsonSerializable(typeof(List<List<PremiumIndexKlineDataItemInner>>), TypeInfoPropertyName = "ListListPremiumIndexKlineDataItemInner")]
+[JsonSerializable(typeof(List<ListAllConvertPairsResponseInner>), TypeInfoPropertyName = "ListListAllConvertPairsResponseInner")]
+[JsonSerializable(typeof(List<LongShortRatioResponseInner>), TypeInfoPropertyName = "ListLongShortRatioResponseInner")]
+[JsonSerializable(typeof(List<MarkPriceResponse2Inner>), TypeInfoPropertyName = "ListMarkPriceResponse2Inner")]
+[JsonSerializable(typeof(List<ModifyMultipleOrdersBatchOrdersParameterInner>), TypeInfoPropertyName = "ListModifyMultipleOrdersBatchOrdersParameterInner")]
+[JsonSerializable(typeof(List<ModifyMultipleOrdersResponseInner>), TypeInfoPropertyName = "ListModifyMultipleOrdersResponseInner")]
+[JsonSerializable(typeof(List<NotionalAndLeverageBracketsResponse1Inner>), TypeInfoPropertyName = "ListNotionalAndLeverageBracketsResponse1Inner")]
+[JsonSerializable(typeof(List<OldTradesLookupResponseInner>), TypeInfoPropertyName = "ListOldTradesLookupResponseInner")]
+[JsonSerializable(typeof(List<OpenInterestStatisticsResponseInner>), TypeInfoPropertyName = "ListOpenInterestStatisticsResponseInner")]
+[JsonSerializable(typeof(List<PlaceMultipleOrdersBatchOrdersParameterInner>), TypeInfoPropertyName = "ListPlaceMultipleOrdersBatchOrdersParameterInner")]
+[JsonSerializable(typeof(List<PlaceMultipleOrdersResponseInner>), TypeInfoPropertyName = "ListPlaceMultipleOrdersResponseInner")]
+[JsonSerializable(typeof(List<PositionAdlQuantileEstimationResponseInner>), TypeInfoPropertyName = "ListPositionAdlQuantileEstimationResponseInner")]
+[JsonSerializable(typeof(List<PositionInformationV2ResponseInner>), TypeInfoPropertyName = "ListPositionInformationV2ResponseInner")]
+[JsonSerializable(typeof(List<PositionInformationV3ResponseInner>), TypeInfoPropertyName = "ListPositionInformationV3ResponseInner")]
+[JsonSerializable(typeof(List<QuarterlyContractSettlementPriceResponseInner>), TypeInfoPropertyName = "ListQuarterlyContractSettlementPriceResponseInner")]
+[JsonSerializable(typeof(List<QueryAllAlgoOrdersResponseInner>), TypeInfoPropertyName = "ListQueryAllAlgoOrdersResponseInner")]
+[JsonSerializable(typeof(List<QueryInsuranceFundBalanceSnapshotResponse2Inner>), TypeInfoPropertyName = "ListQueryInsuranceFundBalanceSnapshotResponse2Inner")]
+[JsonSerializable(typeof(List<QueryUserRateLimitResponseInner>), TypeInfoPropertyName = "ListQueryUserRateLimitResponseInner")]
+[JsonSerializable(typeof(List<RecentTradesListResponseInner>), TypeInfoPropertyName = "ListRecentTradesListResponseInner")]
+[JsonSerializable(typeof(List<SymbolConfigurationResponseInner>), TypeInfoPropertyName = "ListSymbolConfigurationResponseInner")]
+[JsonSerializable(typeof(List<SymbolOrderBookTickerResponse2Inner>), TypeInfoPropertyName = "ListSymbolOrderBookTickerResponse2Inner")]
+[JsonSerializable(typeof(List<SymbolPriceTickerResponse2Inner>), TypeInfoPropertyName = "ListSymbolPriceTickerResponse2Inner")]
+[JsonSerializable(typeof(List<TakerBuySellVolumeResponseInner>), TypeInfoPropertyName = "ListTakerBuySellVolumeResponseInner")]
+[JsonSerializable(typeof(List<Ticker24hrPriceChangeStatisticsResponse2Inner>), TypeInfoPropertyName = "ListTicker24hrPriceChangeStatisticsResponse2Inner")]
+[JsonSerializable(typeof(List<TopTraderLongShortRatioAccountsResponseInner>), TypeInfoPropertyName = "ListTopTraderLongShortRatioAccountsResponseInner")]
+[JsonSerializable(typeof(List<TopTraderLongShortRatioPositionsResponseInner>), TypeInfoPropertyName = "ListTopTraderLongShortRatioPositionsResponseInner")]
+[JsonSerializable(typeof(List<UsersForceOrdersResponseInner>), TypeInfoPropertyName = "ListUsersForceOrdersResponseInner")]
+[JsonSerializable(typeof(MarkPriceResponse), TypeInfoPropertyName = "MarkPriceResponse")]
+[JsonSerializable(typeof(MarkPriceResponse1), TypeInfoPropertyName = "MarkPriceResponse1")]
+[JsonSerializable(typeof(ModifyIsolatedPositionMarginResponse), TypeInfoPropertyName = "ModifyIsolatedPositionMarginResponse")]
+[JsonSerializable(typeof(ModifyOrderResponse), TypeInfoPropertyName = "ModifyOrderResponse")]
+[JsonSerializable(typeof(NewAlgoOrderResponse), TypeInfoPropertyName = "NewAlgoOrderResponse")]
+[JsonSerializable(typeof(NewOrderResponse), TypeInfoPropertyName = "NewOrderResponse")]
+[JsonSerializable(typeof(NotionalAndLeverageBracketsResponse), TypeInfoPropertyName = "NotionalAndLeverageBracketsResponse")]
+[JsonSerializable(typeof(NotionalAndLeverageBracketsResponse2), TypeInfoPropertyName = "NotionalAndLeverageBracketsResponse2")]
+[JsonSerializable(typeof(OpenInterestResponse), TypeInfoPropertyName = "OpenInterestResponse")]
+[JsonSerializable(typeof(OrderBookResponse), TypeInfoPropertyName = "OrderBookResponse")]
+[JsonSerializable(typeof(OrderStatusResponse), TypeInfoPropertyName = "OrderStatusResponse")]
+[JsonSerializable(typeof(QueryAlgoOrderResponse), TypeInfoPropertyName = "QueryAlgoOrderResponse")]
+[JsonSerializable(typeof(QueryCurrentOpenOrderResponse), TypeInfoPropertyName = "QueryCurrentOpenOrderResponse")]
+[JsonSerializable(typeof(QueryIndexPriceConstituentsResponse), TypeInfoPropertyName = "QueryIndexPriceConstituentsResponse")]
+[JsonSerializable(typeof(QueryInsuranceFundBalanceSnapshotResponse), TypeInfoPropertyName = "QueryInsuranceFundBalanceSnapshotResponse")]
+[JsonSerializable(typeof(QueryInsuranceFundBalanceSnapshotResponse1), TypeInfoPropertyName = "QueryInsuranceFundBalanceSnapshotResponse1")]
+[JsonSerializable(typeof(QueryOrderResponse), TypeInfoPropertyName = "QueryOrderResponse")]
+[JsonSerializable(typeof(RpiOrderBookResponse), TypeInfoPropertyName = "RpiOrderBookResponse")]
+[JsonSerializable(typeof(SendQuoteRequestResponse), TypeInfoPropertyName = "SendQuoteRequestResponse")]
+[JsonSerializable(typeof(StartUserDataStreamResponse), TypeInfoPropertyName = "StartUserDataStreamResponse")]
+[JsonSerializable(typeof(SymbolOrderBookTickerResponse), TypeInfoPropertyName = "SymbolOrderBookTickerResponse")]
+[JsonSerializable(typeof(SymbolOrderBookTickerResponse1), TypeInfoPropertyName = "SymbolOrderBookTickerResponse1")]
+[JsonSerializable(typeof(SymbolPriceTickerResponse), TypeInfoPropertyName = "SymbolPriceTickerResponse")]
+[JsonSerializable(typeof(SymbolPriceTickerResponse1), TypeInfoPropertyName = "SymbolPriceTickerResponse1")]
+[JsonSerializable(typeof(SymbolPriceTickerV2Response), TypeInfoPropertyName = "SymbolPriceTickerV2Response")]
+[JsonSerializable(typeof(SymbolPriceTickerV2Response1), TypeInfoPropertyName = "SymbolPriceTickerV2Response1")]
+[JsonSerializable(typeof(TestOrderResponse), TypeInfoPropertyName = "TestOrderResponse")]
+[JsonSerializable(typeof(Ticker24hrPriceChangeStatisticsResponse), TypeInfoPropertyName = "Ticker24hrPriceChangeStatisticsResponse")]
+[JsonSerializable(typeof(Ticker24hrPriceChangeStatisticsResponse1), TypeInfoPropertyName = "Ticker24hrPriceChangeStatisticsResponse1")]
+[JsonSerializable(typeof(ToggleBnbBurnOnFuturesTradeResponse), TypeInfoPropertyName = "ToggleBnbBurnOnFuturesTradeResponse")]
+[JsonSerializable(typeof(TradingScheduleResponse), TypeInfoPropertyName = "TradingScheduleResponse")]
+[JsonSerializable(typeof(UserCommissionRateResponse), TypeInfoPropertyName = "UserCommissionRateResponse")]
+[JsonSerializable(typeof(long))]
+[JsonSerializable(typeof(string))]
+public sealed partial class DerivativesTradingUsdsFuturesRestApiJson : JsonSerializerContext
+{
+    private static JsonSerializerOptions? s_indented;
+
+    /// <summary>Writes a model of the DerivativesTradingUsdsFutures RestApi (or a list of them) as indented JSON. It works under Native AOT.</summary>
+    /// <typeparam name="T">The model, or a list of models.</typeparam>
+    /// <param name="value">The value to write.</param>
+    public static string ToJson<T>(T value)
+    {
+        var options = s_indented ??= new JsonSerializerOptions(Default.Options) { WriteIndented = true };
+        return JsonSerializer.Serialize(value, (System.Text.Json.Serialization.Metadata.JsonTypeInfo<T>)options.GetTypeInfo(typeof(T)));
+    }
+}

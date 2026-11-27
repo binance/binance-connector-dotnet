@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../src/Binance.W3WPrediction/Binance.W3WPrediction.csproj" />
+  </ItemGroup>
+</Project>

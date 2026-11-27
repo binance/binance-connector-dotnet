@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Official Binance CMS Connector - A lightweight library that provides a convenient interface to Binance's CMS WebSocket Streams.</Description>
+  </PropertyGroup>
+</Project>

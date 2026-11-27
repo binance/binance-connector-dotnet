@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Official Binance Mining Connector - A lightweight library that provides a convenient interface to Binance's Mining REST API.</Description>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Official Binance C2C Connector - A lightweight library that provides a convenient interface to Binance's C2C REST API.</Description>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,29 @@
+//
+// Binance .NET Connector
+// https://github.com/binance/binance-connector-dotnet
+//
+// Distributed under the MIT License. See the LICENCE file.
+// Documentation: https://binance.github.io/binance-connector-dotnet/
+//
+
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Binance.Common;
+
+namespace Binance.Staking.RestApi;
+
+public sealed class SubscribeEthStakingResponse
+{
+    [JsonPropertyName("success")]
+    public bool? Success { get; set; }
+
+    [JsonPropertyName("wbethAmount")]
+    public string? WbethAmount { get; set; }
+
+    [JsonPropertyName("purchaseId")]
+    public long? PurchaseId { get; set; }
+
+    /// <summary>ETH amount per 1 WBETH</summary>
+    [JsonPropertyName("conversionRatio")]
+    public string? ConversionRatio { get; set; }
+}
