@@ -19,6 +19,9 @@
       { "files": ["docs/*.md", "docs/toc.yml", "README.md", "MIGRATION.md", "CHANGELOG.md"] },
       { "files": ["src/Binance.*/README.md", "src/Binance.*/docs/**/*.md", "examples/Binance.*/README.md", "tests/README.md"] }
     ],
+    "resource": [
+      { "src": "docs/site-root", "files": ["index.html"] }
+    ],
     "dest": "docs/_site",
     "globalMetadata": {
       "_appTitle": "Binance .NET Connector",
