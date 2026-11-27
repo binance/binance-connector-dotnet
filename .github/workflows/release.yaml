@@ -2,17 +2,27 @@ name: Release
 
 on:
   push:
-    tags: ['v*']
+    branches: [master]
+    paths:
+      - 'src/**'
+      - Versions.props
+      - Directory.Build.props
+      - Directory.Packages.props
+      - global.json
   workflow_dispatch:
     inputs:
       publish:
-        description: 'Push the packages to NuGet (a tag does it always)'
+        description: 'Publish the packages with a new version'
         type: boolean
         default: false
 
 permissions:
   contents: write
   id-token: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
 
 env:
   BINARY_REPOSITORY: binance/binance-connector-cpp
@@ -22,24 +32,41 @@ jobs:
   release:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    env:
+      PUBLISH: ${{ github.event_name == 'push' || inputs.publish }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Find the packages with a new version
+        id: find
+        run: |
+          set -euo pipefail
+          : > new-packages.txt
+          sed -n "s:.*== '\([^']*\)'\">\([^<]*\)</Version>.*:\1 \2:p" Versions.props | while read -r id version; do
+            lower=$(echo "$id" | tr 'A-Z' 'a-z')
+            if curl -fsS "https://api.nuget.org/v3-flatcontainer/$lower/index.json" 2>/dev/null | grep -q "\"$version\""; then
+              continue
+            fi
+            
+            if ! grep -q "^## ${version} " "src/$id/CHANGELOG.md" 2>/dev/null; then
+              echo "::error::src/$id/CHANGELOG.md has no '## $version - <date>' entry"
+              exit 1
+            fi
+            
+            echo "$id $version" >> new-packages.txt
+          done
+          
+          echo "New versions:"; cat new-packages.txt
+          echo "count=$(grep -c . new-packages.txt || true)" >> "$GITHUB_OUTPUT"
+
       - uses: actions/setup-dotnet@v4
+        if: steps.find.outputs.count != '0'
         with:
           global-json-file: global.json
 
-      - name: Check that the tag is the version of the packages
-        if: startsWith(github.ref, 'refs/tags/v')
-        run: |
-          version=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Directory.Build.props | head -n 1)
-          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
-            echo "::error::The tag $GITHUB_REF_NAME is not v$version (Directory.Build.props)"
-            exit 1
-          fi
-
       - name: Download the platform binaries
+        if: steps.find.outputs.count != '0'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -51,58 +78,73 @@ jobs:
           done
 
       - name: Build
+        if: steps.find.outputs.count != '0'
         run: dotnet build Binance.slnx -c Release
 
       - name: Format check
+        if: steps.find.outputs.count != '0'
         run: dotnet format whitespace Binance.slnx --verify-no-changes
 
       - name: Test
+        if: steps.find.outputs.count != '0'
         env:
           BINANCE_C_LIB: ${{ github.workspace }}/src/Binance.Common/runtimes/linux-x64/native/libbinance_c.so
         run: dotnet test Binance.slnx -c Release --no-build
 
-      - name: Pack
-        run: dotnet pack Binance.slnx -c Release --no-build -o artifacts
+      - name: Pack the packages with a new version
+        if: steps.find.outputs.count != '0'
+        run: |
+          set -euo pipefail
+          dotnet pack Binance.slnx -c Release --no-build -o artifacts
+          mkdir -p publish
+          while read -r id version; do
+            [ -n "$id" ] || continue
+            test -f "artifacts/$id.$version.nupkg" || { echo "::error::artifacts/$id.$version.nupkg was not packed"; exit 1; }
+            mv "artifacts/$id.$version.nupkg" publish/
+          done < new-packages.txt
+          ls publish
 
       - name: Check that every platform binary is in Binance.Common
+        if: steps.find.outputs.count != '0'
         run: |
+          pkg=$(ls publish/Binance.Common.[0-9]*.nupkg artifacts/Binance.Common.[0-9]*.nupkg 2>/dev/null | head -n 1)
           for rid in $RIDS; do
-            unzip -l artifacts/Binance.Common.[0-9]*.nupkg | grep -q "runtimes/$rid/native/" || { echo "::error::no binary for $rid"; exit 1; }
+            unzip -l "$pkg" | grep -q "runtimes/$rid/native/" || { echo "::error::no binary for $rid"; exit 1; }
           done
 
       - uses: actions/upload-artifact@v4
+        if: steps.find.outputs.count != '0'
         with:
           name: packages
-          path: artifacts/*.nupkg
+          path: publish/*.nupkg
 
       - name: Log in to NuGet
         id: nuget
-        if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
+        if: steps.find.outputs.count != '0' && env.PUBLISH == 'true'
         uses: NuGet/login@v1
         with:
           user: ${{ vars.NUGET_USER }}
 
       - name: Publish to NuGet
-        if: startsWith(github.ref, 'refs/tags/v') || inputs.publish
+        if: steps.find.outputs.count != '0' && env.PUBLISH == 'true'
         env:
           NUGET_API_KEY: ${{ steps.nuget.outputs.NUGET_API_KEY }}
-        run: dotnet nuget push "artifacts/*.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+        run: dotnet nuget push "publish/*.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
 
-      - name: Create the GitHub release and attach the packages
-        if: startsWith(github.ref, 'refs/tags/v')
+      - name: Create the GitHub releases
+        if: steps.find.outputs.count != '0' && env.PUBLISH == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          
-          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" artifacts/*.nupkg --repo "$GITHUB_REPOSITORY" --clobber
-            exit 0
-          fi
-          
-          version="${GITHUB_REF_NAME#v}"
-          awk -v heading="## ${version} " 'index($0, heading) == 1 {p = 1; next} /^## / {p = 0} p' CHANGELOG.md > notes.md
-          test -s notes.md || { echo "::error::No CHANGELOG.md entry for $version"; exit 1; }
-          
-          gh release create "$GITHUB_REF_NAME" artifacts/*.nupkg --repo "$GITHUB_REPOSITORY" --verify-tag \
-            --title "$GITHUB_REF_NAME" --notes-file notes.md
+          while read -r id version; do
+            [ -n "$id" ] || continue
+            tag="$id-v$version"
+            if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+              gh release upload "$tag" "publish/$id.$version.nupkg" --repo "$GITHUB_REPOSITORY" --clobber
+              continue
+            fi
+            awk -v heading="## ${version} " 'index($0, heading) == 1 {p = 1; next} /^## / {p = 0} p' "src/$id/CHANGELOG.md" > notes.md
+            gh release create "$tag" "publish/$id.$version.nupkg" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+              --title "$id $version" --notes-file notes.md
+          done < new-packages.txt
