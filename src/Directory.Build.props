@@ -1,0 +1,19 @@
+<Project>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+  <PropertyGroup>
+    <IsConnector Condition="!$(MSBuildProjectName.StartsWith('Binance.Common'))">true</IsConnector>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <IsAotCompatible>true</IsAotCompatible>
+    <PackageTags>binance api binance-api exchange connector dotnet csharp</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IsConnector)' == 'true'">
+    <ProductTag>$([System.Text.RegularExpressions.Regex]::Replace($(MSBuildProjectName.Substring(8)), '(?&lt;=[A-Za-z0-9])([A-Z])(?=[a-z])', '-$1').ToLowerInvariant())</ProductTag>
+    <PackageTags>$(PackageTags) $(ProductTag)</PackageTags>
+    <NoWarn>$(NoWarn);CS1591;CA1720;CA1711</NoWarn>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(IsConnector)' == 'true'">
+    <ProjectReference Include="$(MSBuildThisFileDirectory)Binance.Common/Binance.Common.csproj" />
+    <None Include="README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+</Project>

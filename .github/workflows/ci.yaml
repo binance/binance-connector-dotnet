@@ -1,0 +1,126 @@
+name: .NET Connector CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  detect-targets:
+    runs-on: ubuntu-latest
+    outputs:
+      modified_targets: ${{ steps.filter.outputs.modified_targets }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check that Binance.slnx lists every project
+        run: |
+          sh scripts/update-slnx.sh
+          if ! git diff --quiet -- Binance.slnx; then
+            echo "::error::Binance.slnx is out of date: run 'make slnx' and commit it"
+            git diff -- Binance.slnx
+            exit 1
+          fi
+
+      - name: Detect modified targets
+        id: filter
+        run: |
+          if git rev-parse --verify HEAD^ >/dev/null 2>&1; then
+            BASE_COMMIT="HEAD^"
+          else
+            BASE_COMMIT=$(git rev-list --max-parents=0 HEAD)
+          fi
+          all=false
+          [ "${{ github.event_name }}" = "workflow_dispatch" ] && all=true
+
+          TARGETS=()
+          if $all || ! git diff --quiet "$BASE_COMMIT" HEAD -- ':(glob)src/Binance.Common*/**' \
+              tests/Binance.Common.Tests Directory.Build.props Directory.Packages.props global.json \
+              .editorconfig Binance.slnx src/Directory.Build.props examples/Directory.Build.props \
+              examples/Directory.Build.targets tests/Directory.Build.props scripts .github/workflows/ci.yaml; then
+            TARGETS+=("common")
+          fi
+          
+          for dir in src/Binance.*/; do
+            name=$(basename "$dir")
+            case "$name" in Binance.Common*) continue ;; esac
+            
+            if $all || ! git diff --quiet "$BASE_COMMIT" HEAD -- "src/$name" "examples/$name.Examples" "tests/$name.Tests"; then
+              TARGETS+=("$name")
+            fi
+          done
+
+          JSON=$(printf '%s\n' "${TARGETS[@]}" | jq -R -s -c 'split("\n") | map(select(. != ""))')
+          echo "Detected modified targets: $JSON"
+          echo "modified_targets=$JSON" >> "$GITHUB_OUTPUT"
+
+  build-target:
+    runs-on: ubuntu-latest
+    needs: [detect-targets]
+    if: ${{ needs.detect-targets.outputs.modified_targets != '[]' }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        target: ${{ fromJson(needs.detect-targets.outputs.modified_targets) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Download the platform library
+        run: make native-download NATIVE_RID=linux-x64
+
+      - name: Select the projects
+        run: |
+          lib="$PWD/build/native/c_api/libbinance_c.so"
+          test -f "$lib"
+          echo "BINANCE_C_LIB=$lib" >> "$GITHUB_ENV"
+          
+          if [ "${{ matrix.target }}" = "common" ]; then
+            # Common is also built and tested against one product, like the C++ connector does.
+            projects="src/Binance.Common src/Binance.Common.DependencyInjection tests/Binance.Common.Tests tests/Binance.Spot.Tests"
+            tests="tests/Binance.Common.Tests tests/Binance.Spot.Tests"
+            folders="src/Binance.Common src/Binance.Common.DependencyInjection tests/Binance.Common.Tests"
+          else
+            name="${{ matrix.target }}"
+            projects="src/$name tests/$name.Tests examples/$name.Examples"
+            tests="tests/$name.Tests"
+            folders="src/$name tests/$name.Tests examples/$name.Examples"
+          fi
+          
+          {
+            echo "PROJECTS=$projects"
+            echo "TESTS=$tests"
+            echo "FOLDERS=$folders"
+          } >> "$GITHUB_ENV"
+
+      - name: Format Check
+        run: |
+          for folder in $FOLDERS; do
+            dotnet format whitespace "$folder" --folder --verify-no-changes
+          done
+
+      - name: Build
+        run: |
+          for project in $PROJECTS; do
+            dotnet build "$project" -c Release
+          done
+
+      - name: Test
+        run: |
+          for project in $TESTS; do
+            dotnet test "$project" -c Release --no-build
+          done

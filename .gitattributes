@@ -1,0 +1,7 @@
+# LF line endings everywhere, as in .editorconfig.
+* text=auto eol=lf
+
+# Platform libraries are binary files.
+*.dylib binary
+*.so binary
+*.dll binary

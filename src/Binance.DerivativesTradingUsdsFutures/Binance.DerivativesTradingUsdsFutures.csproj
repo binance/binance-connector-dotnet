@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Official Binance Derivatives Trading (USDS-M Futures) Connector - A lightweight library that provides a convenient interface to Binance's Derivatives Trading (USDS-M Futures) REST API, WebSocket API and WebSocket Streams.</Description>
+  </PropertyGroup>
+</Project>

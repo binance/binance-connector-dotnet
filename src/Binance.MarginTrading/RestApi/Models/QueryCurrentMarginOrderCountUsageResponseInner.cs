@@ -1,0 +1,36 @@
+//
+// Binance .NET Connector
+// https://github.com/binance/binance-connector-dotnet
+//
+// Distributed under the MIT License. See the LICENCE file.
+// Documentation: https://binance.github.io/binance-connector-dotnet/
+//
+
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Binance.Common;
+
+namespace Binance.MarginTrading.RestApi;
+
+public sealed class QueryCurrentMarginOrderCountUsageResponseInner
+{
+    /// <summary>rate Limit Type.</summary>
+    [JsonPropertyName("rateLimitType")]
+    public string? RateLimitType { get; set; }
+
+    /// <summary>interval.</summary>
+    [JsonPropertyName("interval")]
+    public string? Interval { get; set; }
+
+    /// <summary>interval Num.</summary>
+    [JsonPropertyName("intervalNum")]
+    public long? IntervalNum { get; set; }
+
+    /// <summary>limit.</summary>
+    [JsonPropertyName("limit")]
+    public long? Limit { get; set; }
+
+    /// <summary>count.</summary>
+    [JsonPropertyName("count")]
+    public long? Count { get; set; }
+}

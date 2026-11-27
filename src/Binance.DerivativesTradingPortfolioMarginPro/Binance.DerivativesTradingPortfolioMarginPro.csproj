@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Official Binance Derivatives Trading (Portfolio Margin Pro) Connector - A lightweight library that provides a convenient interface to Binance's Derivatives Trading (Portfolio Margin Pro) REST API and WebSocket Streams.</Description>
+  </PropertyGroup>
+</Project>

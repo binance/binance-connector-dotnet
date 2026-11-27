@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Official Binance Crypto Loan Connector - A lightweight library that provides a convenient interface to Binance's Crypto Loan REST API.</Description>
+  </PropertyGroup>
+</Project>

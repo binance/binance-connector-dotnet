@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../src/Binance.Alpha/Binance.Alpha.csproj" />
+  </ItemGroup>
+</Project>

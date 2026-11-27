@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../src/Binance.DerivativesTradingPortfolioMargin/Binance.DerivativesTradingPortfolioMargin.csproj" />
+  </ItemGroup>
+</Project>

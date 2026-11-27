@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Official Binance Spot Connector - A lightweight library that provides a convenient interface to Binance's Spot REST API, WebSocket API and WebSocket Streams.</Description>
+  </PropertyGroup>
+</Project>

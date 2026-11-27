@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Official Binance Sub Account Connector - A lightweight library that provides a convenient interface to Binance's Sub Account REST API.</Description>
+  </PropertyGroup>
+</Project>

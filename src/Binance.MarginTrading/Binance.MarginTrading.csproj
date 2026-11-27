@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Official Binance Margin Trading Connector - A lightweight library that provides a convenient interface to Binance's Margin Trading REST API and WebSocket Streams.</Description>
+  </PropertyGroup>
+</Project>

@@ -1,24 +1,26 @@
-project.lock.json
-.DS_Store
-nupkg/
-
-# Visual Studio Code
-.vscode
-
-# Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-build/
-bld/
+# .NET
 [Bb]in/
 [Oo]bj/
-[Oo]ut/
-msbuild.log
-msbuild.err
-msbuild.wrn
+*.user
+*.suo
+*.nupkg
+*.snupkg
+artifacts/
+TestResults/
+.vs/
+.vscode/
+.idea/
+*.log
 
-.ionide/
+# DocFX output
+docs/_site/
+docs/api/*.yml
+docs/api/.manifest
+docs/connectors.md
+
+# macOS
+.DS_Store
+
+# Platform libraries are added to these folders before packing and are never committed
+src/Binance.Common/runtimes/*/native/*
+!src/Binance.Common/runtimes/*/native/.gitkeep
