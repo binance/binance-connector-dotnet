@@ -25,7 +25,7 @@ With the move towards product-specific connectors, version 5.0 replaces the sing
 ### Step 1: Replace the Packages
 
 ```bash
-dotnet add package Binance.Spot --version 5.0.0   # replaces 4.x: a different library under the same id
+dotnet add package Binance.Spot   # 5.x replaces 4.x: a different library under the same id
 ```
 
 Add the package of every other product you used: `Binance.Wallet`, `Binance.SubAccount`, `Binance.MarginTrading`,

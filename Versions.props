@@ -1,0 +1,36 @@
+<Project>
+  <!-- The version of every package. Each package has its own version and its own CHANGELOG.md
+       (src/<package>/CHANGELOG.md): the generation job bumps a connector when its API changes -->
+  <PropertyGroup>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.Algo'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.Alpha'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.C2C'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.Cms'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.Common'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.Common.DependencyInjection'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.Convert'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.CopyTrading'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.CryptoLoan'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.DerivativesTradingCoinFutures'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.DerivativesTradingOptions'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.DerivativesTradingPortfolioMargin'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.DerivativesTradingPortfolioMarginPro'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.DerivativesTradingUsdsFutures'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.DualInvestment'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.Fiat'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.GiftCard'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.MarginTrading'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.Mining'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.Pay'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.Rebate'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.SimpleEarn'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.Spot'">5.0.1</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.Staking'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.StockOptions'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.Stocks'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.SubAccount'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.VipLoan'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.W3WPrediction'">1.0.0</Version>
+    <Version Condition="'$(MSBuildProjectName)' == 'Binance.Wallet'">1.0.0</Version>
+  </PropertyGroup>
+</Project>

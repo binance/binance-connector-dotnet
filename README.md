@@ -158,8 +158,11 @@ services.AddBinanceRestApi<SpotRestApi>(SpotRestApi.Production, o => o.ApiKey = 
 
 ### Versioning
 
-Releases follow [Semantic Versioning](https://semver.org). Version `5.0.0` replaces the HttpClient based 4.x connector, see
-[MIGRATION.md](./MIGRATION.md). All packages share one version, set in [`Directory.Build.props`](https://github.com/binance/binance-connector-dotnet/blob/master/Directory.Build.props).
+Releases follow [Semantic Versioning](https://semver.org). Every package has its own version, listed in
+[`Versions.props`](https://github.com/binance/binance-connector-dotnet/blob/master/Versions.props), and its own changelog
+(`src/Binance.<Product>/CHANGELOG.md`): a connector gets a new version when its API changes, and depends on the
+`Binance.Common` version it was built with, or a later one. `Binance.Spot` 5.x replaces the HttpClient based 4.x connector, see
+[MIGRATION.md](./MIGRATION.md).
 
 ### Building from source
 

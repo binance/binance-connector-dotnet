@@ -1,5 +1,8 @@
 # Changelog
 
+From 5.0.0 on, every package has its own version and changelog: see `src/<package>/CHANGELOG.md` (for example
+[`src/Binance.Spot/CHANGELOG.md`](./src/Binance.Spot/CHANGELOG.md)). This file keeps the 5.0.0 release and the 4.x history.
+
 ## 5.0.0 - 2026-11-27
 
 A new major version, replacing the single 4.x `Binance.Spot` package with one package per Binance product, with typed REST API,

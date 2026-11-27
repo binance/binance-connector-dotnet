@@ -4,8 +4,9 @@
 #   make examples PRODUCT=spot             # list the examples of a product
 #   make example NAME=spot/RestApi/Market/Ticker
 #   make format | format-check | pack | docs | slnx | clean
+#   make bump-common [TARGET_VER=<version>] # release every package with the Binance.Common of Versions.props
 
-.PHONY: help restore build test test-unit native native-download examples example format format-check pack docs slnx clean
+.PHONY: help restore build test test-unit native native-download examples example format format-check pack docs slnx clean bump-common
 
 CONFIG     ?= Debug
 PRODUCTS   ?=
@@ -113,3 +114,6 @@ clean:
 	dotnet clean $(SOLUTION) -c $(CONFIG) > /dev/null || :
 	find src examples tests -type d \( -name bin -o -name obj \) -prune -exec rm -rf {} +
 	rm -rf artifacts $(NATIVE_DIR)
+
+bump-common:
+	sh scripts/bump-common.sh $(TARGET_VER)

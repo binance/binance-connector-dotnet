@@ -1,6 +1,5 @@
 <Project>
   <PropertyGroup>
-    <Version>5.0.0</Version>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -17,4 +16,5 @@
     <Deterministic>true</Deterministic>
     <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
+  <Import Project="$(MSBuildThisFileDirectory)Versions.props" />
 </Project>
